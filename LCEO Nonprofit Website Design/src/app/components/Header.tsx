@@ -257,15 +257,12 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                   <AnimatePresence>
                     {activeDropdown === group.label && (group.items || group.sections) && (
                       <motion.div
-                        initial={{ opacity: 0, y: -30, scaleY: 0.5 }}
-                        animate={{ opacity: 1, y: 0, scaleY: 1 }}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{
-                          type: "spring",
-                          stiffness: 400,
-                          damping: 8,
-                          mass: 1.2,
-                          duration: 1.2
+                          duration: 0.2,
+                          ease: "easeOut"
                         }}
                         style={{ originY: 0 }}
                         className={
@@ -452,10 +449,10 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                 <AnimatePresence>
                   {activeDropdown === 'Login' && (
                     <motion.div
-                      initial={{ opacity: 0, y: -20, scaleY: 0.8 }}
-                      animate={{ opacity: 1, y: 0, scaleY: 1 }}
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 12 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
                       style={{ originY: 0 }}
                       className="mega-menu-container mega-compact mega-compact-right"
                     >

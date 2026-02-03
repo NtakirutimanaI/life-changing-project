@@ -267,7 +267,7 @@ export function DonatePage() {
                     </div>
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full bg-accent hover:bg-accent/90 h-16 text-xl font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 text-black">
+                  <Button type="submit" size="lg" className="w-full bg-accent hover:bg-accent/90 h-16 text-xl font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 text-white">
                     Donate ${customAmount || selectedAmount}
                   </Button>
 
