@@ -49,7 +49,7 @@ function EligibilityChecker() {
   const checkEligibility = () => {
     const ageNum = parseInt(age);
     const eligible: string[] = [];
-    
+
     if (ageNum >= 14 && ageNum <= 30) {
       // Check for different programs
       if (education === 'in-school' && ageNum >= 12 && ageNum <= 18) {
@@ -69,7 +69,7 @@ function EligibilityChecker() {
     setResult({
       eligible: eligible.length > 0,
       programs: eligible,
-      message: eligible.length > 0 
+      message: eligible.length > 0
         ? 'Great news! You qualify for the following programs:'
         : 'Based on your information, you may not currently qualify. Please contact us directly for personalized guidance.',
     });
@@ -86,7 +86,7 @@ function EligibilityChecker() {
           Answer a few questions to see which LCEO programs you qualify for
         </p>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         <div>
           <Label htmlFor="age">Your Age</Label>
           <Input
@@ -213,7 +213,7 @@ function ResourceFinder() {
           Find LCEO resources and support services based on your needs
         </p>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         <div>
           <Label>What do you need help with?</Label>
           <Select value={need} onValueChange={setNeed}>
@@ -311,7 +311,7 @@ function MentalHealthConnector() {
           Connect with appropriate mental health support - completely confidential
         </p>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
           <p className="text-sm text-purple-900">
             <AlertCircle className="w-4 h-4 inline mr-1" />
@@ -354,18 +354,16 @@ function MentalHealthConnector() {
         </Button>
 
         {recommendation && (
-          <div className={`p-4 rounded-lg border-2 ${
-            recommendation.color === 'red' ? 'bg-red-50 border-red-300' :
-            recommendation.color === 'orange' ? 'bg-orange-50 border-orange-300' :
-            recommendation.color === 'yellow' ? 'bg-yellow-50 border-yellow-300' :
-            'bg-green-50 border-green-300'
-          }`}>
-            <Badge className={`mb-2 ${
-              recommendation.color === 'red' ? 'bg-red-600' :
-              recommendation.color === 'orange' ? 'bg-orange-600' :
-              recommendation.color === 'yellow' ? 'bg-yellow-600' :
-              'bg-green-600'
+          <div className={`p-4 rounded-lg border-2 ${recommendation.color === 'red' ? 'bg-red-50 border-red-300' :
+              recommendation.color === 'orange' ? 'bg-orange-50 border-orange-300' :
+                recommendation.color === 'yellow' ? 'bg-yellow-50 border-yellow-300' :
+                  'bg-green-50 border-green-300'
             }`}>
+            <Badge className={`mb-2 ${recommendation.color === 'red' ? 'bg-red-600' :
+                recommendation.color === 'orange' ? 'bg-orange-600' :
+                  recommendation.color === 'yellow' ? 'bg-yellow-600' :
+                    'bg-green-600'
+              }`}>
               {recommendation.level}
             </Badge>
             <p className="font-semibold mb-3">{recommendation.message}</p>
@@ -452,7 +450,7 @@ function CareerPathSuggestions() {
           Discover career paths aligned with your interests and LCEO programs
         </p>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         <div>
           <Label>What are you interested in? (Select all that apply)</Label>
           <div className="grid grid-cols-2 gap-2 mt-2">
@@ -501,8 +499,8 @@ function CareerPathSuggestions() {
                         <h5 className="font-semibold">{career.name}</h5>
                         <Badge variant="secondary" className={
                           career.demand === 'Very High' ? 'bg-green-100 text-green-800' :
-                          career.demand === 'High' ? 'bg-blue-100 text-blue-800' :
-                          'bg-gray-100 text-gray-800'
+                            career.demand === 'High' ? 'bg-blue-100 text-blue-800' :
+                              'bg-gray-100 text-gray-800'
                         }>
                           {career.demand} Demand
                         </Badge>

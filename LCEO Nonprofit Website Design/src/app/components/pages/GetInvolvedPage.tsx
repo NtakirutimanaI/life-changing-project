@@ -50,7 +50,7 @@ export function GetInvolvedPage({ onNavigate }: GetInvolvedPageProps) {
   ];
 
   const districts = [
-    'Gasabo', 'Kicukiro', 'Nyarugenge', 'Bugesera', 'Gatsibo', 
+    'Gasabo', 'Kicukiro', 'Nyarugenge', 'Bugesera', 'Gatsibo',
     'Kayonza', 'Kirehe', 'Ngoma', 'Rwamagana', 'Other'
   ];
 
@@ -70,7 +70,7 @@ export function GetInvolvedPage({ onNavigate }: GetInvolvedPageProps) {
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">Ways to Make a Difference</h2>
-          
+
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             <Card className="text-center hover:shadow-lg transition-shadow cursor-pointer" onClick={() => onNavigate('donate')}>
               <CardContent className="p-8">
@@ -154,7 +154,7 @@ export function GetInvolvedPage({ onNavigate }: GetInvolvedPageProps) {
             <CardContent className="p-8">
               <h3 className="text-2xl font-bold mb-6 text-center">Volunteer Interest Form</h3>
               <form onSubmit={handleVolunteerSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2 gap-8">
                   <div>
                     <Label htmlFor="v-name">Full Name *</Label>
                     <Input id="v-name" required />
@@ -164,7 +164,7 @@ export function GetInvolvedPage({ onNavigate }: GetInvolvedPageProps) {
                     <Input id="v-email" type="email" required />
                   </div>
                 </div>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2 gap-8">
                   <div>
                     <Label htmlFor="v-phone">Phone</Label>
                     <Input id="v-phone" type="tel" />
@@ -200,16 +200,16 @@ export function GetInvolvedPage({ onNavigate }: GetInvolvedPageProps) {
                 </div>
                 <div>
                   <Label htmlFor="v-skills">Skills & Experience</Label>
-                  <Textarea 
-                    id="v-skills" 
+                  <Textarea
+                    id="v-skills"
                     placeholder="Tell us about your relevant skills, experience, and why you want to volunteer with LCEO"
                     rows={4}
                   />
                 </div>
                 <div>
                   <Label htmlFor="v-availability">Availability</Label>
-                  <Textarea 
-                    id="v-availability" 
+                  <Textarea
+                    id="v-availability"
                     placeholder="How many hours per month can you commit? Any specific days/times?"
                     rows={3}
                   />
@@ -236,7 +236,7 @@ export function GetInvolvedPage({ onNavigate }: GetInvolvedPageProps) {
           <Card>
             <CardContent className="p-8">
               <form onSubmit={handleContactSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2 gap-8">
                   <div>
                     <Label htmlFor="c-name">Full Name *</Label>
                     <Input id="c-name" required />
@@ -246,7 +246,7 @@ export function GetInvolvedPage({ onNavigate }: GetInvolvedPageProps) {
                     <Input id="c-email" type="email" required />
                   </div>
                 </div>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2 gap-8">
                   <div>
                     <Label htmlFor="c-phone">Phone</Label>
                     <Input id="c-phone" type="tel" />
@@ -285,8 +285,8 @@ export function GetInvolvedPage({ onNavigate }: GetInvolvedPageProps) {
                 </div>
                 <div>
                   <Label htmlFor="c-message">Message *</Label>
-                  <Textarea 
-                    id="c-message" 
+                  <Textarea
+                    id="c-message"
                     placeholder="Please provide details about your inquiry..."
                     rows={6}
                     required
@@ -310,9 +310,9 @@ export function GetInvolvedPage({ onNavigate }: GetInvolvedPageProps) {
             Get monthly updates on our impact, beneficiary stories, and ways to get involved
           </p>
           <div className="flex gap-3 max-w-md mx-auto">
-            <Input 
-              type="email" 
-              placeholder="Enter your email" 
+            <Input
+              type="email"
+              placeholder="Enter your email"
               className="bg-white text-foreground h-12"
             />
             <Button className="bg-accent hover:bg-accent/90 h-12 px-8">

@@ -3,102 +3,105 @@ import { motion } from 'framer-motion';
 
 export function VolunteerSection() {
     return (
-        <section className="relative py-28 md:py-40 bg-[#0d211e] overflow-hidden">
-            {/* Background Image with Overlay */}
+        <section className="relative py-20 lg:py-28 overflow-hidden bg-[#004037]">
+            {/* BACKGROUND LAYER */}
             <div className="absolute inset-0 w-full h-full">
                 <img
-                    src="https://images.pexels.com/photos/3206011/pexels-photo-3206011.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="Background"
+                    src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=2000"
+                    alt="LCEO Background"
                     className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-[#0d211e]/90 mix-blend-multiply"></div>
+                <div className="absolute inset-0 bg-black/60"></div>
+                <div className="absolute inset-0 bg-[#004037]/85 mix-blend-multiply"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-[#004037]/70 to-transparent"></div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="container mx-auto max-w-7xl px-6 relative z-10">
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
 
-                    {/* Left Content */}
-                    <div className="text-white space-y-8">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                        >
-                            <h4 className="text-[#FFC105] font-bold text-sm tracking-[0.2em] uppercase mb-4">
-                                Join With Us
-                            </h4>
-                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
-                                Because Every <br />
-                                Life Matters!
-                            </h2>
-                            <p className="text-gray-300 text-lg md:text-xl leading-relaxed max-w-xl mb-10 font-light">
-                                Charitable giving as a religious act or duty is referred to as alms. The name stems from the most obvious expression of the virtue of charity, giving the recipients of it the means they need to survive.
-                            </p>
-
-                            <a href="#" className="inline-block bg-[#FFC105] text-[#0d211e] font-extrabold py-4 px-10 rounded-sm hover:bg-white transition-all duration-300 uppercase tracking-widest shadow-lg">
-                                Donate Now
-                            </a>
-                        </motion.div>
-                    </div>
-
-                    {/* Right Form */}
+                    {/* LEFT SIDE: TEXT AREA (Expands to fill space) */}
                     <motion.div
-                        initial={{ opacity: 0, x: 20 }}
+                        initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="bg-white p-8 md:p-14 relative shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] z-20 w-full max-w-[500px] lg:ml-auto rounded-md"
+                        transition={{ duration: 0.8 }}
+                        className="flex-1 text-white space-y-8"
                     >
-                        {/* Form Header */}
-                        <div className="mb-8">
-                            <h4 className="text-[#FFC105] font-bold text-xs tracking-[0.2em] uppercase mb-3">
-                                Join Us Now
+                        <div className="space-y-4">
+                            <h4 className="text-[#facc15] font-black text-sm tracking-[0.3em] uppercase flex items-center gap-3">
+                                <span className="w-10 h-[2px] bg-[#facc15]"></span>
+                                Join With Us
                             </h4>
-                            <h3 className="text-3xl font-extrabold text-[#0d211e]">
-                                Become A Volunteer
-                            </h3>
+                            <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] tracking-tight">
+                                Because Every <br />
+                                <span className="text-white">Life Matters!</span>
+                            </h2>
                         </div>
 
-                        {/* Form Fields */}
-                        <form className="space-y-5">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <p className="text-white/90 text-lg md:text-xl leading-relaxed max-w-xl font-medium">
+                            Charitable giving as a religious act or duty is referred to as alms. The name stems from the most obvious expression of the virtue of charity, giving the recipients of it the means they need to survive.
+                        </p>
+
+                        <motion.button
+                            whileHover={{ scale: 1.05, backgroundColor: "#ffffff", color: "#004037" }}
+                            whileTap={{ scale: 0.98 }}
+                            className="bg-[#facc15] text-[#004037] font-black py-4 px-12 rounded-sm uppercase tracking-widest text-sm shadow-xl transition-all"
+                            style={{ backgroundColor: '#facc15', color: '#004037' }}
+                        >
+                            Donate Now
+                        </motion.button>
+                    </motion.div>
+
+                    {/* RIGHT SIDE: EXTREMELY SLIM FORM CARD (Fixed 200px) */}
+                    <div className="flex justify-center lg:justify-end shrink-0">
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="bg-white p-5 shadow-[0_40px_50px_-20px_rgba(0,0,0,0.6)] w-[200px] rounded-none border-b-8 border-[#facc15]"
+                        >
+                            <div className="mb-6">
+                                <h4 className="text-[#facc15] font-bold text-[10px] tracking-widest uppercase mb-1">
+                                    Join Us
+                                </h4>
+                                <h3 className="text-xl font-black text-[#004037] leading-tight">
+                                    Volunteer
+                                </h3>
+                            </div>
+
+                            <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
                                 <input
                                     type="text"
-                                    placeholder="Your Name"
-                                    className="w-full bg-gray-50 border-none p-4 text-gray-800 focus:ring-1 focus:ring-[#FFC105]/50 outline-none placeholder:text-gray-400 transition-all rounded-sm"
+                                    placeholder="Name"
+                                    className="w-full bg-[#f8f9fa] border-none py-3 px-4 text-xs text-gray-900 placeholder:text-gray-400 focus:ring-1 focus:ring-[#facc15] outline-none transition-all font-semibold rounded-none"
                                 />
                                 <input
                                     type="email"
-                                    placeholder="Your Email"
-                                    className="w-full bg-gray-50 border-none p-4 text-gray-800 focus:ring-1 focus:ring-[#FFC105]/50 outline-none placeholder:text-gray-400 transition-all rounded-sm"
+                                    placeholder="Email"
+                                    className="w-full bg-[#f8f9fa] border-none py-3 px-4 text-xs text-gray-900 placeholder:text-gray-400 focus:ring-1 focus:ring-[#facc15] outline-none transition-all font-semibold rounded-none"
                                 />
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <input
                                     type="tel"
-                                    placeholder="Phone No"
-                                    className="w-full bg-gray-50 border-none p-4 text-gray-800 focus:ring-1 focus:ring-[#FFC105]/50 outline-none placeholder:text-gray-400 transition-all rounded-sm"
+                                    placeholder="Phone"
+                                    className="w-full bg-[#f8f9fa] border-none py-3 px-4 text-xs text-gray-900 placeholder:text-gray-400 focus:ring-1 focus:ring-[#facc15] outline-none transition-all font-semibold rounded-none"
                                 />
-                                <input
-                                    type="text"
-                                    placeholder="Your address"
-                                    className="w-full bg-gray-50 border-none p-4 text-gray-800 focus:ring-1 focus:ring-[#FFC105]/50 outline-none placeholder:text-gray-400 transition-all rounded-sm"
-                                />
-                            </div>
-                            <textarea
-                                placeholder="Message"
-                                rows={4}
-                                className="w-full bg-gray-50 border-none p-4 text-gray-800 focus:ring-1 focus:ring-[#FFC105]/50 outline-none placeholder:text-gray-400 resize-none transition-all rounded-sm"
-                            ></textarea>
+                                <textarea
+                                    placeholder="Message"
+                                    rows={3}
+                                    className="w-full bg-[#f8f9fa] border-none py-3 px-4 text-xs text-gray-900 placeholder:text-gray-400 focus:ring-1 focus:ring-[#facc15] outline-none transition-all font-semibold resize-none rounded-none"
+                                ></textarea>
 
-                            <button
-                                type="submit"
-                                className="w-full bg-[#FFC105] text-[#0d211e] font-extrabold py-5 px-8 uppercase tracking-widest hover:bg-[#0d211e] hover:text-white transition-colors duration-300 shadow-lg hover:shadow-xl rounded-sm"
-                            >
-                                Become A Volunteer
-                            </button>
-                        </form>
-                    </motion.div>
+                                <motion.button
+                                    whileHover={{ backgroundColor: "#004037", color: "#ffffff" }}
+                                    className="w-full bg-[#facc15] text-[#004037] font-black py-3 px-2 uppercase tracking-tighter text-[10px] shadow-lg transition-all"
+                                    style={{ backgroundColor: '#facc15', color: '#004037' }}
+                                >
+                                    Join Cause
+                                </motion.button>
+                            </form>
+                        </motion.div>
+                    </div>
 
                 </div>
             </div>

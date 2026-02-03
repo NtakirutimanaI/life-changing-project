@@ -136,15 +136,15 @@ export function DonatePage() {
               <CardContent className="p-8 md:p-10">
                 <form onSubmit={handleSubmit}>
                   {/* Donation Type Toggles */}
-                  <div className="mb-10">
+                  <div className="mb-12">
                     <Label className="text-sm font-bold uppercase tracking-wider text-black mb-4 block">Frequency</Label>
                     <Tabs value={donationType} onValueChange={setDonationType} className="w-full">
-                      <TabsList className="grid w-full grid-cols-4 bg-gray-100 p-1.5 rounded-xl h-auto">
+                      <TabsList className="grid w-full grid-cols-4 gap-4 bg-transparent h-auto p-0">
                         {['monthly', 'quarterly', 'yearly', 'one-time'].map(type => (
                           <TabsTrigger
                             key={type}
                             value={type}
-                            className="capitalize py-3 rounded-lg data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-sm text-black font-bold transition-all duration-300"
+                            className="capitalize py-3 rounded-xl border border-gray-200 data-[state=active]:bg-primary data-[state=active]:border-primary data-[state=active]:text-white data-[state=active]:shadow-lg text-black font-bold bg-white transition-all duration-300"
                           >
                             {type.replace('-', ' ')}
                           </TabsTrigger>
@@ -154,9 +154,9 @@ export function DonatePage() {
                   </div>
 
                   {/* Amount Grid */}
-                  <div className="mb-10">
+                  <div className="mb-12">
                     <Label className="text-sm font-bold uppercase tracking-wider text-black mb-4 block">Select Amount</Label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
                       {presetAmounts[donationType as keyof typeof presetAmounts].map((amount) => (
                         <button
                           key={amount}
@@ -205,7 +205,7 @@ export function DonatePage() {
                   </div>
 
                   {/* Program Selection */}
-                  <div className="mb-10">
+                  <div className="mb-12">
                     <Label className="text-sm font-bold uppercase tracking-wider text-black mb-4 block">Designation</Label>
                     <Select value={program} onValueChange={setProgram}>
                       <SelectTrigger className="h-14 text-lg border-gray-200 rounded-xl text-black">
@@ -221,12 +221,12 @@ export function DonatePage() {
                   </div>
 
                   {/* Donor Info */}
-                  <div className="mb-10">
+                  <div className="mb-12">
                     <h3 className="text-xl font-bold text-black mb-6 flex items-center gap-2">
                       <span className="bg-secondary/20 text-secondary w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
                       Your Information
                     </h3>
-                    <div className="grid md:grid-cols-2 gap-5">
+                    <div className="grid md:grid-cols-2 gap-8">
                       <div className="space-y-2">
                         <Label htmlFor="full-name" className="text-black font-semibold">Full Name</Label>
                         <Input id="full-name" required className="h-12 rounded-lg border-gray-200 text-black focus:border-primary" />
@@ -245,12 +245,12 @@ export function DonatePage() {
                   </div>
 
                   {/* Payment */}
-                  <div className="mb-10">
+                  <div className="mb-12">
                     <h3 className="text-xl font-bold text-black mb-6 flex items-center gap-2">
                       <span className="bg-secondary/20 text-secondary w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
                       Payment Details
                     </h3>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                       {['Card', 'Mobile', 'Bank', 'PayPal'].map((method, i) => (
                         <button
                           key={method}
@@ -284,9 +284,8 @@ export function DonatePage() {
             </Card>
           </motion.div>
 
-          {/* Sidebar Info - UPDATED TO LIGHT THEME */}
           <motion.div
-            className="space-y-6"
+            className="flex flex-col gap-10"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
@@ -294,11 +293,11 @@ export function DonatePage() {
             <Card className="bg-white text-black border border-gray-200 shadow-xl rounded-2xl overflow-hidden relative">
               <div className="absolute top-0 right-0 w-32 h-32 bg-gray-100 rounded-full blur-3xl -mr-10 -mt-10"></div>
               <CardContent className="p-8 relative z-10">
-                <h3 className="font-bold text-xl mb-6 flex items-center gap-3 text-black">
-                  <div className="p-2 bg-gray-100 rounded-lg"><Check className="text-secondary" size={20} /></div>
+                <h3 className="font-bold text-xl mb-8 flex items-center gap-4 text-black">
+                  <div className="p-3 bg-gray-100 rounded-xl"><Check className="text-secondary" size={24} /></div>
                   Why Donate Monthly?
                 </h3>
-                <ul className="space-y-4">
+                <ul className="flex flex-col gap-6">
                   {[
                     'Steady funding allows us to plan long-term.',
                     'Lower administrative costs means more goes to the cause.',
@@ -316,8 +315,8 @@ export function DonatePage() {
 
             <Card className="border border-gray-200 shadow-lg rounded-2xl bg-white">
               <CardContent className="p-8">
-                <h3 className="font-bold text-lg mb-6 text-black">Allocation of Funds</h3>
-                <div className="space-y-5">
+                <h3 className="font-bold text-lg mb-8 text-black">Allocation of Funds</h3>
+                <div className="flex flex-col gap-8">
                   {[
                     { l: 'Programs & Services', p: 85, c: 'bg-primary' },
                     { l: 'Management', p: 12, c: 'bg-secondary' },

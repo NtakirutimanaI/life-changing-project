@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/app/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/app/components/ui/dialog';
 import { Progress } from '@/app/components/ui/progress';
-import { 
+import {
   Target, Users, DollarSign, TrendingUp, Edit, Trash2, Plus,
   Calendar, MapPin, Award, Settings
 } from 'lucide-react';
@@ -102,7 +102,7 @@ export function ProgramManagement() {
           <h2 className="text-2xl font-bold">Program Management</h2>
           <p className="text-sm text-gray-600">Manage and monitor all LCEO programs</p>
         </div>
-        
+
         <Dialog>
           <DialogTrigger asChild>
             <Button>
@@ -119,34 +119,34 @@ export function ProgramManagement() {
                 <Label htmlFor="programName">Program Name</Label>
                 <Input id="programName" placeholder="Enter program name" />
               </div>
-              
+
               <div>
                 <Label htmlFor="description">Description</Label>
-                <Textarea 
-                  id="description" 
-                  placeholder="Brief description of the program" 
+                <Textarea
+                  id="description"
+                  placeholder="Brief description of the program"
                   rows={3}
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-8">
                 <div>
                   <Label htmlFor="capacity">Participant Capacity</Label>
                   <Input id="capacity" type="number" placeholder="100" />
                 </div>
-                
+
                 <div>
                   <Label htmlFor="budget">Total Budget ($)</Label>
                   <Input id="budget" type="number" placeholder="25000" />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-8">
                 <div>
                   <Label htmlFor="startDate">Start Date</Label>
                   <Input id="startDate" type="date" />
                 </div>
-                
+
                 <div>
                   <Label htmlFor="location">Location</Label>
                   <Input id="location" placeholder="e.g., Kigali" />
@@ -250,8 +250,8 @@ export function ProgramManagement() {
                   <Button variant="ghost" size="sm">
                     <Edit className="w-4 h-4" />
                   </Button>
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     size="sm"
                     onClick={() => handleDelete(program.id)}
                   >

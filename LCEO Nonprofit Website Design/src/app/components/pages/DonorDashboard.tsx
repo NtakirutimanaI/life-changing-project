@@ -27,9 +27,9 @@ export function DonorDashboard({ onLogout, userName }: DonorDashboardProps) {
   ];
 
   const donationBreakdown = [
-    { name: 'School Retention', value: 600, color: '#0066CC' },
-    { name: 'IkiraroBiz', value: 800, color: '#00A896' },
-    { name: 'Mental Resilience', value: 400, color: '#FF6B35' },
+    { name: 'School Retention', value: 600, color: '#00d2d3' },
+    { name: 'IkiraroBiz', value: 800, color: '#d4ac7d' },
+    { name: 'Mental Resilience', value: 400, color: '#122f2b' },
   ];
 
   const donationsOverTime = [
@@ -129,29 +129,29 @@ export function DonorDashboard({ onLogout, userName }: DonorDashboardProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="border-b rounded-none h-auto p-0 bg-transparent w-full justify-start">
-              <TabsTrigger 
-                value="impact" 
+              <TabsTrigger
+                value="impact"
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
               >
                 <BarChart3 size={18} className="mr-2" />
                 My Impact
               </TabsTrigger>
-              <TabsTrigger 
-                value="updates" 
+              <TabsTrigger
+                value="updates"
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
               >
                 <Users size={18} className="mr-2" />
                 Beneficiary Updates
               </TabsTrigger>
-              <TabsTrigger 
-                value="history" 
+              <TabsTrigger
+                value="history"
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
               >
                 <CreditCard size={18} className="mr-2" />
                 Donation History
               </TabsTrigger>
-              <TabsTrigger 
-                value="payment" 
+              <TabsTrigger
+                value="payment"
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
               >
                 <Settings size={18} className="mr-2" />
@@ -222,7 +222,7 @@ export function DonorDashboard({ onLogout, userName }: DonorDashboardProps) {
                       <XAxis dataKey="month" />
                       <YAxis />
                       <Tooltip />
-                      <Line type="monotone" dataKey="amount" stroke="#0066CC" strokeWidth={3} />
+                      <Line type="monotone" dataKey="amount" stroke="#00d2d3" strokeWidth={3} />
                     </LineChart>
                   </ResponsiveContainer>
                 </CardContent>
@@ -272,7 +272,7 @@ export function DonorDashboard({ onLogout, userName }: DonorDashboardProps) {
                   <CardContent className="p-0">
                     <div className="grid md:grid-cols-4 gap-0">
                       <div className="relative h-48 md:h-auto">
-                        <img 
+                        <img
                           src={update.photo}
                           alt={update.beneficiary}
                           className="w-full h-full object-cover"
@@ -289,8 +289,8 @@ export function DonorDashboard({ onLogout, userName }: DonorDashboardProps) {
                             <h3 className="font-bold text-lg mb-1">{update.name}</h3>
                             <p className="text-sm text-muted-foreground">{update.month}</p>
                           </div>
-                          <Button 
-                            variant="outline" 
+                          <Button
+                            variant="outline"
                             size="sm"
                             onClick={() => setSelectedReport(update)}
                           >
@@ -494,7 +494,7 @@ export function DonorDashboard({ onLogout, userName }: DonorDashboardProps) {
           </DialogHeader>
           {selectedReport && (
             <div className="space-y-6">
-              <img 
+              <img
                 src={selectedReport.photo}
                 alt={selectedReport.beneficiary}
                 className="w-full h-64 object-cover rounded-lg"

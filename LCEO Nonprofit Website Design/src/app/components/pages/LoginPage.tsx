@@ -54,8 +54,8 @@ export function LoginPage({ role, onNavigate }: LoginPageProps) {
     await new Promise(resolve => setTimeout(resolve, 500));
 
     const identifier = loginMethod === 'phone' ? phone : email;
-    const success = login(identifier, password, role, loginMethod === 'phone');
-    
+    const success = await login(identifier, password, role, loginMethod === 'phone');
+
     if (success) {
       // Navigate to appropriate dashboard
       onNavigate(`${role}-dashboard`);
@@ -82,11 +82,9 @@ export function LoginPage({ role, onNavigate }: LoginPageProps) {
           <CardHeader className="space-y-2">
             {/* Logo */}
             <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-2xl">L</span>
-              </div>
+              <img src="/logo.png?v=5" alt="LCEO Logo" className="h-20 object-contain" />
             </div>
-            
+
             <CardTitle className="text-2xl text-center">
               {roleLabels[role!]} Login
             </CardTitle>
@@ -96,7 +94,7 @@ export function LoginPage({ role, onNavigate }: LoginPageProps) {
           </CardHeader>
 
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
                 <Alert variant="destructive">
                   <AlertDescription>{error}</AlertDescription>
@@ -110,7 +108,7 @@ export function LoginPage({ role, onNavigate }: LoginPageProps) {
                     <TabsTrigger value="email">Email</TabsTrigger>
                     <TabsTrigger value="phone">Phone Number</TabsTrigger>
                   </TabsList>
-                  
+
                   <TabsContent value="email" className="space-y-2 mt-4">
                     <Label htmlFor="email">Email</Label>
                     <Input
@@ -123,7 +121,7 @@ export function LoginPage({ role, onNavigate }: LoginPageProps) {
                       disabled={isLoading}
                     />
                   </TabsContent>
-                  
+
                   <TabsContent value="phone" className="space-y-2 mt-4">
                     <Label htmlFor="phone">Phone Number</Label>
                     <Input

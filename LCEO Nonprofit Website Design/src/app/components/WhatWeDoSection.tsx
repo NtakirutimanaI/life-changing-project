@@ -35,7 +35,7 @@ const services = [
 
 export function WhatWeDoSection() {
     return (
-        <section className="pt-24 md:pt-40 pb-24 md:pb-40 bg-white relative overflow-hidden">
+        <section className="py-16 md:py-24 bg-white relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Header */}
                 <div className="text-center mb-16 md:mb-20 space-y-4">
@@ -80,39 +80,77 @@ export function WhatWeDoSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
-                            className="bg-white rounded-xl p-8 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.15)] transition-all duration-500 relative overflow-hidden flex flex-col items-center text-center group h-full border border-gray-50 cursor-pointer"
+                            whileHover="hover"
+                            className="bg-white p-8 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_50px_-10px_rgba(19,212,212,0.15)] transition-all duration-500 relative overflow-hidden flex flex-col items-center text-center group h-full border border-gray-50 cursor-pointer"
                         >
-                            {/* Hover Background Animation - Slides from top-left */}
-                            <div className="absolute -top-32 -left-32 w-56 h-56 bg-accent rounded-full transition-all duration-700 ease-in-out group-hover:scale-[6] z-0 origin-center"></div>
+                            {/* Animated Vibrant Cyan Background Fill - Slides from Left */}
+                            <motion.div
+                                className="absolute inset-0 bg-[#13d4d4] z-0"
+                                initial={{ x: '-100%' }}
+                                variants={{
+                                    hover: { x: 0 }
+                                }}
+                                transition={{ duration: 0.5, ease: "easeInOut" }}
+                            />
 
-                            {/* Watermark Icon - Fixed Bottom Right */}
-                            <div className="absolute -bottom-8 -right-8 w-40 h-40 opacity-40 group-hover:opacity-10 transition-all duration-500 pointer-events-none text-primary/20 group-hover:text-white/10 z-10">
+                            {/* Watermark Icon - Subtle and Animated */}
+                            <motion.div
+                                className="absolute -bottom-4 -right-4 w-32 h-32 opacity-10 pointer-events-none text-[#13d4d4] z-10"
+                                variants={{
+                                    hover: { scale: 1.2, rotate: 10, opacity: 0.1 }
+                                }}
+                            >
                                 <span className="w-full h-full block [&>svg]:w-full [&>svg]:h-full">
                                     {service.bgIcon}
                                 </span>
-                            </div>
+                            </motion.div>
 
-                            {/* Main Icon - No Box, just Icon */}
-                            <div className="mb-6 text-primary transform group-hover:scale-110 group-hover:text-white transition-all duration-500 relative z-10">
+                            {/* Main Icon */}
+                            <motion.div
+                                className="mb-6 text-[#13d4d4] relative z-20"
+                                variants={{
+                                    hover: { scale: 1.1, y: -5, color: "#000000" }
+                                }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            >
                                 {service.icon}
-                            </div>
+                            </motion.div>
 
-                            <div className="relative z-10 flex-grow transition-colors duration-500">
-                                <h3 className="text-xl font-bold text-accent mb-4 leading-tight group-hover:text-white">
+                            <div className="relative z-20 flex-grow">
+                                <motion.h3
+                                    className="text-xl font-bold text-[#004037] mb-4 leading-tight transition-colors duration-300"
+                                    variants={{
+                                        hover: { color: "#000000" }
+                                    }}
+                                >
                                     {service.title}
-                                </h3>
+                                </motion.h3>
 
-                                <p className="text-gray-500 text-sm leading-relaxed mb-6 group-hover:text-white/90">
+                                <motion.p
+                                    className="text-gray-500 text-sm leading-relaxed mb-6 transition-colors duration-300"
+                                    variants={{
+                                        hover: { color: "#000000" }
+                                    }}
+                                >
                                     {service.description}
-                                </p>
+                                </motion.p>
                             </div>
 
-                            {/* Link - Centered and colored */}
-                            <div className="relative z-10 mt-auto transition-colors duration-500">
-                                <a href="#" className="inline-flex items-center text-sm font-bold text-primary group-hover:text-white transition-colors uppercase tracking-wider gap-2">
+                            {/* Link - Interactive Read More */}
+                            <div className="relative z-20 mt-auto">
+                                <motion.a
+                                    href="#"
+                                    className="inline-flex items-center text-sm font-black text-[#13d4d4] transition-colors uppercase tracking-[0.2em] gap-2"
+                                    variants={{
+                                        hover: { gap: '12px', x: 5, color: "#000000" }
+                                    }}
+                                >
                                     Read More
-                                </a>
+                                    <ArrowRight size={16} />
+                                </motion.a>
                             </div>
+
+
                         </motion.div>
                     ))}
                 </div>

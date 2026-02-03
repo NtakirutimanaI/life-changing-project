@@ -2,7 +2,7 @@ import { Users, GraduationCap, Briefcase, Heart, ArrowRight, ChevronLeft, Chevro
 import { CampaignsSection } from '@/app/components/CampaignsSection';
 import { VideoSection } from '@/app/components/VideoSection';
 import { WhatWeDoSection } from '@/app/components/WhatWeDoSection';
-import { VolunteerSection } from '@/app/components/VolunteerSection';
+
 import { Button } from '@/app/components/ui/button';
 import { Card, CardContent } from '@/app/components/ui/card';
 import { HeroCarousel } from '@/app/components/HeroCarousel';
@@ -88,7 +88,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
       {/* Hero Section */}
       <HeroCarousel />
 
-      {/* Impact Statistics - Professional Brand Bar */}
+      {/* Impact Statistics - Single Horizontal Row */}
       <div className="relative -mt-16 z-20 px-4">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -96,14 +96,18 @@ export function HomePage({ onNavigate }: HomePageProps) {
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="bg-accent shadow-2xl rounded-none p-6 md:p-10 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 text-white relative overflow-hidden"
+            className="bg-accent shadow-2xl rounded-none py-16 px-12 flex items-center justify-between gap-12 text-white relative overflow-hidden"
           >
             {stats.map((stat, index) => (
-              <motion.div key={index} variants={fadeInUp} className="text-center relative z-10 flex flex-col items-center justify-center py-4 md:py-0">
-                <div className="text-4xl md:text-5xl font-black mb-2 tracking-tight">
+              <motion.div
+                key={index}
+                variants={fadeInUp}
+                className="text-center flex flex-col items-center justify-center flex-1 relative z-10"
+              >
+                <div className="text-5xl md:text-6xl lg:text-7xl font-black mb-3 tracking-tight leading-none">
                   {stat.number}
                 </div>
-                <div className="text-sm md:text-base font-medium text-white/80 uppercase tracking-wide">
+                <div className="text-[11px] md:text-xs font-bold text-white/95 uppercase tracking-[0.15em] leading-tight max-w-[140px]">
                   {stat.label}
                 </div>
               </motion.div>
@@ -112,8 +116,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </div>
 
+
+
       {/* Introduction Section */}
-      <section className="pb-24 md:pb-60 bg-white overflow-hidden" style={{ marginTop: '100px' }}>
+      <section className="pb-24 md:pb-60 bg-white overflow-hidden" style={{ marginTop: '50px' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 items-center gap-8">
 
@@ -141,7 +147,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
 
               <Button
                 onClick={() => onNavigate('donate')}
-                className="bg-secondary hover:bg-secondary/90 text-primary-foreground font-bold px-10 py-4 rounded-md shadow-lg transition-all text-base"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-10 py-4 rounded-md shadow-lg transition-all text-base"
               >
                 Make A Donation
               </Button>
@@ -185,90 +191,90 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* What We Do Cards Section based on User Request */}
 
 
-      {/* Success Stories Carousel */}
-      <section className="py-40 bg-muted relative overflow-hidden">
-        {/* Decorative Background Elements */}
-        <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
-          <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M0 100 C 20 0 50 0 100 100 Z" fill="var(--primary)" />
+      {/* Our Story Section - Three Columns */}
+      <section className="py-16 bg-white relative border-b border-gray-100 overflow-hidden">
+        {/* Dotted World Map Background Pattern */}
+        <div className="absolute inset-0 z-0 opacity-[0.05] pointer-events-none flex items-center justify-center">
+          <svg viewBox="0 0 1000 500" className="w-full h-full text-secondary" fill="currentColor">
+            <path d="M220 180h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm-150 10h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2zm10 0h2v2h-2z" />
+            <circle cx="500" cy="250" r="200" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" />
+            <circle cx="500" cy="250" r="150" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 6" />
+            <circle cx="500" cy="250" r="100" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="1 8" />
           </svg>
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-24"
-          >
-            <h2 className="text-3xl md:text-5xl font-extrabold mb-4 text-accent">Stories of Transformation</h2>
-            <div className="w-24 h-1 bg-secondary mx-auto rounded-full"></div>
-          </motion.div>
+        {/* Yellow accent bar on the right */}
+        <div className="absolute top-0 right-0 w-2 h-full bg-secondary z-10"></div>
 
-          <div className="relative">
-            <Card className="overflow-hidden border-none shadow-2xl bg-white rounded-2xl">
-              <CardContent className="p-0">
-                <div className="grid md:grid-cols-2 gap-0">
-                  <div className="relative h-64 md:h-80 overflow-hidden group">
-                    <img
-                      src={testimonials[currentTestimonial].image}
-                      alt={testimonials[currentTestimonial].name}
-                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors duration-500"></div>
-                  </div>
-                  <div className="p-10 md:p-14 flex flex-col justify-center bg-white relative">
-                    <div className="absolute top-6 left-8 text-9xl text-primary/5 font-serif select-none">"</div>
-                    <motion.div
-                      key={currentTestimonial}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="relative z-10"
-                    >
-                      <p className="text-xl md:text-2xl mb-8 italic text-gray-700 leading-normal font-serif">
-                        {testimonials[currentTestimonial].quote}
-                      </p>
-                      <div className="border-l-4 border-secondary pl-4">
-                        <div className="font-bold text-xl text-accent">{testimonials[currentTestimonial].name}</div>
-                        <div className="text-primary font-medium">{testimonials[currentTestimonial].role}</div>
-                      </div>
-                    </motion.div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-3 gap-0">
 
-            <div className="flex justify-center items-center gap-6 mt-10">
-              <button
-                onClick={prevTestimonial}
-                className="w-12 h-12 rounded-full bg-white shadow-lg border border-gray-100 flex items-center justify-center hover:bg-primary hover:text-white transition-all hover:-translate-y-1"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <div className="flex gap-2">
-                {testimonials.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentTestimonial(index)}
-                    className={`h-3 rounded-full transition-all duration-300 ${index === currentTestimonial ? 'bg-secondary w-8' : 'bg-gray-300 w-3 hover:bg-primary/50'
-                      }`}
-                  />
-                ))}
+            {/* Column 1: Our History */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="px-8 py-6 relative"
+            >
+              <div className="relative">
+                <div className="absolute -top-2 -left-2 text-8xl font-black text-secondary opacity-10 leading-none pointer-events-none">1</div>
+                <h3 className="text-xl font-bold text-accent mb-3 relative z-10">
+                  <span className="text-5xl font-black text-secondary mr-2">1</span>
+                  Our History
+                </h3>
               </div>
-              <button
-                onClick={nextTestimonial}
-                className="w-12 h-12 rounded-full bg-white shadow-lg border border-gray-100 flex items-center justify-center hover:bg-primary hover:text-white transition-all hover:-translate-y-1"
-              >
-                <ChevronRight size={24} />
-              </button>
-            </div>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Charitable giving as a religious act or duty is referred to as alms. The name stems from the most obvious expression.
+              </p>
+            </motion.div>
+
+            {/* Column 2: Our Mission */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="px-8 py-6 relative border-l border-gray-200"
+            >
+              <div className="relative">
+                <div className="absolute -top-2 -left-2 text-8xl font-black text-secondary opacity-10 leading-none pointer-events-none">2</div>
+                <h3 className="text-xl font-bold text-accent mb-3 relative z-10">
+                  <span className="text-5xl font-black text-secondary mr-2">2</span>
+                  Our Mission
+                </h3>
+              </div>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Charitable giving as a religious act or duty is referred to as alms. The name stems from the most obvious expression.
+              </p>
+            </motion.div>
+
+            {/* Column 3: Community */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="px-8 py-6 relative border-l border-gray-200"
+            >
+              <div className="relative">
+                <div className="absolute -top-2 -left-2 text-8xl font-black text-secondary opacity-10 leading-none pointer-events-none">3</div>
+                <h3 className="text-xl font-bold text-accent mb-3 relative z-10">
+                  <span className="text-5xl font-black text-secondary mr-2">3</span>
+                  Community
+                </h3>
+              </div>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Charitable giving as a religious act or duty is referred to as alms. The name stems from the most obvious expression.
+              </p>
+            </motion.div>
+
           </div>
         </div>
       </section>
+
 
 
 
@@ -325,11 +331,8 @@ export function HomePage({ onNavigate }: HomePageProps) {
       {/* What We Do Cards Section based on User Request */}
       <WhatWeDoSection />
 
-      {/* Volunteer Section */}
-      <VolunteerSection />
-
       {/* Partners Section */}
-      <section className="py-32 bg-muted/50">
+      <section className="py-16 bg-muted/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-center mb-12 text-gray-400 uppercase tracking-widest">Our Partners</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 opacity-60 hover:opacity-100 transition-opacity duration-300">
@@ -345,42 +348,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-r from-primary to-primary/80 text-white relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
 
-        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-8 leading-tight">
-              Ready to Be an Agent of Change?
-            </h2>
-            <p className="text-xl mb-10 text-white/90 max-w-2xl mx-auto">
-              Your monthly support sustains education, builds businesses, and transforms lives for generations to come.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                onClick={() => onNavigate('donate')}
-                className="bg-secondary text-white hover:bg-white/10 font-bold text-xl px-10 py-8 rounded-xl shadow-2xl transition-transform hover:-translate-y-1"
-              >
-                Start Your Monthly Impact
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => onNavigate('get-involved')}
-                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold text-xl px-10 py-8 rounded-xl transition-all"
-              >
-                Get Involved
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
     </div>
   );
 }

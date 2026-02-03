@@ -5,7 +5,7 @@ import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
-import { 
+import {
   LayoutDashboard, FileEdit, Target, Users, DollarSign, BarChart3, Settings,
   Search, CheckCircle, Clock, FileText, Eye, Edit, Trash2, Plus, LogOut
 } from 'lucide-react';
@@ -23,10 +23,10 @@ export function AdminDashboard({ onLogout, userName }: AdminDashboardProps) {
   const [selectedBeneficiary, setSelectedBeneficiary] = useState<any>(null);
 
   const quickStats = [
-    { label: 'Donations This Month', value: '$12,450', change: '+15%', icon: DollarSign, color: 'bg-green-100 text-green-700' },
-    { label: 'Active Beneficiaries', value: '248', change: '+12', icon: Users, color: 'bg-blue-100 text-blue-700' },
+    { label: 'Donations This Month', value: '$12,450', change: '+15%', icon: DollarSign, color: 'bg-primary/20 text-primary' },
+    { label: 'Active Beneficiaries', value: '248', change: '+12', icon: Users, color: 'bg-secondary/20 text-secondary' },
     { label: 'Pending Reports', value: '18', change: 'Review', icon: FileText, color: 'bg-yellow-100 text-yellow-700' },
-    { label: 'New Donors', value: '24', change: 'This month', icon: DollarSign, color: 'bg-purple-100 text-purple-700' },
+    { label: 'New Donors', value: '24', change: 'This month', icon: DollarSign, color: 'bg-accent/10 text-accent' },
   ];
 
   const recentActivity = [
@@ -128,9 +128,9 @@ export function AdminDashboard({ onLogout, userName }: AdminDashboardProps) {
   ];
 
   const programDistribution = [
-    { name: 'School Retention', value: 45, color: '#0066CC' },
-    { name: 'IkiraroBiz', value: 35, color: '#00A896' },
-    { name: 'Mental Resilience', value: 20, color: '#FF6B35' },
+    { name: 'School Retention', value: 45, color: '#00d2d3' }, // Primary
+    { name: 'IkiraroBiz', value: 35, color: '#d4ac7d' }, // Secondary
+    { name: 'Mental Resilience', value: 20, color: '#122f2b' }, // Accent
   ];
 
   return (
@@ -168,63 +168,56 @@ export function AdminDashboard({ onLogout, userName }: AdminDashboardProps) {
           <nav className="space-y-1">
             <button
               onClick={() => setActiveTab('overview')}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${
-                activeTab === 'overview' ? 'bg-primary text-white' : 'hover:bg-muted'
-              }`}
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${activeTab === 'overview' ? 'bg-primary text-white' : 'hover:bg-muted'
+                }`}
             >
               <LayoutDashboard size={18} />
               Overview
             </button>
             <button
               onClick={() => setActiveTab('content')}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${
-                activeTab === 'content' ? 'bg-primary text-white' : 'hover:bg-muted'
-              }`}
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${activeTab === 'content' ? 'bg-primary text-white' : 'hover:bg-muted'
+                }`}
             >
               <FileEdit size={18} />
               Content Management
             </button>
             <button
               onClick={() => setActiveTab('programs')}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${
-                activeTab === 'programs' ? 'bg-primary text-white' : 'hover:bg-muted'
-              }`}
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${activeTab === 'programs' ? 'bg-primary text-white' : 'hover:bg-muted'
+                }`}
             >
               <Target size={18} />
               Programs
             </button>
             <button
               onClick={() => setActiveTab('beneficiaries')}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${
-                activeTab === 'beneficiaries' ? 'bg-primary text-white' : 'hover:bg-muted'
-              }`}
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${activeTab === 'beneficiaries' ? 'bg-primary text-white' : 'hover:bg-muted'
+                }`}
             >
               <Users size={18} />
               Beneficiaries
             </button>
             <button
               onClick={() => setActiveTab('donors')}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${
-                activeTab === 'donors' ? 'bg-primary text-white' : 'hover:bg-muted'
-              }`}
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${activeTab === 'donors' ? 'bg-primary text-white' : 'hover:bg-muted'
+                }`}
             >
               <DollarSign size={18} />
               Donors
             </button>
             <button
               onClick={() => setActiveTab('analytics')}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${
-                activeTab === 'analytics' ? 'bg-primary text-white' : 'hover:bg-muted'
-              }`}
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${activeTab === 'analytics' ? 'bg-primary text-white' : 'hover:bg-muted'
+                }`}
             >
               <BarChart3 size={18} />
               Reports & Analytics
             </button>
             <button
               onClick={() => setActiveTab('settings')}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${
-                activeTab === 'settings' ? 'bg-primary text-white' : 'hover:bg-muted'
-              }`}
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${activeTab === 'settings' ? 'bg-primary text-white' : 'hover:bg-muted'
+                }`}
             >
               <Settings size={18} />
               Settings
@@ -246,7 +239,7 @@ export function AdminDashboard({ onLogout, userName }: AdminDashboardProps) {
                         <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${stat.color}`}>
                           <stat.icon size={20} />
                         </div>
-                        <span className="text-xs text-green-600">{stat.change}</span>
+                        <span className="text-xs text-primary">{stat.change}</span>
                       </div>
                       <div className="text-2xl font-bold mb-1">{stat.value}</div>
                       <div className="text-sm text-muted-foreground">{stat.label}</div>
@@ -394,7 +387,7 @@ export function AdminDashboard({ onLogout, userName }: AdminDashboardProps) {
                           <tr key={beneficiary.id} className="border-b hover:bg-muted">
                             <td className="py-3 px-4">
                               <div className="flex items-center gap-3">
-                                <img 
+                                <img
                                   src={beneficiary.photo}
                                   alt={beneficiary.name}
                                   className="w-10 h-10 rounded-full object-cover"
@@ -411,7 +404,7 @@ export function AdminDashboard({ onLogout, userName }: AdminDashboardProps) {
                             <td className="py-3 px-4 text-sm">{beneficiary.enrolled}</td>
                             <td className="py-3 px-4 text-sm">{beneficiary.lastReport}</td>
                             <td className="py-3 px-4">
-                              <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs">
+                              <span className="px-2 py-1 bg-primary/20 text-primary rounded text-xs">
                                 {beneficiary.status}
                               </span>
                             </td>
@@ -488,7 +481,7 @@ export function AdminDashboard({ onLogout, userName }: AdminDashboardProps) {
                             <td className="py-3 px-4 font-bold">{donor.totalDonated}</td>
                             <td className="py-3 px-4 text-sm">{donor.lastDonation}</td>
                             <td className="py-3 px-4">
-                              <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs">
+                              <span className="px-2 py-1 bg-primary/20 text-primary rounded text-xs">
                                 {donor.status}
                               </span>
                             </td>
@@ -516,7 +509,7 @@ export function AdminDashboard({ onLogout, userName }: AdminDashboardProps) {
           {activeTab === 'analytics' && (
             <div className="space-y-6">
               <h2 className="text-2xl font-bold">Reports & Analytics</h2>
-              
+
               <div className="grid lg:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>
@@ -530,7 +523,7 @@ export function AdminDashboard({ onLogout, userName }: AdminDashboardProps) {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line type="monotone" dataKey="amount" stroke="#0066CC" strokeWidth={3} />
+                        <Line type="monotone" dataKey="amount" stroke="#00d2d3" strokeWidth={3} />
                       </LineChart>
                     </ResponsiveContainer>
                   </CardContent>

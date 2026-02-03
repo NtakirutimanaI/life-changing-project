@@ -1,4 +1,4 @@
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin, Clock, ArrowUp, ChevronRight, Calendar } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin, Clock, ArrowUp, ChevronRight, Calendar, Send, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface FooterProps {
@@ -17,15 +17,57 @@ export function Footer({ onNavigate }: FooterProps) {
       {/* Newsletter Section */}
       <div className="newsletter-wrapper">
         <div className="newsletter-container">
-          <div className="newsletter-box">
-            <div className="newsletter-text">
-              <div className="newsletter-label">
-                <div className="newsletter-bar"></div>
-                <span className="newsletter-label-text">Newsletter</span>
-              </div>
-              <h3 className="newsletter-heading">Support LCEO Monthly</h3>
+          <div className="newsletter-box relative overflow-hidden">
+
+            {/* BACKGROUNDS ONLY: Wavy flight path and paper plane as requested from image */}
+            <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+              <svg viewBox="0 0 1000 300" className="w-full h-full text-[#13d4d4] opacity-20" preserveAspectRatio="none">
+                <path
+                  d="M 100,250 C 300,250 400,50 600,100 C 800,150 900,50 1100,50"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeDasharray="12 12"
+                  fill="none"
+                />
+              </svg>
             </div>
-            <div className="newsletter-form-wrapper">
+            {/* Paper Plane Background */}
+            <div className="absolute top-[10%] left-[38%] text-[#13d4d4] opacity-20 pointer-events-none transform -rotate-12 z-0">
+              <Send size={130} fill="currentColor" />
+            </div>
+
+            {/* Child Cutout Background (from reference image) */}
+            <div className="absolute -right-12 -bottom-10 w-72 h-80 opacity-90 pointer-events-none hidden xl:block z-0">
+              <img
+                src="https://images.unsplash.com/photo-1514316703755-dca7d8d2d782?q=80&w=800&auto=format&fit=crop"
+                className="w-full h-full object-contain grayscale"
+                alt="Support background"
+              />
+            </div>
+
+            {/* RESTORED ORIGINAL CONTENT BLOCK */}
+            <div className="flex items-center gap-5 w-full lg:w-auto relative z-10">
+              <div className="relative w-16 h-16 md:w-20 md:h-20 flex-shrink-0">
+                <img
+                  src="https://images.unsplash.com/photo-1540331547168-8b63109225b7?q=80&w=400&auto=format&fit=crop"
+                  className="w-full h-full object-cover rounded-full border-4 border-white shadow-xl brightness-105"
+                  alt="LCEO Child"
+                />
+                <div className="absolute -bottom-1 -right-1 bg-white p-1 rounded-full shadow-lg text-red-600 z-10">
+                  <Heart size={16} fill="currentColor" />
+                </div>
+              </div>
+
+              <div className="newsletter-text">
+                <div className="newsletter-label">
+                  <div className="newsletter-bar"></div>
+                  <span className="newsletter-label-text">Newsletter</span>
+                </div>
+                <h3 className="newsletter-heading">Support LCEO Monthly</h3>
+              </div>
+            </div>
+
+            <div className="newsletter-form-wrapper relative z-10">
               <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
                 <input
                   type="email"
@@ -47,13 +89,7 @@ export function Footer({ onNavigate }: FooterProps) {
           {/* Column 1: Logo & About */}
           <div className="footer-col-1-brand">
             <div className="footer-logo-link" onClick={() => onNavigate('home')}>
-              <div className="footer-logo-icon">
-                <svg width="40" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M25 45L22.8 42.8C11.8 32.6 4.5 25.8 4.5 17.5C4.5 10.7 9.7 5.5 16.5 5.5C20.3 5.5 24 7.3 25 10.1C26 7.3 29.7 5.5 33.5 5.5C40.3 5.5 45.5 10.7 45.5 17.5C45.5 25.8 38.2 32.6 27.2 42.8L25 45Z" fill="var(--primary)" />
-                  <path d="M15 25C15 25 20 15 25 25" stroke="#122f2b" strokeWidth="3" strokeLinecap="round" />
-                </svg>
-              </div>
-              <span className="footer-logo-text">LCEO<span className="footer-logo-dot">.</span></span>
+              <img src="/logo.png?v=5" alt="LCEO Logo" className="footer-logo-img h-12 object-contain mr-2" />
             </div>
             <p className="footer-desc">
               LCEO non-profit organization dedicated to creating lasting impact through clean water, free education, healthcare, and community development.

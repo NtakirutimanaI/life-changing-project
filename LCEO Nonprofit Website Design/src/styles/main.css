@@ -788,15 +788,15 @@
 }
 
 .bg-primary\/10 {
-    background-color: rgba(79, 177, 161, 0.1);
+    background-color: rgba(0, 210, 211, 0.1);
 }
 
 .bg-secondary\/10 {
-    background-color: rgba(255, 193, 5, 0.1);
+    background-color: rgba(212, 172, 125, 0.1);
 }
 
 .bg-secondary\/5 {
-    background-color: rgba(255, 193, 5, 0.05);
+    background-color: rgba(212, 172, 125, 0.05);
 }
 
 .from-black\/70 {
@@ -1643,7 +1643,7 @@
 
 .newsletter-form {
     display: flex;
-    gap: 0;
+    gap: 0.75rem;
 }
 
 .newsletter-input {
@@ -1652,8 +1652,8 @@
     padding-left: 1.5rem;
     border-top-left-radius: 0.375rem;
     border-bottom-left-radius: 0.375rem;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
     border: 1px solid #e5e7eb;
     background-color: #f9fafb;
     color: #1f2937;
@@ -1669,8 +1669,8 @@
     height: 3.5rem;
     padding-left: 2rem;
     padding-right: 2rem;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    border-top-left-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
     border-top-right-radius: 0.375rem;
     border-bottom-right-radius: 0.375rem;
     background-color: var(--primary);

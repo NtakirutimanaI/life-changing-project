@@ -88,36 +88,36 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="border-b rounded-none h-auto p-0 bg-transparent w-full justify-start">
-              <TabsTrigger 
-                value="profile" 
+              <TabsTrigger
+                value="profile"
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
               >
                 <User size={18} className="mr-2" />
                 My Profile
               </TabsTrigger>
-              <TabsTrigger 
-                value="reports" 
+              <TabsTrigger
+                value="reports"
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
               >
                 <BarChart3 size={18} className="mr-2" />
                 Business Reports
               </TabsTrigger>
-              <TabsTrigger 
-                value="progress" 
+              <TabsTrigger
+                value="progress"
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
               >
                 <Target size={18} className="mr-2" />
                 My Progress
               </TabsTrigger>
-              <TabsTrigger 
-                value="messages" 
+              <TabsTrigger
+                value="messages"
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
               >
                 <MessageSquare size={18} className="mr-2" />
                 Messages
               </TabsTrigger>
-              <TabsTrigger 
-                value="resources" 
+              <TabsTrigger
+                value="resources"
                 className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent"
               >
                 <BookOpen size={18} className="mr-2" />
@@ -140,7 +140,7 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid md:grid-cols-2 gap-8">
                       <div>
                         <Label>Full Name</Label>
                         <Input value="Grace Mukamana" readOnly />
@@ -150,7 +150,7 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
                         <Input value="IkiraroBiz Entrepreneurship" readOnly />
                       </div>
                     </div>
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid md:grid-cols-2 gap-8">
                       <div>
                         <Label>District</Label>
                         <Input value="Gasabo" readOnly />
@@ -227,7 +227,7 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmitReport} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid md:grid-cols-2 gap-8">
                     <div>
                       <Label htmlFor="report-month">Report Period *</Label>
                       <Select defaultValue="jan-2026">
@@ -249,12 +249,12 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
 
                   <div className="border-t pt-6">
                     <h3 className="font-bold text-lg mb-4">Financial Summary</h3>
-                    <div className="grid md:grid-cols-3 gap-4">
+                    <div className="grid md:grid-cols-3 gap-8">
                       <div>
                         <Label htmlFor="revenue">Revenue this month (RWF) *</Label>
-                        <Input 
-                          id="revenue" 
-                          type="number" 
+                        <Input
+                          id="revenue"
+                          type="number"
                           placeholder="350000"
                           value={revenue}
                           onChange={(e) => setRevenue(e.target.value)}
@@ -263,9 +263,9 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
                       </div>
                       <div>
                         <Label htmlFor="expenses">Expenses this month (RWF) *</Label>
-                        <Input 
-                          id="expenses" 
-                          type="number" 
+                        <Input
+                          id="expenses"
+                          type="number"
                           placeholder="200000"
                           value={expenses}
                           onChange={(e) => setExpenses(e.target.value)}
@@ -274,9 +274,8 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
                       </div>
                       <div>
                         <Label>Profit/Loss (RWF)</Label>
-                        <div className={`h-10 px-3 rounded-md border flex items-center font-bold ${
-                          calculateProfit() >= 0 ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
-                        }`}>
+                        <div className={`h-10 px-3 rounded-md border flex items-center font-bold ${calculateProfit() >= 0 ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+                          }`}>
                           {calculateProfit().toLocaleString()}
                         </div>
                       </div>
@@ -292,8 +291,8 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
                       </div>
                       <div>
                         <Label htmlFor="products">Products/services sold *</Label>
-                        <Textarea 
-                          id="products" 
+                        <Textarea
+                          id="products"
                           placeholder="List main products or services (e.g., dresses, alterations, school uniforms)"
                           rows={3}
                           required
@@ -307,8 +306,8 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
                     <div className="space-y-4">
                       <div>
                         <Label htmlFor="wins">What went well this month? *</Label>
-                        <Textarea 
-                          id="wins" 
+                        <Textarea
+                          id="wins"
                           placeholder="Share your successes and positive experiences"
                           rows={3}
                           required
@@ -316,8 +315,8 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
                       </div>
                       <div>
                         <Label htmlFor="challenges">Challenges faced *</Label>
-                        <Textarea 
-                          id="challenges" 
+                        <Textarea
+                          id="challenges"
                           placeholder="What difficulties did you encounter?"
                           rows={3}
                           required
@@ -325,8 +324,8 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
                       </div>
                       <div>
                         <Label htmlFor="solutions">Solutions tried</Label>
-                        <Textarea 
-                          id="solutions" 
+                        <Textarea
+                          id="solutions"
                           placeholder="How did you address these challenges?"
                           rows={3}
                         />
@@ -386,7 +385,7 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
                       <Check className="inline mr-1" size={14} />
                       Auto-saved 2 minutes ago
                     </p>
-                    <Button type="submit" size="lg" className="bg-green-600 hover:bg-green-700">
+                    <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90">
                       Submit Report
                     </Button>
                   </div>
@@ -409,7 +408,7 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
                       <XAxis dataKey="month" />
                       <YAxis />
                       <Tooltip />
-                      <Line type="monotone" dataKey="revenue" stroke="#0066CC" strokeWidth={3} />
+                      <Line type="monotone" dataKey="revenue" stroke="#00d2d3" strokeWidth={3} />
                     </LineChart>
                   </ResponsiveContainer>
                 </CardContent>
@@ -430,7 +429,7 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
                               Revenue: {report.revenue} | Profit: {report.profit}
                             </div>
                           </div>
-                          <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">
+                          <span className="px-2 py-1 bg-primary/20 text-primary rounded text-xs">
                             {report.status}
                           </span>
                         </div>
@@ -446,15 +445,13 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
                   <CardContent>
                     <div className="space-y-3">
                       {achievements.map((achievement, index) => (
-                        <div 
-                          key={index} 
-                          className={`flex items-center gap-3 p-3 rounded-lg ${
-                            achievement.unlocked ? 'bg-yellow-50' : 'bg-muted'
-                          }`}
+                        <div
+                          key={index}
+                          className={`flex items-center gap-3 p-3 rounded-lg ${achievement.unlocked ? 'bg-yellow-50' : 'bg-muted'
+                            }`}
                         >
-                          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                            achievement.unlocked ? 'bg-yellow-400' : 'bg-gray-300'
-                          }`}>
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${achievement.unlocked ? 'bg-yellow-400' : 'bg-gray-300'
+                            }`}>
                             {achievement.unlocked ? '🏆' : '🔒'}
                           </div>
                           <span className={achievement.unlocked ? 'font-medium' : 'text-muted-foreground'}>
@@ -477,13 +474,13 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="p-4 bg-blue-50 rounded-lg">
+                  <div className="p-4 bg-secondary/10 rounded-lg">
                     <div className="flex justify-between items-start mb-2">
                       <span className="font-medium">Marie Uwimana (Mentor)</span>
                       <span className="text-xs text-muted-foreground">2 days ago</span>
                     </div>
                     <p className="text-sm">
-                      Great work on your December report! Your revenue growth is impressive. 
+                      Great work on your December report! Your revenue growth is impressive.
                       Let's discuss marketing strategies in our next session.
                     </p>
                   </div>
@@ -498,7 +495,7 @@ export function BeneficiaryDashboard({ onLogout, userName }: BeneficiaryDashboar
                     </p>
                   </div>
 
-                  <div className="p-4 bg-green-50 rounded-lg">
+                  <div className="p-4 bg-primary/10 rounded-lg">
                     <div className="flex justify-between items-start mb-2">
                       <span className="font-medium">Donor Message</span>
                       <span className="text-xs text-muted-foreground">2 weeks ago</span>

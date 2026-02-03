@@ -110,10 +110,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
         }
       ]
     },
-    {
-      label: 'Resources',
-      id: 'resources'
-    },
+
     {
       label: 'Get Involved',
       variant: 'mega',
@@ -225,13 +222,11 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
               className="flex items-center cursor-pointer gap-2 shrink-0"
               onClick={() => onNavigate('home')}
             >
-              <div className={`flex items-center justify-center rounded-full bg-primary shadow-sm ${isScrolled ? 'w-8 h-8' : 'w-10 h-10'} transition-all duration-300`}>
-                <Target className="text-white w-6 h-6" strokeWidth={2.5} />
-              </div>
-              <div className="flex flex-col">
-                <span className={`font-extrabold text-accent tracking-tight leading-none font-heading transition-all duration-300 ${isScrolled ? 'text-lg' : 'text-xl'}`}>LCEO<span className="text-secondary">.</span></span>
-                <span className="text-[9px] text-gray-400 font-bold tracking-widest uppercase">Nonprofit</span>
-              </div>
+              <img
+                src="/logo.png?v=5"
+                alt="LCEO - Life Changing Endeavor Organization"
+                className={`object-contain transition-all duration-300 w-auto ${isScrolled ? 'h-12' : 'h-16'}`}
+              />
             </div>
 
             {/* Desktop Navigation */}
@@ -408,7 +403,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                           </div>
                         ) : (
                           <div className="py-2">
-                            {group.items.map((item) => (
+                            {group.items?.map((item) => (
                               <button
                                 key={item.id}
                                 onClick={() => handleNavClick(item.id)}
@@ -497,7 +492,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
 
               <Button
                 onClick={() => onNavigate('donate')}
-                className={`bg-secondary text-primary-foreground hover:bg-primary/90 font-bold rounded-md uppercase tracking-wide text-[11px] shadow-sm transition-all hover:-translate-y-0.5 active:scale-95 whitespace-nowrap ${isScrolled ? 'px-4 py-2.5' : 'px-5 py-3'}`}
+                className={`bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-md uppercase tracking-wide text-[11px] shadow-sm transition-all hover:-translate-y-0.5 active:scale-95 whitespace-nowrap ${isScrolled ? 'px-4 py-2.5' : 'px-5 py-3'}`}
               >
                 Donate Now
               </Button>
@@ -593,7 +588,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                 <div className="pt-4">
                   <Button
                     onClick={() => handleNavClick('donate')}
-                    className="w-full bg-secondary text-primary-foreground hover:bg-primary/90 font-bold py-6 text-base rounded-lg shadow-sm"
+                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold py-6 text-base rounded-lg shadow-sm"
                   >
                     Donate Now
                   </Button>

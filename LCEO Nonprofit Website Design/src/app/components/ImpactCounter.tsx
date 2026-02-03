@@ -1,47 +1,35 @@
 import { useEffect, useState } from 'react';
-import { Users, GraduationCap, Briefcase, Heart } from 'lucide-react';
 
 interface CounterStat {
-  icon: any;
   value: number;
   label: string;
-  prefix?: string;
   suffix?: string;
-  color: string;
 }
 
 export function ImpactCounter() {
   const [isVisible, setIsVisible] = useState(false);
 
-  // Real-time targets (these would come from a database in production)
+  // Stats matching the reference image
   const targetStats: CounterStat[] = [
     {
-      icon: Users,
-      value: 5247,
+      value: 5000,
       label: 'Women & Girls Reached',
       suffix: '+',
-      color: 'text-primary',
     },
     {
-      icon: GraduationCap,
-      value: 1284,
+      value: 1200,
       label: 'Girls Kept in School',
       suffix: '+',
-      color: 'text-primary',
     },
     {
-      icon: Briefcase,
-      value: 843,
+      value: 800,
       label: 'Businesses Launched',
       suffix: '+',
-      color: 'text-primary',
     },
     {
-      icon: Heart,
-      value: 327,
+      value: 300,
       label: 'Change Champions Trained',
       suffix: '+',
-      color: 'text-primary',
     },
   ];
 
@@ -56,7 +44,7 @@ export function ImpactCounter() {
   useEffect(() => {
     if (!isVisible) return;
 
-    const duration = 2000; // 2 seconds
+    const duration = 2000;
     const steps = 60;
     const stepDuration = duration / steps;
 
@@ -84,69 +72,24 @@ export function ImpactCounter() {
     };
   }, [isVisible]);
 
-  // Simulate real-time updates (increment every 30 seconds)
-  useEffect(() => {
-    const updateInterval = setInterval(() => {
-      const randomIndex = Math.floor(Math.random() * targetStats.length);
-      setStats((prevStats) =>
-        prevStats.map((stat, idx) =>
-          idx === randomIndex ? { ...stat, value: stat.value + 1 } : stat
-        )
-      );
-    }, 30000); // Update every 30 seconds
-
-    return () => clearInterval(updateInterval);
-  }, []);
-
   return (
     <div className="w-full">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full mb-4">
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-          <span className="text-sm font-semibold">Live Impact Dashboard</span>
-        </div>
-        <h2 className="text-3xl md:text-4xl font-black mb-4 text-accent">
-          Our Impact in Real-Time
-        </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
-          Every number represents a life transformed, a dream realized, and a community empowered.
-          Watch our impact grow in real-time as we continue to serve Rwanda's young women and girls.
-        </p>
-      </div>
-
-      {/* Counters Bar */}
-      <div className="bg-accent shadow-2xl rounded-3xl p-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-white relative overflow-hidden">
-        {stats.map((stat, index) => {
-          return (
-            <div key={index} className="text-center relative z-10 flex flex-col items-center">
-              <div className="text-4xl md:text-5xl font-black mb-1 flex items-center gap-3">
-                <div className="w-1 h-10 bg-white rounded-sm"></div>
-                <span>
-                  {stat.prefix}
-                  {stat.value.toLocaleString()}
-                  {stat.suffix}
-                </span>
+      {/* Impact Stats - Exact match to reference image */}
+      <div className="bg-accent py-20 px-8">
+        <div className="grid grid-cols-2 gap-x-32 gap-y-20 max-w-5xl mx-auto">
+          {stats.map((stat, index) => (
+            <div key={index} className="flex flex-col items-center justify-center text-center">
+              {/* Large Number */}
+              <div className="text-6xl md:text-7xl font-extrabold text-white mb-3">
+                {stat.value.toLocaleString()}{stat.suffix}
               </div>
-              <div className="text-[13px] md:text-[15px] font-medium text-white/70">
+              {/* Label - uppercase with spacing */}
+              <div className="text-sm font-semibold text-white uppercase tracking-[0.2em]">
                 {stat.label}
               </div>
             </div>
-          );
-        })}
-      </div>
-
-      {/* Last Updated */}
-      <div className="text-center mt-6">
-        <p className="text-xs text-gray-500">
-          Last updated: {new Date().toLocaleString('en-US', {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          })}
-        </p>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -3,11 +3,12 @@
   --line-height: 28px;
 
   /* New LCEO Branding Color */
-  --primary: #4fb1a1;
+  /* Primary - Vibrant Teal/Cyan (Main Brand Color) */
+  --primary: #00d2d3;
   --primary-foreground: #ffffff;
 
-  --secondary: #4fb1a1;
-  /* Updated from yellow to teal */
+  /* Secondary - Beige/Gold (Accent Color) */
+  --secondary: #d4ac7d;
   --secondary-foreground: #122f2b;
 
   --accent: #122f2b;
@@ -39,7 +40,7 @@
 
   --switch-background: #cbced4;
 
-  --ring: #4fb1a1;
+  --ring: #00d2d3;
   --radius: 0.25rem;
 
   --chart-1: #00705d;
@@ -50,12 +51,12 @@
 
   --sidebar: #f8f9fa;
   --sidebar-foreground: #122f2b;
-  --sidebar-primary: #4fb1a1;
+  --sidebar-primary: #00d2d3;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #e9ecef;
   --sidebar-accent-foreground: #122f2b;
   --sidebar-border: #dee2e6;
-  --sidebar-ring: #4fb1a1;
+  --sidebar-ring: #00d2d3;
 
   --font-weight-normal: 400;
   --font-weight-medium: 600;
