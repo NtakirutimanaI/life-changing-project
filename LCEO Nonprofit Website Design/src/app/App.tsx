@@ -46,21 +46,18 @@ function AppContent() {
 
     if (currentPage === 'beneficiary-dashboard') {
       if (!isAuthenticated || user?.user_type !== 'beneficiary') {
-        handleNavigate('beneficiary-login');
         return <LoginPage role="beneficiary" onNavigate={handleNavigate} />;
       }
       return <BeneficiaryDashboard onLogout={handleLogout} userName={user.name} />;
     }
     if (currentPage === 'donor-dashboard') {
       if (!isAuthenticated || user?.user_type !== 'donor') {
-        handleNavigate('donor-login');
         return <LoginPage role="donor" onNavigate={handleNavigate} />;
       }
       return <DonorDashboard onLogout={handleLogout} userName={user.name} />;
     }
     if (currentPage === 'admin-dashboard') {
       if (!isAuthenticated || user?.user_type !== 'admin') {
-        handleNavigate('admin-login');
         return <LoginPage role="admin" onNavigate={handleNavigate} />;
       }
       return <AdminDashboard onLogout={handleLogout} userName={user.name} />;
