@@ -1,7 +1,8 @@
-import { Menu, X, ChevronDown, Users, Target, Compass, BookOpen, FileText, Heart, Phone, Mail, Facebook, Twitter, Instagram, Youtube, Search, ArrowRight } from 'lucide-react';
+import { Menu, X, ChevronDown, Users, Target, Compass, BookOpen, FileText, Heart, Phone, Mail, Facebook, Twitter, Instagram, Youtube, Search, ArrowRight, LayoutDashboard, LogOut } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/app/components/ui/button';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import { useAuth } from '@/app/components/AuthContext';
 
 interface HeaderProps {
   currentPage: string;
@@ -38,6 +39,7 @@ interface NavGroup {
 }
 
 export function Header({ currentPage, onNavigate }: HeaderProps) {
+  const { isAuthenticated, user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -90,7 +92,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
           title: 'Stories',
           layout: 'list',
           items: [
-            { id: 'impact', label: 'Impact Stories', description: '500+ projects delivered worldwide.', image: '/impact_stories_thumb_1769784605930.png' },
+            { id: 'impact', label: 'Impact Stories', description: 'Transforming lives across Rwanda.', image: '/impact_stories_thumb_1769784605930.png' },
             { id: 'success-stories', label: 'Success Stories', description: 'Climbing the ladder of success.', image: '/beneficiaries_thumb_1769784622033.png' },
           ]
         },
@@ -173,6 +175,10 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
     setActiveDropdown(null);
   };
 
+  const toggleDropdown = (label: string) => {
+    setActiveDropdown(activeDropdown === label ? null : label);
+  };
+
   return (
     <motion.div
       initial={{ y: -100, opacity: 0 }}
@@ -242,7 +248,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
                   <button
-                    onClick={() => group.id && handleNavClick(group.id)}
+                    onClick={() => (group.items || group.sections) ? toggleDropdown(group.label) : handleNavClick(group.id || '')}
                     className={`px-4 py-2 text-[15px] font-bold text-accent transition-colors font-heading flex items-center gap-1 rounded-full hover:bg-gray-50 whitespace-nowrap
                       ${group.items?.some(i => i.id === currentPage) || group.id === currentPage ? 'text-primary bg-primary/5' : ''}`}
                   >
@@ -428,71 +434,130 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
               ))}
             </nav>
 
-            {/* Actions */}
             <div className="hidden lg:flex items-center gap-6">
-              <button className="text-accent hover:text-primary transition-colors p-2 hover:bg-gray-100 rounded-full">
+              <button
+                className="text-accent hover:text-primary transition-colors p-2 hover:bg-gray-100 rounded-full"
+                onClick={() => onNavigate('search?q=')}
+              >
                 <Search className="w-4 h-4" />
               </button>
 
-              <div
-                className={`relative group ${activeDropdown === 'Login' ? 'active' : ''}`}
-                onMouseEnter={() => setActiveDropdown('Login')}
-                onMouseLeave={() => setActiveDropdown(null)}
-              >
-                <button
-                  className="text-[14px] font-bold text-accent flex items-center gap-1 cursor-pointer font-heading px-3 py-2 rounded-md hover:bg-gray-50 whitespace-nowrap"
-                >
-                  <span className="nav-link-animated">Login</span>
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === 'Login' ? 'rotate-180 text-secondary' : 'text-gray-400'}`} />
-                </button>
-
-                <AnimatePresence>
-                  {activeDropdown === 'Login' && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2, ease: "easeOut" }}
-                      style={{ originY: 0 }}
-                      className="mega-menu-container mega-compact mega-compact-right"
-                    >
-                      <div className="mega-sections-container">
-                        {loginGroup.sections!.map((section, idx) => (
-                          <div key={idx} className="mega-section-col">
-                            <h4 className="mega-menu-heading">{section.title}</h4>
-                            <div className="mega-section-list">
-                              {section.items.map((item) => (
-                                <button
-                                  key={item.id}
-                                  onClick={() => handleNavClick(item.id)}
-                                  className="mega-section-item-btn"
-                                >
-                                  {item.icon && (
-                                    <div className="mega-section-icon">
-                                      <item.icon size={18} strokeWidth={1.5} />
-                                    </div>
-                                  )}
-                                  <div>
-                                    <div className="mega-section-title text-[13px]">{item.label}</div>
-                                    <div className="mega-section-desc text-[11px]">{item.description}</div>
-                                  </div>
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              <Button
+              {/* Donate Button with Brand Colors */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => onNavigate('donate')}
-                className={`bg-primary text-primary-foreground hover:bg-primary/90 font-bold rounded-md uppercase tracking-wide text-[11px] shadow-sm transition-all hover:-translate-y-0.5 active:scale-95 whitespace-nowrap ${isScrolled ? 'px-4 py-2.5' : 'px-5 py-3'}`}
+                className="bg-primary hover:bg-primary/90 text-white font-bold text-sm px-5 py-2.5 rounded-full flex items-center gap-2 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300"
               >
-                Donate Now
-              </Button>
+                <Heart className="w-4 h-4 fill-current" />
+                <span>Donate Now</span>
+              </motion.button>
+
+              {isAuthenticated ? (
+                <div
+                  className={`relative group ${activeDropdown === 'User' ? 'active' : ''}`}
+                  onMouseEnter={() => setActiveDropdown('User')}
+                  onMouseLeave={() => setActiveDropdown(null)}
+                >
+                  <button
+                    className="text-[14px] font-bold text-primary flex items-center gap-2 cursor-pointer font-heading px-3 py-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-all"
+                  >
+                    <LayoutDashboard size={16} />
+                    <span>Dashboard</span>
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === 'User' ? 'rotate-180 text-secondary' : 'text-gray-400'}`} />
+                  </button>
+
+                  <AnimatePresence>
+                    {activeDropdown === 'User' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        style={{ originY: 0 }}
+                        className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden py-2"
+                      >
+                        <div className="px-4 py-3 border-b border-gray-50 mb-1">
+                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Signed in as</p>
+                          <p className="text-sm font-bold text-accent truncate">{user?.name}</p>
+                          <p className="text-[10px] font-medium text-primary uppercase">{user?.user_type}</p>
+                        </div>
+                        <button
+                          onClick={() => handleNavClick(`${user?.user_type}-dashboard`)}
+                          className="w-full text-left px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-50 hover:text-primary flex items-center gap-2 transition-colors"
+                        >
+                          <LayoutDashboard size={16} />
+                          Go to Dashboard
+                        </button>
+                        <button
+                          onClick={() => {
+                            logout();
+                            setActiveDropdown(null);
+                          }}
+                          className="w-full text-left px-4 py-2 text-sm font-bold text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors"
+                        >
+                          <LogOut size={16} />
+                          Sign Out
+                        </button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <div
+                  className={`relative group ${activeDropdown === 'Login' ? 'active' : ''}`}
+                  onMouseEnter={() => setActiveDropdown('Login')}
+                  onMouseLeave={() => setActiveDropdown(null)}
+                >
+                  <button
+                    onClick={() => toggleDropdown('Login')}
+                    className="text-[14px] font-bold text-accent flex items-center gap-1 cursor-pointer font-heading px-3 py-2 rounded-md hover:bg-gray-50 whitespace-nowrap"
+                  >
+                    <span className="nav-link-animated">Login</span>
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === 'Login' ? 'rotate-180 text-secondary' : 'text-gray-400'}`} />
+                  </button>
+
+                  <AnimatePresence>
+                    {activeDropdown === 'Login' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        style={{ originY: 0 }}
+                        className="mega-menu-container mega-compact mega-compact-right"
+                      >
+                        <div className="mega-sections-container">
+                          {loginGroup.sections!.map((section, idx) => (
+                            <div key={idx} className="mega-section-col">
+                              <h4 className="mega-menu-heading">{section.title}</h4>
+                              <div className="mega-section-list">
+                                {section.items.map((item) => (
+                                  <button
+                                    key={item.id}
+                                    onClick={() => handleNavClick(item.id)}
+                                    className="mega-section-item-btn"
+                                  >
+                                    {item.icon && (
+                                      <div className="mega-section-icon">
+                                        <item.icon size={18} strokeWidth={1.5} />
+                                      </div>
+                                    )}
+                                    <div>
+                                      <div className="mega-section-title text-[13px]">{item.label}</div>
+                                      <div className="mega-section-desc text-[11px]">{item.description}</div>
+                                    </div>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
             </div>
 
             {/* Mobile menu button */}
@@ -515,6 +580,22 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
               className="lg:hidden border-t border-gray-100 bg-white absolute w-full shadow-xl overflow-hidden"
             >
               <div className="px-6 py-6 space-y-4 max-h-[80vh] overflow-y-auto">
+                {/* Mobile Search */}
+                <div className="pb-4 border-b border-gray-100 mb-2">
+                  <div className="relative">
+                    <Input
+                      placeholder="Search..."
+                      className="pl-10 h-10 bg-gray-50 border-none rounded-xl"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          handleNavClick(`search?q=${(e.target as HTMLInputElement).value}`);
+                        }
+                      }}
+                    />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  </div>
+                </div>
+
                 {navGroups.map((group) => (
                   <div key={group.label} className="space-y-2">
                     {group.sections ? (
@@ -582,14 +663,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                     </button>
                   ))}
                 </div>
-                <div className="pt-4">
-                  <Button
-                    onClick={() => handleNavClick('donate')}
-                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold py-6 text-base rounded-lg shadow-sm"
-                  >
-                    Donate Now
-                  </Button>
-                </div>
+                {/* Donate Now button removed as per user request */}
               </div>
             </motion.div>
           )}

@@ -6,7 +6,7 @@ const services = [
     {
         icon: <Droplets size={64} strokeWidth={1} />,
         title: "Clean Water For Communities",
-        description: "providing sustainable access to clean water and sanitation for vulnerable communities.",
+        description: "Providing sustainable access to clean water and sanitation for vulnerable communities.",
         bgIcon: <Droplets strokeWidth={0.5} />,
         color: "bg-primary"
     },
@@ -67,7 +67,7 @@ export function WhatWeDoSection() {
                         transition={{ delay: 0.2 }}
                         className="text-gray-500 max-w-2xl mx-auto text-base md:text-lg leading-relaxed pt-2"
                     >
-                        Giving is not just about making a donation. It's about making a difference one child, one life, one future at a time.
+                        We implement holistic programs addressing poverty's root causes, ensuring sustainable development and lasting empowerment.
                     </motion.p>
                 </div>
 

@@ -227,7 +227,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 </h3>
               </div>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Charitable giving as a religious act or duty is referred to as alms. The name stems from the most obvious expression.
+                Founded to support vulnerable women in Rwanda, LCEO has grown from a local initiative to a transformative force for thousands.
               </p>
             </motion.div>
 
@@ -247,7 +247,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 </h3>
               </div>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Charitable giving as a religious act or duty is referred to as alms. The name stems from the most obvious expression.
+                To empower women through education, economic support, and mental health care, building a sustainable future for all.
               </p>
             </motion.div>
 
@@ -267,7 +267,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 </h3>
               </div>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Charitable giving as a religious act or duty is referred to as alms. The name stems from the most obvious expression.
+                We believe in community-led change. By working with local leaders and families, we ensure sustainable impact.
               </p>
             </motion.div>
 

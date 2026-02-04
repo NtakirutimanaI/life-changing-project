@@ -7,11 +7,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ta
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
 import {
   LayoutDashboard, FileEdit, Target, Users, DollarSign, BarChart3, Settings,
-  Search, CheckCircle, Clock, FileText, Eye, Edit, Trash2, Plus, LogOut
+  Search, CheckCircle, Clock, FileText, Eye, Edit, Trash2, Plus, LogOut, TrendingUp
 } from 'lucide-react';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { ContentManagement } from '@/app/components/ContentManagement';
 import { ProgramManagement } from '@/app/components/ProgramManagement';
+import { CampaignManagement } from '@/app/components/CampaignManagement';
 
 interface AdminDashboardProps {
   onLogout: () => void;
@@ -140,8 +141,8 @@ export function AdminDashboard({ onLogout, userName }: AdminDashboardProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold">LCEO Admin Dashboard</h1>
-              <p className="text-sm text-muted-foreground">Manage programs, beneficiaries, and content</p>
+              <h1 className="text-2xl font-bold">Welcome, {userName || 'Admin'}</h1>
+              <p className="text-sm text-muted-foreground">LCEO Internal Management Portal</p>
             </div>
             <div className="flex gap-3">
               <Button variant="outline">
@@ -213,6 +214,14 @@ export function AdminDashboard({ onLogout, userName }: AdminDashboardProps) {
             >
               <BarChart3 size={18} />
               Reports & Analytics
+            </button>
+            <button
+              onClick={() => setActiveTab('campaigns')}
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm ${activeTab === 'campaigns' ? 'bg-primary text-white' : 'hover:bg-muted'
+                }`}
+            >
+              <TrendingUp size={18} />
+              Campaigns
             </button>
             <button
               onClick={() => setActiveTab('settings')}
@@ -586,6 +595,10 @@ export function AdminDashboard({ onLogout, userName }: AdminDashboardProps) {
 
           {activeTab === 'programs' && (
             <ProgramManagement />
+          )}
+
+          {activeTab === 'campaigns' && (
+            <CampaignManagement />
           )}
 
           {activeTab === 'settings' && (

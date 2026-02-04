@@ -168,14 +168,14 @@ export function Footer({ onNavigate }: FooterProps) {
                 <div className="contact-icon-wrapper">
                   <MapPin size={18} fill="currentColor" className="footer-logo-dot" />
                 </div>
-                <span className="contact-text">962 Fifth Avenue, 3rd Floor<br />New York, NY10022</span>
+                <span className="contact-text">Kigali City Tower, 15th Floor<br />Kigali, Rwanda</span>
               </li>
               <li className="contact-item">
                 <div className="contact-icon-wrapper">
                   <Mail size={18} fill="currentColor" className="footer-logo-dot" />
                 </div>
-                <a href="mailto:hello@dynamiclayers.net" className="contact-link">
-                  hello@dynamiclayers.net
+                <a href="mailto:info@lceo.org.rw" className="contact-link">
+                  info@lceo.org.rw
                 </a>
               </li>
               <li className="contact-item">
@@ -183,7 +183,7 @@ export function Footer({ onNavigate }: FooterProps) {
                   <Phone size={18} fill="currentColor" className="footer-logo-dot" />
                 </div>
                 <a href="tel:+123456789101" className="contact-link">
-                  (+123) 456 789 101
+                  +250 788 123 456
                 </a>
               </li>
               <li className="contact-item">

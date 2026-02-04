@@ -15,6 +15,7 @@ import { LoginPage } from '@/app/components/pages/LoginPage';
 import { BeneficiaryDashboard } from '@/app/components/pages/BeneficiaryDashboard';
 import { DonorDashboard } from '@/app/components/pages/DonorDashboard';
 import { AdminDashboard } from '@/app/components/pages/AdminDashboard';
+import { SearchPage } from '@/app/components/pages/SearchPage';
 import { Toaster } from '@/app/components/ui/sonner';
 import { AuthProvider, useAuth } from '@/app/components/AuthContext';
 import { TranslationProvider } from '@/app/components/TranslationContext';
@@ -75,7 +76,12 @@ function AppContent() {
       case 'donate': return <DonatePage />;
       case 'get-involved': return <GetInvolvedPage onNavigate={handleNavigate} />;
       case 'explore': return <ExplorePage />;
-      default: return <HomePage onNavigate={handleNavigate} />;
+      default:
+        if (currentPage.startsWith('search')) {
+          const queryParam = currentPage.includes('q=') ? currentPage.split('q=')[1] : '';
+          return <SearchPage initialQuery={decodeURIComponent(queryParam)} onNavigate={handleNavigate} />;
+        }
+        return <HomePage onNavigate={handleNavigate} />;
     }
   };
 

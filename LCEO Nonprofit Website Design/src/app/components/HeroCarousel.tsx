@@ -18,8 +18,8 @@ const slides = [
         id: 2,
         image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1920&auto=format&fit=crop",
         subtitle: "Education for a Brighter Future",
-        title: "Your Small Help Makes World Better",
-        description: "Giving is not just about making a donation. It's about making a difference one child, one life, one future at a time.",
+        title: "Your Support Creates Lasting Impact",
+        description: "Providing essential resources for children to thrive. Together, we can build a foundation for a brighter tomorrow.",
         cta: "Make A Donation",
         link: "/donate"
     },

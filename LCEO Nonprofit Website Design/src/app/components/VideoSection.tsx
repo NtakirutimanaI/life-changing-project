@@ -126,7 +126,7 @@ export function VideoSection() {
                                 transition={{ delay: 0.2 }}
                                 className="text-white/80 text-lg md:text-xl leading-relaxed block max-w-xl font-medium"
                             >
-                                Every child deserves a chance to grow, learn, and dream. But for millions of children around the world, poverty is a daily reality that robs them of opportunities most of us take for granted.
+                                Clean water is life. LCEO's water program constructs wells and sanitation facilities, ensuring that communities have the fundamental resource they need to break the cycle of poverty and disease.
                             </motion.p>
 
                             <motion.button

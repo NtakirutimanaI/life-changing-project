@@ -39,7 +39,7 @@ export function VolunteerSection() {
                         </div>
 
                         <p className="text-white/90 text-lg md:text-xl leading-relaxed max-w-xl font-medium">
-                            Charitable giving as a religious act or duty is referred to as alms. The name stems from the most obvious expression of the virtue of charity, giving the recipients of it the means they need to survive.
+                            At LCEO, we believe that volunteering is not just an act of kindness, but a powerful catalyst for change. By joining our team, you contribute directly to building stronger communities and empowering future generations.
                         </p>
 
                         <motion.button
