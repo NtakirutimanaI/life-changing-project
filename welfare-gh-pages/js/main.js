@@ -1,3 +1,16 @@
+// loader dismissal - move to top for immediate execution
+(function () {
+	var removeLoader = function () {
+		var loader = document.getElementById('ftco-loader');
+		if (loader) {
+			loader.classList.remove('show');
+		}
+	};
+	setTimeout(removeLoader, 100);
+	window.addEventListener('load', removeLoader);
+	setTimeout(removeLoader, 2000);
+})();
+
 AOS.init({
 	duration: 800,
 	easing: 'slide'
@@ -26,16 +39,6 @@ AOS.init({
 
 	};
 	fullHeight();
-
-	// loader
-	var loader = function () {
-		setTimeout(function () {
-			if ($('#ftco-loader').length > 0) {
-				$('#ftco-loader').removeClass('show');
-			}
-		}, 1);
-	};
-	loader();
 
 	// Scrollax
 	$.Scrollax();
@@ -306,6 +309,127 @@ AOS.init({
 		e.preventDefault();
 		$('html, body').animate({ scrollTop: 0 }, '300');
 	});
+
+	// Donation Amount Selection Logic - Copies selected amount to the input field
+	var syncDonationAmount = function () {
+		$('.donation-form').each(function () {
+			var $form = $(this);
+			var $activeBtn = $form.find('.btn-group-toggle .btn.active');
+			if ($activeBtn.length > 0) {
+				var amount = $activeBtn.find('input').val();
+				$form.find('input[name="custom_amount"]').val(amount);
+			}
+		});
+	};
+
+	$('.donation-form .btn-group-toggle .btn').on('click', function () {
+		var amount = $(this).find('input').val();
+		$(this).closest('.donation-form').find('input[name="custom_amount"]').val(amount);
+	});
+
+	// Payment Method Switcher
+	$(document).on('click', '.payment-box', function () {
+		const method = $(this).data('method');
+		const $parent = $(this).closest('.payment-methods');
+
+		// Update UI
+		$parent.find('.payment-box').removeClass('active').css({
+			'background': 'transparent',
+			'border-color': '#dee2e6'
+		});
+
+		let bgColor = 'rgba(108, 117, 125, 0.1)';
+		let borderColor = '#6c757d';
+
+		if (method === 'MoMo') { bgColor = 'rgba(255, 204, 0, 0.1)'; borderColor = '#FFCC00'; }
+		else if (method === 'Bank Card') { bgColor = 'rgba(0, 123, 255, 0.1)'; borderColor = '#007bff'; }
+		else if (method === 'Bank Account') { bgColor = 'rgba(40, 167, 69, 0.1)'; borderColor = '#28a745'; }
+
+		$(this).addClass('active').css({
+			'background': bgColor,
+			'border-color': borderColor + ' !important'
+		});
+
+		$('#selectedPaymentMethod').val(method);
+
+		// Update details container
+		let detailsHtml = '';
+		if (method === 'MoMo') {
+			detailsHtml = `<div class="form-group momo-details"><input type="text" class="form-control" placeholder="MTN/Airtel Phone Number" style="border-radius: 8px;"></div>`;
+		} else if (method === 'Bank Card') {
+			detailsHtml = `
+				<div class="row no-gutters">
+					<div class="col-8 pr-1"><input type="text" class="form-control mb-2" placeholder="Card Number" style="border-radius: 8px;"></div>
+					<div class="col-4 pl-1"><input type="text" class="form-control mb-2" placeholder="EXP" style="border-radius: 8px;"></div>
+				</div>`;
+		} else if (method === 'Bank Account') {
+			detailsHtml = `<div class="form-group"><input type="text" class="form-control" placeholder="Account Name / Number" style="border-radius: 8px;"></div>`;
+		} else {
+			detailsHtml = `<p class="small text-muted mb-0">Please bring cash to our office in Bugesera.</p>`;
+		}
+		$('#payment-details-container').html(detailsHtml);
+	});
+
+	// Step Navigation Logic
+	$(document).on('click', '#btn-goto-step-2', function () {
+		// Simple validation for Step 1
+		const fullName = $('input[name="full_name"]').val();
+		const email = $('input[name="email"]').val();
+		const amount = $('input[name="custom_amount"]').val();
+
+		if (!fullName || !email || !amount) {
+			alert('Please fill in all required fields (Name, Email, Amount).');
+			return;
+		}
+
+		$('#donation-step-1').hide();
+		$('#donation-step-2').fadeIn();
+	});
+
+	$(document).on('click', '#btn-back-to-step-1', function () {
+		$('#donation-step-2').hide();
+		$('#donation-step-1').fadeIn();
+	});
+
+	// Handle Donation Form Submission
+	$(document).on('submit', '#donationForm', function (e) {
+		e.preventDefault();
+		const formData = {
+			donorName: $(this).find('input[name="full_name"]').val(),
+			email: $(this).find('input[name="email"]').val(),
+			amount: $(this).find('input[name="custom_amount"]').val() || $(this).find('input[name="amount_pre"]:checked').val(),
+			paymentMethod: $('#selectedPaymentMethod').val(),
+			message: $(this).find('textarea[name="message"]').val(),
+			cause: "General Fund"
+		};
+
+		if (typeof CMS !== 'undefined') {
+			CMS.addDonation(formData);
+			alert('Thank you, ' + formData.donorName + '! Your donation of $' + formData.amount + ' via ' + formData.paymentMethod + ' has been received.');
+			$('#donationModal').modal('hide');
+
+			// Reset form and steps
+			this.reset();
+			$('#donation-step-2').hide();
+			$('#donation-step-1').show();
+
+			// If on admin dashboard, sync it
+			CMS.renderRecentDonations(CMS.getDonations());
+		} else {
+			alert('CMS not found. Donation saved locally.');
+		}
+	});
+
+	// Sync when donation modal is shown
+	$('#donationModal').on('shown.bs.modal', function () {
+		syncDonationAmount();
+		// Ensure we start at step 1 for re-opens without reload
+		$('#donation-step-2').hide();
+		$('#donation-step-1').show();
+	});
+
+	// Initial sync for non-modal forms if any
+	syncDonationAmount();
 
 })(jQuery);
 
