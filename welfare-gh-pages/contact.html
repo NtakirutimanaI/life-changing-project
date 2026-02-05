@@ -297,112 +297,180 @@
                   <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
                     <label class="btn btn-outline-primary active w-100 py-3">
                       <input type="radio" name="options" id="option1" checked> $10
-                    </label>
-                    <label class="btn btn-outline-primary w-100 py-3">
-                      <input type="radio" name="options" id="option2"> $25
-                    </label>
-                    <label class="btn btn-outline-primary w-100 py-3">
-                      <input type="radio" name="options" id="option3"> $50
-                    </label>
-                    <label class="btn btn-outline-primary w-100 py-3">
-                      <input type="radio" name="options" id="option4"> $100
-                    </label>
+                      <form action="#" class="donation-form" id="donationForm">
+                        <!-- Step 1: Donor Info & Amount -->
+                        <div id="donation-step-1">
+                          <div class="form-group mb-4">
+                            <label class="font-weight-bold text-muted small text-uppercase">Select Amount</label>
+                            <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
+                              <label class="btn btn-outline-primary active w-100 py-3">
+                                <input type="radio" name="amount_pre" id="option1" value="10" checked> $10
+                              </label>
+                              <label class="btn btn-outline-primary w-100 py-3">
+                                <input type="radio" name="amount_pre" id="option2" value="25"> $25
+                              </label>
+                              <label class="btn btn-outline-primary w-100 py-3">
+                                <input type="radio" name="amount_pre" id="option3" value="50"> $50
+                              </label>
+                              <label class="btn btn-outline-primary w-100 py-3">
+                                <input type="radio" name="amount_pre" id="option4" value="100"> $100
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="form-group mb-4">
+                            <input type="number" name="custom_amount" class="form-control py-4"
+                              placeholder="Or enter custom amount ($)" style="border-radius: 8px;">
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <input type="text" name="full_name" class="form-control" placeholder="Full Name"
+                                  style="border-radius: 8px;" required>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <input type="email" name="email" class="form-control" placeholder="Email Address"
+                                  style="border-radius: 8px;" required>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <textarea name="message" id="" cols="30" rows="2" class="form-control"
+                              placeholder="Optional Message" style="border-radius: 8px;"></textarea>
+                          </div>
+
+                          <button type="button" id="btn-goto-step-2"
+                            class="btn btn-primary btn-block py-3 font-weight-bold mt-4 shadow-sm"
+                            style="background: #122f2b !important; border-color: #122f2b !important; color: white !important; border-radius: 8px;">
+                            Complete Donation
+                          </button>
+                        </div>
+
+                        <!-- Step 2: Payment Methods (Initially Hidden) -->
+                        <div id="donation-step-2" style="display: none;">
+                          <button type="button" class="btn btn-link p-0 mb-3 text-muted" id="btn-back-to-step-1">
+                            <i class="icon-arrow-left mr-1"></i> Back to info
+                          </button>
+
+                          <div class="form-group mb-4">
+                            <label class="font-weight-bold text-muted small text-uppercase mb-3">Choose Payment
+                              Method</label>
+                            <div class="row no-gutters payment-methods">
+                              <div class="col-3 pr-1">
+                                <div class="payment-box text-center p-2 border rounded active" data-method="MoMo"
+                                  style="cursor: pointer; transition: 0.3s; border-color: #FFCC00 !important; background: rgba(255, 204, 0, 0.1);">
+                                  <div style="color: #FFCC00; font-size: 20px;"><i class="icon-mobile"></i></div>
+                                  <div class="small font-weight-bold">MoMo</div>
+                                </div>
+                              </div>
+                              <div class="col-3 px-1">
+                                <div class="payment-box text-center p-2 border rounded" data-method="Bank Card"
+                                  style="cursor: pointer; transition: 0.3s;">
+                                  <div style="color: #007bff; font-size: 20px;"><i class="icon-credit-card"></i></div>
+                                  <div class="small font-weight-bold">Card</div>
+                                </div>
+                              </div>
+                              <div class="col-3 px-1">
+                                <div class="payment-box text-center p-2 border rounded" data-method="Bank Account"
+                                  style="cursor: pointer; transition: 0.3s;">
+                                  <div style="color: #28a745; font-size: 20px;"><i class="icon-bank"></i></div>
+                                  <div class="small font-weight-bold">Bank</div>
+                                </div>
+                              </div>
+                              <div class="col-3 pl-1">
+                                <div class="payment-box text-center p-2 border rounded" data-method="Cash"
+                                  style="cursor: pointer; transition: 0.3s;">
+                                  <div style="color: #6c757d; font-size: 20px;"><i class="icon-money"></i></div>
+                                  <div class="small font-weight-bold">Cash</div>
+                                </div>
+                              </div>
+                            </div>
+                            <input type="hidden" name="payment_method" id="selectedPaymentMethod" value="MoMo">
+                          </div>
+
+                          <div id="payment-details-container" class="mb-5">
+                            <div class="form-group momo-details">
+                              <input type="text" class="form-control" placeholder="MTN/Airtel Phone Number"
+                                style="border-radius: 8px;">
+                            </div>
+                          </div>
+
+                          <button type="submit" class="btn btn-primary btn-block py-3 font-weight-bold shadow-sm"
+                            style="background: #17d1ac !important; border-color: #17d1ac !important; color: white !important; border-radius: 8px;">
+                            Confirm & Pay Now
+                          </button>
+                        </div>
+
+                        <p class="text-center text-muted small mt-3">Secure Payment Powered by LCEO Finance</p>
+                      </form>
                   </div>
                 </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                <div class="form-group mb-4">
-                  <input type="text" class="form-control py-4" placeholder="Or enter custom amount ($)"
-                    style="border-radius: 8px;">
-                </div>
+      <!-- loader -->
+      <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+          <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+          <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+            stroke="#F96D00" />
+        </svg></div>
 
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Full Name" style="border-radius: 8px;">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <input type="email" class="form-control" placeholder="Email Address" style="border-radius: 8px;">
-                    </div>
-                  </div>
-                </div>
-
+      <!-- Search Modal -->
+      <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body p-5">
+              <form action="#" class="search-form">
                 <div class="form-group">
-                  <textarea name="" id="" cols="30" rows="3" class="form-control" placeholder="Optional Message"
-                    style="border-radius: 8px;"></textarea>
+                  <div class="icon"><span class="icon-search"></span></div>
+                  <input type="text" class="form-control" placeholder="Type keywords and hit enter...">
                 </div>
-
-                <button type="submit" class="btn btn-primary btn-block py-3 font-weight-bold mt-4 shadow-sm"
-                  style="background: #122f2b !important; border-color: #122f2b !important; color: white !important; border-radius: 8px;">
-                  Complete Donation
-                </button>
-                <p class="text-center text-muted small mt-3">Secure Payment Powered by Stripe/M-Pesa</p>
               </form>
+              <div class="search-suggestions mt-4">
+                <h6 class="text-muted mb-3">Suggested:</h6>
+                <div class="d-flex flex-wrap gap-2">
+                  <a href="how-we-work.html" class="badge badge-light p-2 mr-2 mb-2">IkiraroBiz</a>
+                  <a href="about.html" class="badge badge-light p-2 mr-2 mb-2">Our Mission</a>
+                  <a href="impact-stories.html" class="badge badge-light p-2 mr-2 mb-2">Impact Stories</a>
+                  <a href="donate.html" class="badge badge-light p-2 mr-2 mb-2">Donate</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-        stroke="#F96D00" />
-    </svg></div>
-
-  <!-- Search Modal -->
-  <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header border-0">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body p-5">
-          <form action="#" class="search-form">
-            <div class="form-group">
-              <div class="icon"><span class="icon-search"></span></div>
-              <input type="text" class="form-control" placeholder="Type keywords and hit enter...">
-            </div>
-          </form>
-          <div class="search-suggestions mt-4">
-            <h6 class="text-muted mb-3">Suggested:</h6>
-            <div class="d-flex flex-wrap gap-2">
-              <a href="how-we-work.html" class="badge badge-light p-2 mr-2 mb-2">IkiraroBiz</a>
-              <a href="about.html" class="badge badge-light p-2 mr-2 mb-2">Our Mission</a>
-              <a href="impact-stories.html" class="badge badge-light p-2 mr-2 mb-2">Impact Stories</a>
-              <a href="donate.html" class="badge badge-light p-2 mr-2 mb-2">Donate</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/bootstrap-datepicker.js"></script>
-  <script src="js/jquery.timepicker.min.js"></script>
-  <script src="js/scrollax.min.js"></script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="js/google-map.js"></script>
-  <script src="js/cms-core.js"></script>
-  <script src="js/main.js"></script>
+      <script src="js/jquery.min.js"></script>
+      <script src="js/jquery-migrate-3.0.1.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/jquery.easing.1.3.js"></script>
+      <script src="js/jquery.waypoints.min.js"></script>
+      <script src="js/jquery.stellar.min.js"></script>
+      <script src="js/owl.carousel.min.js"></script>
+      <script src="js/jquery.magnific-popup.min.js"></script>
+      <script src="js/aos.js"></script>
+      <script src="js/jquery.animateNumber.min.js"></script>
+      <script src="js/bootstrap-datepicker.js"></script>
+      <script src="js/jquery.timepicker.min.js"></script>
+      <script src="js/scrollax.min.js"></script>
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+      <script src="js/google-map.js"></script>
+      <script src="js/cms-core.js"></script>
+      <script src="js/main.js"></script>
 
 </body>
 
