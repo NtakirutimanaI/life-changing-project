@@ -292,6 +292,7 @@ html [type="button"],
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button;
+  appearance: button;
 }
 
 button::-moz-focus-inner,
@@ -314,6 +315,7 @@ input[type="time"],
 input[type="datetime-local"],
 input[type="month"] {
   -webkit-appearance: listbox;
+  appearance: listbox;
 }
 
 textarea {
@@ -352,11 +354,13 @@ progress {
 [type="search"] {
   outline-offset: -2px;
   -webkit-appearance: none;
+  appearance: none;
 }
 
 [type="search"]::-webkit-search-cancel-button,
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
+  appearance: none;
 }
 
 ::-webkit-file-upload-button {
@@ -6084,6 +6088,7 @@ button.close {
   background-color: transparent;
   border: 0;
   -webkit-appearance: none;
+  appearance: none;
 }
 
 .modal-open {
@@ -11083,6 +11088,15 @@ h5,
   background: #d2b48c;
 }
 
+.ftco-intro .block-18.color-4 {
+  background: #122f2b;
+}
+
+.ftco-intro .block-18.color-4 .text strong,
+.ftco-intro .block-18.color-4 .text span {
+  color: #fff !important;
+}
+
 .ftco-intro .block-18 .text strong {
   font-size: 60px;
   color: #000;
@@ -11153,10 +11167,11 @@ h5,
 }
 
 .cause-entry .text .custom-progress-success {
-  background-color: #f2f2f2;
-  height: .3rem;
-  border-radius: 4px;
-  margin-bottom: 20px;
+  background-color: #e9ecef;
+  height: 12px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  overflow: hidden;
 }
 
 .cause-entry span.donation-time {
@@ -11165,7 +11180,9 @@ h5,
 }
 
 .cause-entry span.fund-raised {
-  color: #000;
+  color: #122f2b;
+  font-weight: 700;
+  font-size: 15px;
 }
 
 .ftco-section-3 {
@@ -11924,11 +11941,13 @@ textarea.form-control {
 .ftco-footer .ftco-footer-widget .btn-primary {
   background: #fff !important;
   border: 2px solid #fff !important;
+  color: #122f2b !important;
 }
 
 .ftco-footer .ftco-footer-widget .btn-primary:hover {
-  background: #fff;
-  border: 2px solid #fff !important;
+  background: #17d1ac !important;
+  border: 2px solid #17d1ac !important;
+  color: #fff !important;
 }
 
 .ftco-footer p {
@@ -11945,8 +11964,8 @@ textarea.form-control {
 
 .ftco-footer .ftco-heading-2 {
   font-size: 17px;
-  font-weight: 400;
-  color: #000;
+  font-weight: 700;
+  color: #fff;
 }
 
 .ftco-footer .block-21 .text .heading {
@@ -12174,6 +12193,7 @@ textarea.form-control {
 .mfp-with-zoom.mfp-bg {
   opacity: 0;
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -o-transition: all 0.3s ease-out;
@@ -13150,4 +13170,99 @@ textarea.form-control {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px;
   }
+}
+
+/* Navigation CTA - Donate Now Button */
+.nav-item.cta .nav-link {
+  background: #122f2b !important;
+  color: #fff !important;
+  border-radius: 30px;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(18, 47, 43, 0.2);
+  margin-top: 5px;
+}
+
+.nav-item.cta .nav-link:hover {
+  background: #17d1ac !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(23, 209, 172, 0.3);
+}
+
+/* Donation Modal Styling */
+#donationModal .modal-content {
+  border-radius: 15px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+#donationModal .btn-outline-primary {
+  border: 1px solid #dee2e6;
+  color: #495057;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+#donationModal .btn-outline-primary:hover,
+#donationModal .btn-outline-primary.active {
+  background-color: #17d1ac !important;
+  border-color: #17d1ac !important;
+  color: #fff !important;
+}
+
+#donationModal .form-control {
+  border: 1px solid #e9ecef;
+  background-color: #f8f9fa;
+  font-size: 15px;
+}
+
+#donationModal .form-control:focus {
+  border-color: #17d1ac;
+  background-color: #fff;
+  box-shadow: 0 0 0 0.2rem rgba(23, 209, 172, 0.1);
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  width: 50px !important;
+  height: 50px !important;
+  background: #17d1ac !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 20px !important;
+  z-index: 99999 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: all 0.4s ease !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+  transform: translateY(15px);
+}
+
+.scroll-to-top.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+}
+
+.scroll-to-top:hover {
+  background: #122f2b !important;
+  transform: translateY(-5px) !important;
+}
+
+.scroll-to-top span {
+  color: #fff !important;
+}
+
+.scroll-to-top:focus {
+  outline: none;
 }

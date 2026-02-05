@@ -17,10 +17,31 @@ export function HomePage({ onNavigate }: HomePageProps) {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   const stats = [
-    { icon: Users, number: '5,000+', label: 'Women & Girls Reached' },
-    { icon: GraduationCap, number: '1,200+', label: 'Girls Kept in School' },
-    { icon: Briefcase, number: '800+', label: 'Businesses Launched' },
-    { icon: Heart, number: '300+', label: 'Change Champions Trained' },
+    {
+      number: '5,000',
+      label: 'Reached & Empowered',
+      topLabel: 'Women & Girls',
+      bg: '#1abc9c'
+    },
+    {
+      number: '1,200',
+      label: 'Girls stayed in school',
+      topLabel: 'Education',
+      bg: '#16a085'
+    },
+    {
+      number: '450',
+      label: 'Businesses launched',
+      topLabel: 'Livelihoods',
+      bg: '#c5a37d'
+    },
+    {
+      number: '300',
+      label: 'Change Champions trained',
+      topLabel: 'Leadership',
+      bg: '#122f2b',
+      lightText: true
+    },
   ];
 
   const testimonials = [
@@ -69,7 +90,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
   };
 
   const fadeInUp: Variants = {
-    hidden: { opacity: 0, y: 60 },
+    hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
   };
 
@@ -78,7 +99,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2
+        staggerChildren: 0.15
       }
     }
   };
@@ -88,31 +109,40 @@ export function HomePage({ onNavigate }: HomePageProps) {
       {/* Hero Section */}
       <HeroCarousel />
 
-      {/* Impact Statistics - Single Horizontal Row */}
-      <div className="relative -mt-16 z-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="bg-accent shadow-2xl rounded-none py-16 px-12 flex items-center justify-between gap-12 text-white relative overflow-hidden"
-          >
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                className="text-center flex flex-col items-center justify-center flex-1 relative z-10"
-              >
-                <div className="text-5xl md:text-6xl lg:text-7xl font-black mb-3 tracking-tight leading-none">
+      {/* Impact Statistics - Redesigned to match reference image */}
+      <div className="relative -mt-20 z-20">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row shadow-2xl overflow-hidden">
+          {stats.map((stat, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              className="flex-1 flex flex-col min-h-[320px] relative transition-transform hover:scale-[1.02] duration-300"
+              style={{
+                backgroundColor: stat.bg,
+              }}
+            >
+              {/* Standard Design Structure */}
+              <div className="flex-1 py-14 px-8 flex flex-col items-start justify-between">
+                {/* Top Label */}
+                <div className={`text-xl md:text-2xl font-medium ${stat.lightText ? 'text-white/80' : 'text-accent/80'} mb-4 font-poppins`}>
+                  {stat.topLabel}
+                </div>
+
+                {/* Big Number */}
+                <div className={`text-5xl md:text-7xl font-black ${stat.lightText ? 'text-white' : 'text-accent'} mb-4 tracking-tighter leading-none`}>
                   {stat.number}
                 </div>
-                <div className="text-[11px] md:text-xs font-bold text-white/95 uppercase tracking-[0.15em] leading-tight max-w-[140px]">
+
+                {/* Bottom Label */}
+                <div className={`text-sm md:text-lg font-bold ${stat.lightText ? 'text-white/90' : 'text-accent/90'} leading-snug max-w-[200px]`}>
                   {stat.label}
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
 
