@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>Login | LCEO</title>
     <meta charset="utf-8">
@@ -8,122 +7,19 @@
 
     <link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500;600;700&family=Work+Sans:wght@600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500;600;700&family=Work+Sans:wght@600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/ionicons.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        .login-container {
-            max-width: 450px;
-            margin: 100px auto;
-            padding: 40px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-control {
-            height: 52px !important;
-            background: #f8f9fa !important;
-            border: 1px solid #eee !important;
-            border-radius: 5px !important;
-        }
-
-        .btn-primary {
-            background: #4FB1A1 !important;
-            border-color: #4FB1A1 !important;
-            padding: 15px !important;
-            font-weight: 600 !important;
-        }
-
-        .role-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            background: #e9ecef;
-            border-radius: 20px;
-            font-size: 12px;
-            margin-bottom: 20px;
-            font-weight: 600;
-            color: #4FB1A1;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-
 <body style="background: #f4f7f6;">
-    <div class="container">
-        <div class="login-container text-center">
-            <a href="index.html"><img src="images/logo.png" alt="LCEO Logo"
-                    style="height: 60px; margin-bottom: 20px;"></a>
-            <div id="roleBadge" class="role-badge">Admin Login</div>
-            <h2 class="mb-4">Welcome Back</h2>
-            <form id="loginForm">
-                <div class="form-group text-left">
-                    <label>Email Address</label>
-                    <input type="email" id="email" class="form-control" placeholder="admin@lceo.org" required>
-                </div>
-                <div class="form-group text-left">
-                    <label>Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="********" required>
-                </div>
-                <div id="loginError" class="alert alert-danger d-none mb-3">Invalid credentials. Try admin@lceo.org /
-                    admin123</div>
-                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-            </form>
-            <p class="mt-4"><a href="index.html" class="text-muted small">← Back to website</a></p>
-        </div>
-    </div>
-
-    <script src="js/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const role = urlParams.get('role') || 'admin';
-
-            const roleNames = {
-                'beneficiary': 'Beneficiary Login',
-                'donor': 'Donor Portal Login',
-                'admin': 'Admin Access'
-            };
-
-            $('#roleBadge').text(roleNames[role] || 'Login');
-
-            if (role === 'admin') {
-                $('#email').val('admin@lceo.org');
-                $('#password').val('admin123');
-            } else if (role === 'beneficiary') {
-                $('#email').val('beneficiary@lceo.org');
-                $('#password').val('beneficiary123');
-            } else if (role === 'donor') {
-                $('#email').val('donor@lceo.org');
-                $('#password').val('donor123');
-            }
-
-            $('#loginForm').on('submit', function (e) {
-                e.preventDefault();
-                const email = $('#email').val();
-                const pass = $('#password').val();
-
-                // Mock validation
-                if ((role === 'admin' && email === 'admin@lceo.org' && pass === 'admin123') ||
-                    (role === 'beneficiary' && email === 'beneficiary@lceo.org' && pass === 'beneficiary123') ||
-                    (role === 'donor' && email === 'donor@lceo.org' && pass === 'donor123')) {
-
-                    alert('Login Successful! Redirecting to dashboard...');
-                    localStorage.setItem('lceo_user', JSON.stringify({
-                        user_type: role,
-                        name: role === 'admin' ? 'Admin User' : (role === 'donor' ? 'John Smith' : 'Sarah Uwase')
-                    }));
-                    window.location.href = role + '-dashboard.html';
-                } else {
-                    $('#loginError').removeClass('d-none');
-                }
-            });
-        });
-    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Include basic scripts just in case, though React might not use them -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 </body>
-
 </html>
