@@ -1,12 +1,17 @@
 import React from 'react';
 import { useLanguage } from '../../lib/language-context';
-import { useLocation, Link } from 'react-router-dom';
-import { Globe } from 'lucide-react';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { Globe, User as UserIcon, LogOut, LayoutDashboard, ChevronDown } from 'lucide-react';
+import { useAuth } from '../../lib/auth-context';
+import { UserType } from '../../lib/types';
 
 export const Navbar = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const isDonationPage = location.pathname === '/donate';
+    const isLoginPage = location.pathname === '/login';
     const { language, setLanguage, t } = useLanguage();
+    const { user, isAuthenticated, logout } = useAuth();
 
     const languages = [
         { code: 'en', name: 'English' },
@@ -14,6 +19,21 @@ export const Navbar = () => {
         { code: 'sw', name: 'Swahili' },
         { code: 'fr', name: 'French' }
     ] as const;
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
+
+    const getDashboardLink = () => {
+        if (!user) return '/';
+        switch (user.userType) {
+            case UserType.ADMIN: return '/admin';
+            case UserType.DONOR: return '/donor';
+            case UserType.BENEFICIARY: return '/beneficiary';
+            default: return '/';
+        }
+    };
 
     return (
         <>
@@ -89,7 +109,7 @@ export const Navbar = () => {
             `}</style>
 
             <nav
-                className={`navbar navbar-expand-lg ftco_navbar ftco-navbar-light ${isDonationPage ? 'navbar-donation-steps' : ''}`}
+                className={`navbar navbar-expand-lg ftco_navbar ftco-navbar-light ${isDonationPage || isLoginPage ? 'navbar-donation-steps' : ''}`}
                 id="ftco-navbar"
             >
                 <div className="container">
@@ -139,18 +159,39 @@ export const Navbar = () => {
                                 </div>
                             </li>
 
-                            <li className="nav-item dropdown ml-lg-2">
-                                <a className="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    Login
-                                </a>
-                                <div className="dropdown-menu dropdown-menu-right shadow border-0" aria-labelledby="loginDropdown">
-                                    <Link className="dropdown-item" to="/login?role=beneficiary">Beneficiary Login</Link>
-                                    <Link className="dropdown-item" to="/login?role=donor">Donor Login</Link>
-                                    <div className="dropdown-divider"></div>
-                                    <Link className="dropdown-item" to="/login?role=admin">Admin Access</Link>
-                                </div>
-                            </li>
+                            {!isAuthenticated ? (
+                                <li className="nav-item ml-lg-2">
+                                    <Link className="nav-link" to="/login" style={{ fontWeight: 600 }}>
+                                        {t('nav.login')}
+                                    </Link>
+                                </li>
+                            ) : (
+                                <li className="nav-item dropdown ml-lg-2">
+                                    <a className="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <div className="d-flex align-items-center bg-emerald-light rounded-pill px-3 py-1" style={{ backgroundColor: 'rgba(23, 209, 172, 0.1)', border: '1px solid rgba(23, 209, 172, 0.2)' }}>
+                                            <UserIcon size={16} className="text-emerald mr-2" style={{ color: '#17D1AC' }} />
+                                            <span className="font-weight-bold" style={{ color: '#122f2b', fontSize: '0.9rem' }}>{user?.name?.split(' ')[0]}</span>
+                                        </div>
+                                    </a>
+                                    <div className="dropdown-menu dropdown-menu-right shadow-lg border-0 py-2 mt-2" aria-labelledby="userDropdown" style={{ borderRadius: '12px', minWidth: '180px' }}>
+                                        <div className="px-4 py-2 border-bottom mb-2">
+                                            <div className="small text-muted">Role</div>
+                                            <div className="font-weight-bold text-capitalize" style={{ fontSize: '0.85rem' }}>{user?.userType}</div>
+                                        </div>
+                                        <Link className="dropdown-item py-2 d-flex align-items-center" to={getDashboardLink()}>
+                                            <LayoutDashboard size={16} className="mr-2 opacity-70" /> {t('nav.dashboard')}
+                                        </Link>
+                                        <Link className="dropdown-item py-2 d-flex align-items-center" to="/profile">
+                                            <UserIcon size={16} className="mr-2 opacity-70" /> {t('nav.profile')}
+                                        </Link>
+                                        <div className="dropdown-divider"></div>
+                                        <button className="dropdown-item py-2 d-flex align-items-center text-danger" onClick={handleLogout}>
+                                            <LogOut size={16} className="mr-2 opacity-70" /> {t('nav.logout')}
+                                        </button>
+                                    </div>
+                                </li>
+                            )}
 
                             <li className="nav-item ml-lg-1">
                                 <a href="#" className="nav-link search-icon d-flex align-items-center justify-content-center" data-toggle="modal" data-target="#searchModal" style={{ padding: '15px 10px' }}>
@@ -168,7 +209,7 @@ export const Navbar = () => {
                             <li className="nav-item dropdown lang-switcher ml-lg-2">
                                 <a className="nav-link dropdown-toggle d-flex align-items-center" href="#" id="langDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ padding: '15px 10px' }}>
-                                    <Globe size={20} className={isDonationPage ? 'text-dark' : 'text-white'} />
+                                    <Globe size={20} className={isDonationPage || isLoginPage ? 'text-dark' : 'text-white'} />
                                 </a>
                                 <div className="dropdown-menu dropdown-menu-right shadow border-0" aria-labelledby="langDropdown">
                                     {languages.map((lang) => (

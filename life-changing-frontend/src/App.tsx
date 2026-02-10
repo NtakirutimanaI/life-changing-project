@@ -14,6 +14,7 @@ import { HowWeWorkPage } from '@/pages/HowWeWorkPage';
 import { StrategicDirectionPage } from '@/pages/StrategicDirectionPage';
 import { ImpactStoriesPage } from '@/pages/ImpactStoriesPage';
 import { ResourcesPage } from '@/pages/ResourcesPage';
+import { OurProgramsDetailsPage } from '@/pages/OurProgramsDetailsPage';
 
 import { Toaster } from 'sonner';
 // import './admin.css'; // Assuming admin.css is global often, but maybe strictly for dashboards?
@@ -26,10 +27,14 @@ import { useLocation } from 'react-router-dom';
 
 function AppContent() {
     const location = useLocation();
-    const dashboardRoutes = ['/admin', '/beneficiary', '/donor', '/login'];
+    const dashboardRoutes = ['/admin', '/beneficiary', '/donor'];
     const isDashboard = dashboardRoutes.some(route => location.pathname.startsWith(route));
 
     React.useEffect(() => {
+        if ('scrollRestoration' in window.history) {
+            window.history.scrollRestoration = 'manual';
+        }
+
         const publicStyle = document.getElementById('public-style') as HTMLLinkElement;
         const adminStyle = document.getElementById('admin-style') as HTMLLinkElement;
 
@@ -92,6 +97,7 @@ function AppContent() {
                     <Route path="/strategic-direction" element={<StrategicDirectionPage />} />
                     <Route path="/impact-stories" element={<ImpactStoriesPage />} />
                     <Route path="/resources" element={<ResourcesPage />} />
+                    <Route path="/our-programs-details" element={<OurProgramsDetailsPage />} />
 
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>

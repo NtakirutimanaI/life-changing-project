@@ -11,27 +11,53 @@ export const FloatingScrollToTop = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            const scroll = window.scrollY ||
-                window.pageYOffset ||
-                document.documentElement.scrollTop ||
-                document.body.scrollTop || 0;
+            // Check multiple potential scrolling elements
+            const winScroll = window.scrollY || window.pageYOffset;
+            const docScroll = document.documentElement.scrollTop;
+            const bodyScroll = document.body.scrollTop;
+            const mainScroll = document.querySelector('main')?.scrollTop || 0;
+            const appScroll = document.querySelector('.app-container')?.scrollTop || 0;
 
-            setIsVisible(scroll > 200);
+            const scroll = Math.max(winScroll, docScroll, bodyScroll, mainScroll, appScroll);
+            setIsVisible(scroll > 150);
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
-        // Fallback interval check for environments where scroll events might be buggy
-        const interval = setInterval(handleScroll, 500);
+        // Also listen on potential containers
+        const main = document.querySelector('main');
+        const app = document.querySelector('.app-container');
+        if (main) main.addEventListener('scroll', handleScroll, { passive: true });
+        if (app) app.addEventListener('scroll', handleScroll, { passive: true });
+
+        const interval = setInterval(handleScroll, 400);
 
         handleScroll();
         return () => {
             window.removeEventListener('scroll', handleScroll);
+            if (main) main.removeEventListener('scroll', handleScroll);
+            if (app) app.removeEventListener('scroll', handleScroll);
             clearInterval(interval);
         };
     }, []);
 
     const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Attempt smoothing on all major scroll targets
+        const targets = [window, document.documentElement, document.body, document.querySelector('main'), document.querySelector('.app-container')];
+
+        targets.forEach(target => {
+            if (target) {
+                try {
+                    target.scrollTo({ top: 0, behavior: 'smooth' });
+                } catch (e) {
+                    // Fallback for older browsers
+                    if ('scrollTop' in target) {
+                        (target as HTMLElement).scrollTop = 0;
+                    } else if (target === window) {
+                        window.scrollTo(0, 0);
+                    }
+                }
+            }
+        });
     };
 
     return (

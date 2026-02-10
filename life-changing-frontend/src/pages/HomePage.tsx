@@ -61,7 +61,11 @@ export const HomePage = () => {
 
                 // Fetch Programs
                 const programData = await ProgramsService.getAll();
-                setPrograms(programData);
+                // Duplicate programs if <= 3 to ensure carousel scroll works beautifully
+                const displayPrograms = programData.length <= 3
+                    ? [...programData, ...programData]
+                    : programData;
+                setPrograms(displayPrograms);
 
                 // Fetch Stories
                 const storyData = await ContentService.getStories('story');
@@ -218,13 +222,15 @@ export const HomePage = () => {
                         <div className="col-md-12 ftco-animate">
                             <div className="carousel-cause owl-carousel">
                                 {programs.length > 0 ? (
-                                    programs.map((program) => (
-                                        <div className="item" key={program.id}>
+                                    programs.map((program, index) => (
+                                        <div className="item" key={`${program.id}-${index}`}>
                                             <div className="cause-entry">
                                                 <Link to="/how-we-work" className="img" style={{ backgroundImage: `url(${program.coverImage || '/images/cause-1.jpg'})` }}></Link>
                                                 <div className="text p-3 p-md-4 text-center">
                                                     <h3><Link to="/how-we-work">{program.name?.en || 'Program Name'}</Link></h3>
-                                                    {/* Subtitle/Category if available */}
+                                                    <p style={{ color: '#4FB1A1', fontStyle: 'italic', marginTop: '-10px', fontSize: '0.9rem', marginBottom: '15px' }}>
+                                                        {program.name?.rw}
+                                                    </p>
                                                     <p>{program.description?.en?.substring(0, 100)}...</p>
                                                     <div className="progress custom-progress-success mb-3" style={{ height: '8px' }}>
                                                         <div className="progress-bar bg-primary" role="progressbar"
@@ -235,7 +241,10 @@ export const HomePage = () => {
                                                     <span className="fund-raised d-block mb-3 font-weight-bold" style={{ color: '#122f2b' }}>
                                                         ${program.fundsAllocated?.toLocaleString()} raised of ${program.budget?.toLocaleString()}
                                                     </span>
-                                                    <p><Link to="/donate" className="btn btn-primary px-3 py-2">Donate Now</Link></p>
+                                                    <p>
+                                                        <Link to="/donate" className="btn btn-primary px-3 py-2 mr-2">Donate Now</Link>
+                                                        <Link to="/our-programs-details" className="btn btn-outline-primary px-3 py-2">Learn More</Link>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -256,7 +265,10 @@ export const HomePage = () => {
                                                 </div>
                                                 <span className="fund-raised d-block mb-3 font-weight-bold" style={{ color: '#122f2b' }}>$15,000 raised of
                                                     $20,000</span>
-                                                <p><Link to="/donate" className="btn btn-primary px-3 py-2">Donate Now</Link></p>
+                                                <p>
+                                                    <Link to="/donate" className="btn btn-primary px-3 py-2 mr-2">Donate Now</Link>
+                                                    <Link to="/our-programs-details" className="btn btn-outline-primary px-3 py-2">Learn More</Link>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
