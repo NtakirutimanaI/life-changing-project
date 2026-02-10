@@ -1,21 +1,98 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLegacyScripts } from '../hooks/useLegacyScripts';
+import { ContentService, PageContent, Story } from '../services/content.service';
+import { ProgramsService, Program } from '../services/program.service';
 
 export const HomePage = () => {
     useLegacyScripts();
 
+    const [heroContent, setHeroContent] = useState({
+        title: 'Empower a Future Today',
+        subtitle: 'We support girls, caregivers, and youth by promoting education, health, mentorship, and skills development to strengthen families and build resilient communities.',
+        bgImage: '/images/bg_7.jpg'
+    });
+
+    const [counters, setCounters] = useState({
+        women: '500',
+        businesses: '120',
+        health: '1500',
+        success: '95'
+    });
+
+    const [missionText, setMissionText] = useState('Life-Changing Endeavor Organization (LCEO) is a non-governmental organization based in Bugesera District, Rwanda. We support girls, caregivers, and youth by promoting education, health, mentorship, and skills development to strengthen families and build resilient communities.');
+
+    const [programs, setPrograms] = useState<Program[]>([]);
+    const [stories, setStories] = useState<Story[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Fetch page content
+                const pageData = await ContentService.getPageContent('home');
+
+                // Process page content into state found by key
+                const heroTitle = pageData.find(c => c.section === 'hero' && c.key === 'title')?.value;
+                const heroSubtitle = pageData.find(c => c.section === 'hero' && c.key === 'subtitle')?.value;
+                const heroBg = pageData.find(c => c.section === 'hero' && c.key === 'bg_image')?.value;
+
+                if (heroTitle) setHeroContent(prev => ({ ...prev, title: heroTitle }));
+                if (heroSubtitle) setHeroContent(prev => ({ ...prev, subtitle: heroSubtitle }));
+                if (heroBg) setHeroContent(prev => ({ ...prev, bgImage: heroBg }));
+
+                const counterWomen = pageData.find(c => c.section === 'counters' && c.key === 'women')?.value;
+                const counterBiz = pageData.find(c => c.section === 'counters' && c.key === 'businesses')?.value;
+                const counterHealth = pageData.find(c => c.section === 'counters' && c.key === 'health')?.value;
+                const counterSuccess = pageData.find(c => c.section === 'counters' && c.key === 'success')?.value;
+
+                if (counterWomen || counterBiz) {
+                    setCounters(prev => ({
+                        women: counterWomen || prev.women,
+                        businesses: counterBiz || prev.businesses,
+                        health: counterHealth || prev.health,
+                        success: counterSuccess || prev.success
+                    }));
+                }
+
+                const mission = pageData.find(c => c.section === 'welcome' && c.key === 'mission')?.value;
+                if (mission) setMissionText(mission);
+
+                // Fetch Programs
+                const programData = await ProgramsService.getAll();
+                setPrograms(programData);
+
+                // Fetch Stories
+                const storyData = await ContentService.getStories('story');
+                setStories(storyData.slice(0, 3)); // Limit to 3
+
+            } catch (error) {
+                console.error("Error fetching homepage content:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    // Helper to calculate percentage
+    const getPercentage = (allocated: number = 0, budget: number = 100) => {
+        if (!budget) return 0;
+        return Math.min(100, Math.round((allocated / budget) * 100));
+    };
+
     return (
         <>
-            <div className="hero-wrap" style={{ backgroundImage: "url('/images/bg_7.jpg')" }} data-stellar-background-ratio="0.5">
+            <div className="hero-wrap" style={{ backgroundImage: `url('${heroContent.bgImage}')` }} data-stellar-background-ratio="0.5">
                 <div className="overlay"></div>
                 <div className="container">
                     <div className="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
                         <div className="col-md-7 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
                             <h1 className="mb-4" data-cms="heroTitle" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-                                Empower a Future Today</h1>
+                                {heroContent.title}</h1>
                             <p className="mb-5" data-cms="heroSubtitle" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-                                We support girls, caregivers, and youth by promoting education, health, mentorship, and skills development to strengthen families and build resilient communities.</p>
+                                {heroContent.subtitle}</p>
 
                             <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><Link to="/about"
                                 className="btn btn-white btn-outline-white px-4 py-3">Learn More</Link></p>
@@ -32,7 +109,7 @@ export const HomePage = () => {
                                 <div className="text">
                                     <span>Women Empowered</span>
                                     <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap' }}>
-                                        <strong className="number" data-number="500" style={{ display: 'inline-block' }}>0</strong>
+                                        <strong className="number" data-number={counters.women} style={{ display: 'inline-block' }}>0</strong>
                                         <span
                                             style={{ display: 'inline-block !important', fontSize: '24px', color: '#000', marginLeft: '2px', fontWeight: 400 }}>+</span>
                                     </div>
@@ -44,7 +121,7 @@ export const HomePage = () => {
                             <div className="block-18 color-2 align-items-stretch">
                                 <div className="text">
                                     <span>Businesses Started</span>
-                                    <strong className="number" data-number="120">0</strong>
+                                    <strong className="number" data-number={counters.businesses}>0</strong>
                                     <span>Sustainable income generation</span>
                                 </div>
                             </div>
@@ -54,7 +131,7 @@ export const HomePage = () => {
                                 <div className="text">
                                     <span>Health Screenings</span>
                                     <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap' }}>
-                                        <strong className="number" data-number="1500" style={{ display: 'inline-block' }}>0</strong>
+                                        <strong className="number" data-number={counters.health} style={{ display: 'inline-block' }}>0</strong>
                                         <span
                                             style={{ display: 'inline-block !important', fontSize: '24px', color: '#000', marginLeft: '2px', fontWeight: 400 }}>+</span>
                                     </div>
@@ -67,7 +144,7 @@ export const HomePage = () => {
                                 <div className="text">
                                     <span>Success Rate</span>
                                     <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap' }}>
-                                        <strong className="number" data-number="95" style={{ display: 'inline-block' }}>0</strong>
+                                        <strong className="number" data-number={counters.success} style={{ display: 'inline-block' }}>0</strong>
                                         <span
                                             style={{ display: 'inline-block !important', fontSize: '24px', color: '#000', marginLeft: '2px', fontWeight: 400 }}>%</span>
                                     </div>
@@ -84,12 +161,11 @@ export const HomePage = () => {
                     <div className="row justify-content-center mb-5 pb-3">
                         <div className="col-md-10 heading-section ftco-animate text-center">
                             <h2 className="mb-4">Welcome to LCEO</h2>
-                            <p data-cms="mission">Life-Changing Endeavor Organization (LCEO) is a non-governmental organization based in
-                                Bugesera District,
-                                Rwanda. We support girls, caregivers, and youth by promoting education, health, mentorship, and skills development to strengthen families and build resilient communities.</p>
+                            <p data-cms="mission">{missionText}</p>
                             <p><Link to="/about" className="btn btn-primary p-3 px-5">Learn More About Us</Link></p>
                         </div>
                     </div>
+                    {/* Hardcoded Services Section - could also be dynamic if needed */}
                     <div className="row">
                         <div className="col-md-4 d-flex align-self-stretch ftco-animate">
                             <div className="media block-6 d-flex services p-3 py-4 d-block text-center">
@@ -138,60 +214,50 @@ export const HomePage = () => {
                     <div className="row">
                         <div className="col-md-12 ftco-animate">
                             <div className="carousel-cause owl-carousel">
-                                <div className="item">
-                                    <div className="cause-entry">
-                                        <Link to="/how-we-work" className="img" style={{ backgroundImage: "url(/images/cause-1.jpg)" }}></Link>
-                                        <div className="text p-3 p-md-4 text-center">
-                                            <h3><Link to="/how-we-work">She Can Code</Link></h3>
-                                            <p style={{ color: '#4FB1A1', fontStyle: 'italic', marginTop: '-15px', fontSize: '0.9rem' }}>Abakobwa Mu
-                                                Ikoranabuhanga</p>
-                                            <p>Empowering young women with software development skills to bridge the gender gap in tech.</p>
-                                            <div className="progress custom-progress-success mb-3" style={{ height: '8px' }}>
-                                                <div className="progress-bar bg-primary" role="progressbar" style={{ width: '75%' }} aria-valuenow={75}
-                                                    aria-valuemin={0} aria-valuemax={100}></div>
+                                {programs.length > 0 ? (
+                                    programs.map((program) => (
+                                        <div className="item" key={program.id}>
+                                            <div className="cause-entry">
+                                                <Link to="/how-we-work" className="img" style={{ backgroundImage: `url(${program.coverImage || '/images/cause-1.jpg'})` }}></Link>
+                                                <div className="text p-3 p-md-4 text-center">
+                                                    <h3><Link to="/how-we-work">{program.name?.en || 'Program Name'}</Link></h3>
+                                                    {/* Subtitle/Category if available */}
+                                                    <p>{program.description?.en?.substring(0, 100)}...</p>
+                                                    <div className="progress custom-progress-success mb-3" style={{ height: '8px' }}>
+                                                        <div className="progress-bar bg-primary" role="progressbar"
+                                                            style={{ width: `${getPercentage(program.fundsAllocated, program.budget)}%` }}
+                                                            aria-valuenow={getPercentage(program.fundsAllocated, program.budget)}
+                                                            aria-valuemin={0} aria-valuemax={100}></div>
+                                                    </div>
+                                                    <span className="fund-raised d-block mb-3 font-weight-bold" style={{ color: '#122f2b' }}>
+                                                        ${program.fundsAllocated?.toLocaleString()} raised of ${program.budget?.toLocaleString()}
+                                                    </span>
+                                                    <p><Link to="/donate" className="btn btn-primary px-3 py-2">Donate Now</Link></p>
+                                                </div>
                                             </div>
-                                            <span className="fund-raised d-block mb-3 font-weight-bold" style={{ color: '#122f2b' }}>$15,000 raised of
-                                                $20,000</span>
-                                            <p><Link to="/donate" className="btn btn-primary px-3 py-2">Donate Now</Link></p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    // Fallback static content if no programs
+                                    <div className="item">
+                                        <div className="cause-entry">
+                                            <Link to="/how-we-work" className="img" style={{ backgroundImage: "url(/images/cause-1.jpg)" }}></Link>
+                                            <div className="text p-3 p-md-4 text-center">
+                                                <h3><Link to="/how-we-work">She Can Code</Link></h3>
+                                                <p style={{ color: '#4FB1A1', fontStyle: 'italic', marginTop: '-15px', fontSize: '0.9rem' }}>Abakobwa Mu
+                                                    Ikoranabuhanga</p>
+                                                <p>Empowering young women with software development skills to bridge the gender gap in tech.</p>
+                                                <div className="progress custom-progress-success mb-3" style={{ height: '8px' }}>
+                                                    <div className="progress-bar bg-primary" role="progressbar" style={{ width: '75%' }} aria-valuenow={75}
+                                                        aria-valuemin={0} aria-valuemax={100}></div>
+                                                </div>
+                                                <span className="fund-raised d-block mb-3 font-weight-bold" style={{ color: '#122f2b' }}>$15,000 raised of
+                                                    $20,000</span>
+                                                <p><Link to="/donate" className="btn btn-primary px-3 py-2">Donate Now</Link></p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="item">
-                                    <div className="cause-entry">
-                                        <Link to="/how-we-work" className="img" style={{ backgroundImage: "url(/images/cause-2.jpg)" }}></Link>
-                                        <div className="text p-3 p-md-4 text-center">
-                                            <h3><Link to="/how-we-work">Business Incubation</Link></h3>
-                                            <p style={{ color: '#4FB1A1', fontStyle: 'italic', marginTop: '-15px', fontSize: '0.9rem' }}>Inzozi Nziza</p>
-                                            <p>Supporting women entrepreneurs to start and grow businesses through seed funding and mentorship.
-                                            </p>
-                                            <div className="progress custom-progress-success mb-3" style={{ height: '8px' }}>
-                                                <div className="progress-bar bg-primary" role="progressbar" style={{ width: '56%' }} aria-valuenow={56}
-                                                    aria-valuemin={0} aria-valuemax={100}></div>
-                                            </div>
-                                            <span className="fund-raised d-block mb-3 font-weight-bold" style={{ color: '#122f2b' }}>$8,500 raised of
-                                                $15,000</span>
-                                            <p><Link to="/donate" className="btn btn-primary px-3 py-2">Donate Now</Link></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="item">
-                                    <div className="cause-entry">
-                                        <Link to="/how-we-work" className="img" style={{ backgroundImage: "url(/images/cause-3.jpg)" }}></Link>
-                                        <div className="text p-3 p-md-4 text-center">
-                                            <h3><Link to="/how-we-work">Community Health</Link></h3>
-                                            <p style={{ color: '#4FB1A1', fontStyle: 'italic', marginTop: '-15px', fontSize: '0.9rem' }}>Ubuzima Bwiza</p>
-                                            <p>Providing health education, reproductive health resources, and hygiene kits to rural communities.
-                                            </p>
-                                            <div className="progress custom-progress-success mb-3" style={{ height: '8px' }}>
-                                                <div className="progress-bar bg-primary" role="progressbar" style={{ width: '48%' }} aria-valuenow={48}
-                                                    aria-valuemin={0} aria-valuemax={100}></div>
-                                            </div>
-                                            <span className="fund-raised d-block mb-3 font-weight-bold" style={{ color: '#122f2b' }}>$12,000 raised of
-                                                $25,000</span>
-                                            <p><Link to="/donate" className="btn btn-primary px-3 py-2">Donate Now</Link></p>
-                                        </div>
-                                    </div>
-                                </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -208,51 +274,73 @@ export const HomePage = () => {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
-                            <div className="staff">
-                                <div className="d-flex mb-4">
-                                    <div className="img" style={{ backgroundImage: "url(/images/person_1.jpg)" }}></div>
-                                    <div className="info ml-4">
-                                        <h3>Aline M.</h3>
-                                        <span className="position">Beneficiary</span>
-                                        <div className="text">
-                                            <p>"LCEO helped me return to school through the Pad Box Initiative. Now I can study without worry."
-                                            </p>
+                        {stories.length > 0 ? (
+                            stories.map(story => (
+                                <div className="col-lg-4 d-flex mb-sm-4 ftco-animate" key={story.id}>
+                                    <div className="staff">
+                                        <div className="d-flex mb-4">
+                                            <div className="img" style={{ backgroundImage: `url(${story.image_url || '/images/person_1.jpg'})` }}></div>
+                                            <div className="info ml-4">
+                                                <h3>{story.title}</h3>
+                                                <span className="position">Beneficiary</span>
+                                                <div className="text">
+                                                    <div dangerouslySetInnerHTML={{ __html: story.content }} />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
-                            <div className="staff">
-                                <div className="d-flex mb-4">
-                                    <div className="img" style={{ backgroundImage: "url(/images/person_2.jpg)" }}></div>
-                                    <div className="info ml-4">
-                                        <h3>Divine U.</h3>
-                                        <span className="position">Entrepreneur</span>
-                                        <div className="text">
-                                            <p>"Through IkiraroBiz, I started my own tailoring business. I am now economically independent and
-                                                supporting my family."</p>
+                            ))
+                        ) : (
+                            // Fallback static content
+                            <>
+                                <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
+                                    <div className="staff">
+                                        <div className="d-flex mb-4">
+                                            <div className="img" style={{ backgroundImage: "url(/images/person_1.jpg)" }}></div>
+                                            <div className="info ml-4">
+                                                <h3>Aline M.</h3>
+                                                <span className="position">Beneficiary</span>
+                                                <div className="text">
+                                                    <p>"LCEO helped me return to school through the Pad Box Initiative. Now I can study without worry."
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
-                            <div className="staff">
-                                <div className="d-flex mb-4">
-                                    <div className="img" style={{ backgroundImage: "url(/images/person_3.jpg)" }}></div>
-                                    <div className="info ml-4">
-                                        <h3>Kevaline I.</h3>
-                                        <span className="position">Change Champion</span>
-                                        <div className="text">
-                                            <p>"The mental resilience training changed my mindset. I am now a leader in my community, advocating
-                                                for girls' rights."</p>
+                                <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
+                                    <div className="staff">
+                                        <div className="d-flex mb-4">
+                                            <div className="img" style={{ backgroundImage: "url(/images/person_2.jpg)" }}></div>
+                                            <div className="info ml-4">
+                                                <h3>Divine U.</h3>
+                                                <span className="position">Entrepreneur</span>
+                                                <div className="text">
+                                                    <p>"Through IkiraroBiz, I started my own tailoring business. I am now economically independent and
+                                                        supporting my family."</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                                <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
+                                    <div className="staff">
+                                        <div className="d-flex mb-4">
+                                            <div className="img" style={{ backgroundImage: "url(/images/person_3.jpg)" }}></div>
+                                            <div className="info ml-4">
+                                                <h3>Kevaline I.</h3>
+                                                <span className="position">Change Champion</span>
+                                                <div className="text">
+                                                    <p>"The mental resilience training changed my mindset. I am now a leader in my community, advocating
+                                                        for girls' rights."</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
             </section>
