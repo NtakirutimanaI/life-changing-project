@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../lib/language-context';
 import { useLegacyScripts } from '../hooks/useLegacyScripts';
-import { ContentService, PageContent, Story } from '../services/content.service';
+import { ContentService, Story } from '../services/content.service';
 import { ProgramsService, Program } from '../services/program.service';
 
 export const HomePage = () => {
@@ -14,10 +15,10 @@ export const HomePage = () => {
     });
 
     const [counters, setCounters] = useState({
-        women: '500',
-        businesses: '120',
-        health: '1500',
-        success: '95'
+        women: '5000',
+        education: '1200',
+        livelihoods: '450',
+        leadership: '300'
     });
 
     const [missionText, setMissionText] = useState('Life-Changing Endeavor Organization (LCEO) is a non-governmental organization based in Bugesera District, Rwanda. We support girls, caregivers, and youth by promoting education, health, mentorship, and skills development to strengthen families and build resilient communities.');
@@ -49,9 +50,9 @@ export const HomePage = () => {
                 if (counterWomen || counterBiz) {
                     setCounters(prev => ({
                         women: counterWomen || prev.women,
-                        businesses: counterBiz || prev.businesses,
-                        health: counterHealth || prev.health,
-                        success: counterSuccess || prev.success
+                        education: counterHealth || prev.education,
+                        livelihoods: counterBiz || prev.livelihoods,
+                        leadership: counterSuccess || prev.leadership
                     }));
                 }
 
@@ -82,20 +83,22 @@ export const HomePage = () => {
         return Math.min(100, Math.round((allocated / budget) * 100));
     };
 
+    const { t } = useLanguage();
+
     return (
         <>
-            <div className="hero-wrap" style={{ backgroundImage: `url('${heroContent.bgImage}')` }} data-stellar-background-ratio="0.5">
+            <div className="hero-wrap" style={{ backgroundImage: "url('" + heroContent.bgImage + "')" }} data-stellar-background-ratio="0.5">
                 <div className="overlay"></div>
                 <div className="container">
                     <div className="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
                         <div className="col-md-7 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
                             <h1 className="mb-4" data-cms="heroTitle" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-                                {heroContent.title}</h1>
+                                {t('hero.title')}</h1>
                             <p className="mb-5" data-cms="heroSubtitle" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-                                {heroContent.subtitle}</p>
+                                {t('hero.subtitle')}</p>
 
                             <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><Link to="/about"
-                                className="btn btn-white btn-outline-white px-4 py-3">Learn More</Link></p>
+                                className="btn btn-white btn-outline-white px-4 py-3">{t('btn.learn_more')}</Link></p>
                         </div>
                     </div>
                 </div>
@@ -105,50 +108,50 @@ export const HomePage = () => {
                 <div className="container">
                     <div className="row no-gutters">
                         <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                            <div className="block-18 color-1 align-items-stretch">
-                                <div className="text">
-                                    <span>Women Empowered</span>
-                                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap' }}>
-                                        <strong className="number" data-number={counters.women} style={{ display: 'inline-block' }}>0</strong>
-                                        <span
-                                            style={{ display: 'inline-block !important', fontSize: '24px', color: '#000', marginLeft: '2px', fontWeight: 400 }}>+</span>
+                            <div className="block-18 color-1 align-items-stretch" style={{ padding: '15px 10px' }}>
+                                <div className="text text-center">
+                                    <span style={{ fontSize: '13px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Women & Girls</span>
+                                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap', margin: '5px 0' }}>
+                                        <strong className="number" data-number={counters.women} style={{ fontSize: '32px' }}>0</strong>
+                                        <span style={{ fontSize: '24px', color: '#000', fontWeight: 600 }}>+</span>
                                     </div>
-                                    <span>Through our holistic programs</span>
+                                    <span style={{ fontSize: '13px', lineHeight: '1.2' }}>Reached & Empowered</span>
                                 </div>
                             </div>
                         </div>
                         <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                            <div className="block-18 color-2 align-items-stretch">
-                                <div className="text">
-                                    <span>Businesses Started</span>
-                                    <strong className="number" data-number={counters.businesses}>0</strong>
-                                    <span>Sustainable income generation</span>
+                            <div className="block-18 color-2 align-items-stretch" style={{ padding: '15px 10px' }}>
+                                <div className="text text-center">
+                                    <span style={{ fontSize: '13px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Education</span>
+                                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap', margin: '5px 0' }}>
+                                        <strong className="number" data-number={counters.education} style={{ fontSize: '32px' }}>0</strong>
+                                        <span style={{ fontSize: '24px', color: '#000', fontWeight: 600 }}>+</span>
+                                    </div>
+                                    <span style={{ fontSize: '13px', lineHeight: '1.2' }}>Girls stayed in school</span>
                                 </div>
                             </div>
                         </div>
                         <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                            <div className="block-18 color-3 align-items-stretch">
-                                <div className="text">
-                                    <span>Health Screenings</span>
-                                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap' }}>
-                                        <strong className="number" data-number={counters.health} style={{ display: 'inline-block' }}>0</strong>
-                                        <span
-                                            style={{ display: 'inline-block !important', fontSize: '24px', color: '#000', marginLeft: '2px', fontWeight: 400 }}>+</span>
+                            <div className="block-18 color-3 align-items-stretch" style={{ padding: '15px 10px' }}>
+                                <div className="text text-center">
+                                    <span style={{ fontSize: '13px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Livelihoods</span>
+                                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap', margin: '5px 0' }}>
+                                        <strong className="number" data-number={counters.livelihoods} style={{ fontSize: '32px' }}>0</strong>
+                                        <span style={{ fontSize: '24px', color: '#000', fontWeight: 600 }}>+</span>
                                     </div>
-                                    <span>Improving community well-being</span>
+                                    <span style={{ fontSize: '13px', lineHeight: '1.2' }}>Businesses launched</span>
                                 </div>
                             </div>
                         </div>
                         <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                            <div className="block-18 color-4 align-items-stretch">
-                                <div className="text">
-                                    <span>Success Rate</span>
-                                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap' }}>
-                                        <strong className="number" data-number={counters.success} style={{ display: 'inline-block' }}>0</strong>
-                                        <span
-                                            style={{ display: 'inline-block !important', fontSize: '24px', color: '#000', marginLeft: '2px', fontWeight: 400 }}>%</span>
+                            <div className="block-18 color-4 align-items-stretch" style={{ padding: '15px 10px' }}>
+                                <div className="text text-center text-white">
+                                    <span style={{ fontSize: '13px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px', color: '#fff' }}>Leadership</span>
+                                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap', margin: '5px 0' }}>
+                                        <strong className="number" data-number={counters.leadership} style={{ fontSize: '32px', color: '#fff' }}>0</strong>
+                                        <span style={{ fontSize: '24px', color: '#fff', fontWeight: 600 }}>+</span>
                                     </div>
-                                    <span>Graduates who stay employed</span>
+                                    <span style={{ fontSize: '13px', lineHeight: '1.2', color: '#fff' }}>Change Champions trained</span>
                                 </div>
                             </div>
                         </div>
@@ -225,7 +228,7 @@ export const HomePage = () => {
                                                     <p>{program.description?.en?.substring(0, 100)}...</p>
                                                     <div className="progress custom-progress-success mb-3" style={{ height: '8px' }}>
                                                         <div className="progress-bar bg-primary" role="progressbar"
-                                                            style={{ width: `${getPercentage(program.fundsAllocated, program.budget)}%` }}
+                                                            style={{ width: getPercentage(program.fundsAllocated, program.budget) + '%' }}
                                                             aria-valuenow={getPercentage(program.fundsAllocated, program.budget)}
                                                             aria-valuemin={0} aria-valuemax={100}></div>
                                                     </div>
@@ -516,6 +519,19 @@ export const HomePage = () => {
                                 <div className="sdg-number font-weight-bold h4 mb-2" style={{ color: '#dd1367' }}>10</div>
                                 <p className="small mb-0 font-weight-bold">Reduced Inequality</p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="ftco-section-3 img" style={{ backgroundImage: "url(/images/bg_3.jpg)" }}>
+                <div className="overlay"></div>
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div className="col-md-7 heading-section ftco-animate text-center">
+                            <h2 className="mb-4 text-white">Join Our Mission</h2>
+                            <p className="text-white opacity-75">Your support enables us to continue our vital work in the community.</p>
+                            <p className="mt-4"><Link to="/donate" className="btn btn-primary px-5 py-3 font-weight-bold shadow">Donate Now</Link></p>
                         </div>
                     </div>
                 </div>

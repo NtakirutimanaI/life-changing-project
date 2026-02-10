@@ -65,58 +65,69 @@ export function DonationPage() {
     const selectedAmount = parseInt(formData.amount || formData.customAmount || '0');
 
     const renderSplashScreen = () => (
-        <div className="text-center p-1 animate-fadeIn" style={{ padding: '4px' }}>
-            <div className="mb-2 position-relative d-inline-block">
-                <div className="bg-primary-light rounded-circle p-5 d-flex align-items-center justify-content-center shadow-sm" style={{ width: '150px', height: '150px', backgroundColor: '#f0f7f6' }}>
-                    <Heart size={80} color="#4c9789" fill="#4c9789" className="animate-pulse" />
+        <div className="text-center animate-fadeIn py-5">
+            <div className="mb-4 position-relative d-inline-block">
+                <div className="bg-white rounded-circle p-4 d-flex align-items-center justify-content-center shadow-lg" style={{ width: '150px', height: '150px', border: '8px solid #f0f7f6' }}>
+                    <Heart size={70} color="#4c9789" fill="#4c9789" className="animate-pulse" />
+                </div>
+                <div className="position-absolute" style={{ bottom: '10px', right: '10px' }}>
+                    <div className="bg-primary rounded-circle p-2 shadow-sm" style={{ backgroundColor: '#4c9789' }}>
+                        <Check size={20} color="white" strokeWidth={3} />
+                    </div>
                 </div>
             </div>
 
-            <h1 className="display-4 font-weight-bold mb-2 text-dark" style={{ letterSpacing: '-1px' }}>Empower a Future Today</h1>
-            <p className="lead text-muted mb-3 mx-auto" style={{ maxWidth: '750px', fontSize: '1.2rem', lineHeight: '1.7' }}>
+            <h1 className="display-4 font-weight-bold mb-3 text-dark" style={{ letterSpacing: '-1.5px', color: '#122f2b' }}>Empower a Future Today</h1>
+            <p className="lead text-muted mb-5 mx-auto" style={{ maxWidth: '800px', fontSize: '1.25rem', lineHeight: '1.8' }}>
                 We support girls, caregivers, and youth by promoting education, health, mentorship, and skills development to strengthen families and build resilient communities.
             </p>
 
-            <div className="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2 mb-5">
-                <button
-                    className="btn btn-primary btn-lg px-5 py-3 font-weight-bold shadow-lg transition-all hover-scale btn-lceo-primary mb-2 mb-md-0"
-                    style={{ borderRadius: '15px', backgroundColor: '#4c9789', border: 'none', minWidth: '240px', fontSize: '1.1rem' }}
-                    onClick={() => {
-                        setShowForm(true);
-                        setViewType('quick');
-                    }}
-                >
-                    One-Time Gift
-                </button>
-                <button
-                    className="btn btn-outline-primary btn-lg px-5 py-3 font-weight-bold transition-all hover-scale btn-lceo-outline"
-                    style={{ borderRadius: '15px', color: '#4c9789', borderColor: '#4c9789', minWidth: '240px', fontSize: '1.1rem', backgroundColor: 'transparent' }}
-                    onClick={() => {
-                        setShowForm(true);
-                        setViewType('detailed');
-                        setFormData({ ...formData, type: 'recurring' });
-                    }}
-                >
-                    Become a Monthly Partner
-                </button>
+            <div className="row justify-content-center mb-5 gx-3">
+                <div className="col-md-5 mb-3 mb-md-0">
+                    <button
+                        className="btn btn-primary btn-lg w-100 py-4 font-weight-bold shadow-lg transition-all hover-scale btn-lceo-primary"
+                        style={{ borderRadius: '20px', backgroundColor: '#4c9789', border: 'none', fontSize: '1.2rem' }}
+                        onClick={() => {
+                            setShowForm(true);
+                            setViewType('quick');
+                        }}
+                    >
+                        Make a One-Time Gift
+                    </button>
+                    <p className="small text-muted mt-2">Support immediate needs and urgent projects</p>
+                </div>
+                <div className="col-md-5">
+                    <button
+                        className="btn btn-outline-primary btn-lg w-100 py-4 font-weight-bold transition-all hover-scale btn-lceo-outline"
+                        style={{ borderRadius: '20px', color: '#4c9789', borderColor: '#4c9789', fontSize: '1.2rem', backgroundColor: '#fff' }}
+                        onClick={() => {
+                            setShowForm(true);
+                            setViewType('detailed');
+                            setFormData({ ...formData, type: 'recurring' });
+                        }}
+                    >
+                        Become a Monthly Partner
+                    </button>
+                    <p className="small text-muted mt-2">Join our Impact Circle for sustainable change</p>
+                </div>
             </div>
 
-            <div className="d-flex justify-content-center align-items-center flex-wrap opacity-75 mt-4">
+            <div className="d-flex justify-content-center align-items-center flex-wrap mt-5 pt-3 border-top" style={{ borderColor: 'rgba(0,0,0,0.05)' }}>
                 {[
                     { text: 'Tax Deductible', icon: CheckCircle },
-                    { text: 'SSL Encrypted', icon: CheckCircle },
-                    { text: '95% to Programs', icon: CheckCircle }
+                    { text: 'Secure SSL Payment', icon: CheckCircle },
+                    { text: '95% to Direct Programs', icon: CheckCircle }
                 ].map((item, idx) => (
-                    <div key={idx} className="mx-3 my-2 d-flex align-items-center">
-                        <item.icon size={18} className="mr-2 text-success" />
-                        <span className="small font-weight-bold text-dark">{item.text}</span>
+                    <div key={idx} className="mx-4 my-2 d-flex align-items-center">
+                        <item.icon size={20} className="mr-2 text-success" />
+                        <span className="font-weight-bold text-dark" style={{ fontSize: '0.95rem' }}>{item.text}</span>
                     </div>
                 ))}
             </div>
 
             <div className="mt-5">
-                <button className="btn btn-link text-muted font-weight-bold" onClick={() => window.location.href = '/'}>
-                    <ArrowLeft size={16} className="mr-2" /> Back to Home
+                <button className="btn btn-link text-muted font-weight-bold p-3 btn-lceo-link" onClick={() => window.location.href = '/'}>
+                    <ArrowLeft size={18} className="mr-2" /> Back to Website
                 </button>
             </div>
         </div>
@@ -678,7 +689,7 @@ export function DonationPage() {
     );
 
     return (
-        <div className="p-1" style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #f8faf9 0%, #f0f4f2 100%)', padding: '4px' }}>
+        <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #f8faf9 0%, #f0f4f2 100%)', padding: '110px 15px 80px' }}>
             <style>{`
                 .donation-card {
                     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

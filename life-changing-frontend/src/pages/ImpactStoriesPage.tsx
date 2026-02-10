@@ -37,8 +37,8 @@ export const ImpactStoriesPage = () => {
                                 <div className="icon-section mb-3">
                                     <span className="icon-people" style={{ fontSize: '50px', color: '#4FB1A1' }}></span>
                                 </div>
-                                <h3 className="font-weight-bold" style={{ color: '#4FB1A1', fontSize: '2.5rem' }}>312+</h3>
-                                <span className="position mb-2 d-block">Women and Girls Reached</span>
+                                <h3 className="font-weight-bold" style={{ color: '#4FB1A1', fontSize: '2.5rem' }}>5,000+</h3>
+                                <span className="position mb-2 d-block">Reached & Empowered</span>
                                 <p className="small text-muted">Vulnerable young women and girls supported through our core programs.</p>
                             </div>
                         </div>
@@ -47,8 +47,8 @@ export const ImpactStoriesPage = () => {
                                 <div className="icon-section mb-3">
                                     <span className="icon-school" style={{ fontSize: '50px', color: '#4FB1A1' }}></span>
                                 </div>
-                                <h3 className="font-weight-bold" style={{ color: '#4FB1A1', fontSize: '2.5rem' }}>156</h3>
-                                <span className="position mb-2 d-block">Education Retention</span>
+                                <h3 className="font-weight-bold" style={{ color: '#4FB1A1', fontSize: '2.5rem' }}>1,200+</h3>
+                                <span className="position mb-2 d-block">Girls stayed in school</span>
                                 <p className="small text-muted">Girls supported to remain in school through facilitation and protection.</p>
                             </div>
                         </div>
@@ -57,8 +57,8 @@ export const ImpactStoriesPage = () => {
                                 <div className="icon-section mb-3">
                                     <span className="icon-business_center" style={{ fontSize: '50px', color: '#4FB1A1' }}></span>
                                 </div>
-                                <h3 className="font-weight-bold" style={{ color: '#4FB1A1', fontSize: '2.5rem' }}>89</h3>
-                                <span className="position mb-2 d-block">Businesses Launched</span>
+                                <h3 className="font-weight-bold" style={{ color: '#4FB1A1', fontSize: '2.5rem' }}>450+</h3>
+                                <span className="position mb-2 d-block">Businesses launched</span>
                                 <p className="small text-muted">Women entrepreneurs supported through IkiraroBiz graduation approach.</p>
                             </div>
                         </div>
@@ -67,8 +67,8 @@ export const ImpactStoriesPage = () => {
                                 <div className="icon-section mb-3">
                                     <span className="icon-star" style={{ fontSize: '50px', color: '#4FB1A1' }}></span>
                                 </div>
-                                <h3 className="font-weight-bold" style={{ color: '#4FB1A1', fontSize: '2.5rem' }}>124</h3>
-                                <span className="position mb-2 d-block">Change Champions</span>
+                                <h3 className="font-weight-bold" style={{ color: '#4FB1A1', fontSize: '2.5rem' }}>300+</h3>
+                                <span className="position mb-2 d-block">Change Champions trained</span>
                                 <p className="small text-muted">Leaders empowered through human capital development and mindset shift.</p>
                             </div>
                         </div>
@@ -311,6 +311,19 @@ export const ImpactStoriesPage = () => {
                                         reporting.</p>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="ftco-section-3 img" style={{ backgroundImage: "url(/images/bg_3.jpg)" }}>
+                <div className="overlay"></div>
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div className="col-md-7 heading-section ftco-animate text-center">
+                            <h2 className="mb-4 text-white">Help Us Scale Our Impact</h2>
+                            <p className="text-white opacity-75">Every contribution helps us reach more girls and transform more communities.</p>
+                            <p className="mt-4"><Link to="/donate" className="btn btn-primary px-5 py-3 font-weight-bold shadow">Donate Now</Link></p>
                         </div>
                     </div>
                 </div>

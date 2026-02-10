@@ -35,7 +35,6 @@ function AppContent() {
 
         if (publicStyle && adminStyle) {
             if (isDashboard) {
-                // Keep public style enabled for Bootstrap and base styles
                 publicStyle.disabled = false;
                 adminStyle.disabled = false;
             } else {
@@ -43,10 +42,38 @@ function AppContent() {
                 adminStyle.disabled = true;
             }
         }
-    }, [isDashboard]);
+
+        // Failsafe cleanup for potential stuck overlays or body classes
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = 'auto';
+        document.body.style.paddingRight = '0';
+        const loader = document.getElementById('ftco-loader');
+        if (loader) loader.classList.remove('show');
+
+        // Remove lingering backdrop if any
+        const backdrops = document.getElementsByClassName('modal-backdrop');
+        while (backdrops.length > 0) {
+            backdrops[0].parentNode?.removeChild(backdrops[0]);
+        }
+    }, [isDashboard, location.pathname]);
 
     return (
-        <div className="app-container" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', overflowX: 'hidden' }}>
+        <div className="app-container" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', overflowX: 'hidden', backgroundColor: '#FFFFFF' }}>
+            <style>{`
+                body, html {
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    height: 100% !important;
+                    min-height: 100% !important;
+                    overflow-x: hidden;
+                    background-color: #FFFFFF;
+                }
+                #root {
+                    min-height: 100vh;
+                    display: flex;
+                    flex-direction: column;
+                }
+            `}</style>
             {!isDashboard && <Navbar />}
             <main style={{ flex: 1, paddingTop: isDashboard ? '0' : '0' }}>
                 <Routes>
@@ -75,14 +102,24 @@ function AppContent() {
     );
 }
 
+import { ScrollToTop } from './components/layout/ScrollToTop';
+import { FloatingScrollToTop } from './components/layout/FloatingScrollToTop';
+import { Chatbot } from './components/layout/Chatbot';
+import { LanguageProvider } from './lib/language-context';
+
 function App() {
     return (
-        <AuthProvider>
-            <Toaster position="top-right" richColors />
-            <HashRouter>
-                <AppContent />
-            </HashRouter>
-        </AuthProvider>
+        <LanguageProvider>
+            <AuthProvider>
+                <Toaster position="top-right" richColors />
+                <HashRouter>
+                    <ScrollToTop />
+                    <AppContent />
+                    <FloatingScrollToTop />
+                    <Chatbot />
+                </HashRouter>
+            </AuthProvider>
+        </LanguageProvider>
     );
 }
 

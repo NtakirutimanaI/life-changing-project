@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../lib/language-context';
 import { useLegacyScripts } from '../hooks/useLegacyScripts';
 
 export const AboutPage = () => {
     useLegacyScripts();
+    const { t } = useLanguage();
 
     return (
         <>
@@ -14,7 +16,7 @@ export const AboutPage = () => {
                         <div className="col-md-7 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
                             <p className="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span className="mr-2"><Link
                                 to="/">Home</Link></span> <span>About</span></p>
-                            <h1 className="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">About Us</h1>
+                            <h1 className="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">{t('about.title')}</h1>
                         </div>
                     </div>
                 </div>
@@ -45,14 +47,14 @@ export const AboutPage = () => {
                     <div className="row">
                         <div className="col-md-6 ftco-animate">
                             <div className="p-4 bg-white shadow-sm h-100">
-                                <h3 className="mb-3" style={{ color: '#4FB1A1' }}>Our Vision</h3>
+                                <h3 className="mb-3" style={{ color: '#4FB1A1' }}>{t('about.vision_title')}</h3>
                                 <p data-cms="vision">A society where young women and girls are mentally strong, educated, and economically
                                     empowered — free to lead and thrive in their communities.</p>
                             </div>
                         </div>
                         <div className="col-md-6 ftco-animate">
                             <div className="p-4 bg-white shadow-sm h-100">
-                                <h3 className="mb-3" style={{ color: '#4FB1A1' }}>Our Mission</h3>
+                                <h3 className="mb-3" style={{ color: '#4FB1A1' }}>{t('about.mission_title')}</h3>
                                 <p data-cms="mission">To walk alongside girls and women as they heal, grow, and thrive — through mindset
                                     shift, mental resilience, quality education, and sustainable economic empowerment.</p>
                             </div>
@@ -65,7 +67,7 @@ export const AboutPage = () => {
                 <div className="container">
                     <div className="row justify-content-center mb-5 pb-3">
                         <div className="col-md-7 heading-section ftco-animate text-center">
-                            <h2 className="mb-4">Our Core Values</h2>
+                            <h2 className="mb-4">{t('about.values_title')}</h2>
                             <p>The principles that guide our work and commitment to our beneficiaries.</p>
                         </div>
                     </div>
@@ -186,6 +188,19 @@ export const AboutPage = () => {
                                         sectors.</p>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="ftco-section-3 img" style={{ backgroundImage: "url(/images/bg_3.jpg)" }}>
+                <div className="overlay"></div>
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div className="col-md-7 heading-section ftco-animate text-center">
+                            <h2 className="mb-4 text-white">Join Our Mission</h2>
+                            <p className="text-white opacity-75">Your support enables us to continue our vital work in the community.</p>
+                            <p className="mt-4"><Link to="/donate" className="btn btn-primary px-5 py-3 font-weight-bold shadow">Donate Now</Link></p>
                         </div>
                     </div>
                 </div>

@@ -26,50 +26,50 @@ export const StrategicDirectionPage = () => {
                 <div className="container">
                     <div className="row no-gutters">
                         <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                            <div className="block-18 color-1 align-items-stretch">
-                                <div className="text">
-                                    <span>Women Empowered</span>
-                                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap' }}>
-                                        <strong className="number" data-number="500" style={{ display: 'inline-block' }}>0</strong>
-                                        <span
-                                            style={{ display: 'inline-block !important', fontSize: '35px', color: '#000', marginLeft: '2px', fontWeight: 400 }}>+</span>
+                            <div className="block-18 color-1 align-items-stretch" style={{ padding: '15px 10px' }}>
+                                <div className="text text-center">
+                                    <span style={{ fontSize: '13px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Women & Girls</span>
+                                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap', margin: '5px 0' }}>
+                                        <strong className="number" data-number="5000" style={{ fontSize: '32px' }}>0</strong>
+                                        <span style={{ fontSize: '24px', color: '#000', fontWeight: 600 }}>+</span>
                                     </div>
-                                    <span>Reached & Empowered</span>
+                                    <span style={{ fontSize: '13px', lineHeight: '1.2' }}>Reached & Empowered</span>
                                 </div>
                             </div>
                         </div>
                         <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                            <div className="block-18 color-2 align-items-stretch">
-                                <div className="text">
-                                    <span>Businesses Started</span>
-                                    <strong className="number" data-number="120">0</strong>
-                                    <span>Sustainable income generation</span>
+                            <div className="block-18 color-2 align-items-stretch" style={{ padding: '15px 10px' }}>
+                                <div className="text text-center">
+                                    <span style={{ fontSize: '13px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Education</span>
+                                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap', margin: '5px 0' }}>
+                                        <strong className="number" data-number="1200" style={{ fontSize: '32px' }}>0</strong>
+                                        <span style={{ fontSize: '24px', color: '#000', fontWeight: 600 }}>+</span>
+                                    </div>
+                                    <span style={{ fontSize: '13px', lineHeight: '1.2' }}>Girls stayed in school</span>
                                 </div>
                             </div>
                         </div>
                         <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                            <div className="block-18 color-3 align-items-stretch">
-                                <div className="text">
-                                    <span>Health Screenings</span>
-                                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap' }}>
-                                        <strong className="number" data-number="1500" style={{ display: 'inline-block' }}>0</strong>
-                                        <span
-                                            style={{ display: 'inline-block !important', fontSize: '35px', color: '#000', marginLeft: '2px', fontWeight: 400 }}>+</span>
+                            <div className="block-18 color-3 align-items-stretch" style={{ padding: '15px 10px' }}>
+                                <div className="text text-center">
+                                    <span style={{ fontSize: '13px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px' }}>Livelihoods</span>
+                                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap', margin: '5px 0' }}>
+                                        <strong className="number" data-number="450" style={{ fontSize: '32px' }}>0</strong>
+                                        <span style={{ fontSize: '24px', color: '#000', fontWeight: 600 }}>+</span>
                                     </div>
-                                    <span>Improving community well-being</span>
+                                    <span style={{ fontSize: '13px', lineHeight: '1.2' }}>Businesses launched</span>
                                 </div>
                             </div>
                         </div>
                         <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                            <div className="block-18 color-4 align-items-stretch">
-                                <div className="text">
-                                    <span>Success Rate</span>
-                                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap' }}>
-                                        <strong className="number" data-number="95" style={{ display: 'inline-block' }}>0</strong>
-                                        <span
-                                            style={{ display: 'inline-block !important', fontSize: '35px', color: '#000', marginLeft: '2px', fontWeight: 400 }}>%</span>
+                            <div className="block-18 color-4 align-items-stretch" style={{ padding: '15px 10px' }}>
+                                <div className="text text-center text-white">
+                                    <span style={{ fontSize: '13px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '5px', color: '#fff' }}>Leadership</span>
+                                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', whiteSpace: 'nowrap', margin: '5px 0' }}>
+                                        <strong className="number" data-number="300" style={{ fontSize: '32px', color: '#fff' }}>0</strong>
+                                        <span style={{ fontSize: '24px', color: '#fff', fontWeight: 600 }}>+</span>
                                     </div>
-                                    <span>Change Champions trained</span>
+                                    <span style={{ fontSize: '13px', lineHeight: '1.2', color: '#fff' }}>Change Champions trained</span>
                                 </div>
                             </div>
                         </div>
@@ -329,6 +329,19 @@ export const StrategicDirectionPage = () => {
                             <span className="icon-search"></span>
                         </div>
                     </a>
+                </div>
+            </section>
+
+            <section className="ftco-section-3 img" style={{ backgroundImage: "url(/images/bg_3.jpg)" }}>
+                <div className="overlay"></div>
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div className="col-md-7 heading-section ftco-animate text-center">
+                            <h2 className="mb-4 text-white">Join Our Mission</h2>
+                            <p className="text-white opacity-75">Your support enables us to continue our vital work in the community.</p>
+                            <p className="mt-4"><Link to="/donate" className="btn btn-primary px-5 py-3 font-weight-bold shadow">Donate Now</Link></p>
+                        </div>
+                    </div>
                 </div>
             </section>
 

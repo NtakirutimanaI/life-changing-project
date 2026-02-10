@@ -1,27 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FloatingScrollToTop } from './FloatingScrollToTop';
+import { Chatbot } from './Chatbot';
 
 export const Footer = () => {
     return (
-        <footer className="ftco-footer ftco-section" style={{ background: 'linear-gradient(180deg, #2c5f56 0%, #1e4139 100%)', paddingTop: '80px', paddingBottom: '40px', color: 'rgba(255,255,255,0.9)' }}>
+        <footer className="ftco-footer ftco-section" style={{ background: 'linear-gradient(180deg, #2c5f56 0%, #1e4139 100%)', paddingTop: '60px', paddingBottom: '0px', marginBottom: '0px', color: 'rgba(255,255,255,0.9)', position: 'relative' }}>
             <div className="container">
-                {/* Newsletter Section */}
-                <div className="row mb-5 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                    <div className="col-md-12 text-center">
-                        <div className="max-w-2xl mx-auto">
-                            <h3 className="text-white mb-3" style={{ fontWeight: 700 }}>Stay Connected</h3>
-                            <p className="mb-5">Subscribe to our newsletter for updates, impact stories, and ways to get involved.</p>
-                            <form action="#" className="subscribe-form d-flex justify-content-center">
-                                <div className="form-group d-flex" style={{ maxWidth: '500px', width: '100%' }}>
-                                    <input type="text" className="form-control" placeholder="Enter email address"
-                                        style={{ borderRadius: '30px 0 0 30px', border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(255,255,255,0.1)', color: '#fff' }} />
-                                    <button type="submit" className="btn btn-primary px-4"
-                                        style={{ borderRadius: '0 30px 30px 0', backgroundColor: '#eacfa2', color: '#1e4139', border: 'none', fontWeight: 700 }}>Subscribe</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
 
                 <div className="row mb-5">
                     {/* Brand */}
@@ -73,25 +58,20 @@ export const Footer = () => {
                             <div className="block-23 mb-3">
                                 <ul>
                                     <li><span className="icon icon-map-marker" style={{ color: '#eacfa2' }}></span><span className="text">Bugesera District, Nyamata Sector Eastern Province, Rwanda</span></li>
-                                    <li><a href="tel:+250788123456"><span className="icon icon-phone" style={{ color: '#eacfa2' }}></span><span className="text">+250 788 123 456</span></a></li>
-                                    <li><a href="mailto:info@lceo.org"><span className="icon icon-envelope" style={{ color: '#eacfa2' }}></span><span className="text">info@lceo.org</span></a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="row pt-5" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                <div className="row py-4" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
                     <div className="col-md-12 text-center">
-                        <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px' }}>
+                        <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px', marginBottom: '0' }}>
                             Copyright &copy; {new Date().getFullYear()} Life-Changing Endeavor Organization. All rights reserved.
                         </p>
-                        <div className="mt-2 text-center">
-                            <a href="#" style={{ color: 'rgba(255,255,255,0.6)', margin: '0 10px' }}>Privacy Policy</a>
-                            <a href="#" style={{ color: 'rgba(255,255,255,0.6)', margin: '0 10px' }}>Terms of Service</a>
-                        </div>
                     </div>
                 </div>
+
             </div>
         </footer>
     );
