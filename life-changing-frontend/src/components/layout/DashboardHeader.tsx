@@ -92,10 +92,12 @@ export function DashboardHeader({ onMobileMenuClick }: DashboardHeaderProps) {
     switch (user.userType) {
       case UserType.ADMIN:
         return [
-          { label: "Add Beneficiary", icon: UserPlus, href: "/admin/beneficiaries/add" },
-          { label: "Add Donor", icon: Heart, href: "/admin/donors/add" },
-          { label: "New Report", icon: FileText, href: "/admin/reports" },
-          { label: "Manage Programs", icon: FolderKanban, href: "/admin/programs" },
+          { label: "New Beneficiary", icon: UserPlus, href: "/admin/beneficiaries/add", description: "Register a new girl/woman" },
+          { label: "New Donor", icon: Heart, href: "/admin/donors/add", description: "Record a new supporter" },
+          { label: "Financial Entry", icon: DollarSign, href: "/admin/financial", description: "Log income or expense" },
+          { label: "Create Program", icon: Plus, href: "/admin/programs", description: "Launch a new initiative" },
+          { label: "Manage Content", icon: Globe, href: "/admin/web-contents", description: "Update website sections" },
+          { label: "Impact Report", icon: FileText, href: "/admin/reports", description: "Generate new analytics" },
         ];
       case UserType.BENEFICIARY:
         return [
@@ -186,17 +188,33 @@ export function DashboardHeader({ onMobileMenuClick }: DashboardHeaderProps) {
                   <Plus className="h-5 w-5 text-teal-600 dark:text-teal-400" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-slate-200 dark:border-slate-800 shadow-2xl">
-                {quickAddItems.map((item) => (
-                  <DropdownMenuItem key={item.href} asChild className="rounded-xl focus:bg-teal-50 dark:focus:bg-teal-950/50">
-                    <Link to={item.href} className="flex items-center gap-3 py-2.5 cursor-pointer">
-                      <div className="p-1.5 bg-teal-100 dark:bg-teal-900 rounded-lg">
-                        <item.icon className="h-4 w-4 text-teal-600 dark:text-teal-400" />
-                      </div>
-                      <span className="font-semibold text-slate-700 dark:text-slate-200">{item.label}</span>
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
+              <DropdownMenuContent align="end" className="w-72 p-2 rounded-[2rem] border-slate-200/60 dark:border-slate-800 shadow-2xl animate-in zoom-in-95 duration-200">
+                <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 mb-2">
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Quick Command Center</p>
+                </div>
+                <div className="grid grid-cols-1 gap-1">
+                  {quickAddItems.map((item) => (
+                    <DropdownMenuItem key={item.href} asChild className="rounded-2xl focus:bg-teal-50 dark:focus:bg-teal-900/30 p-0">
+                      <Link to={item.href} className="flex items-center gap-4 px-3 py-2.5 cursor-pointer group/item">
+                        <div className="h-10 w-10 shrink-0 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-xl flex items-center justify-center group-hover/item:scale-110 group-hover/item:bg-teal-500 group-hover/item:text-white transition-all shadow-sm">
+                          <item.icon className="h-5 w-5 text-teal-600 dark:text-teal-400 group-hover/item:text-white transition-colors" />
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-sm font-black text-slate-900 dark:text-white leading-tight">{item.label}</span>
+                          {"description" in item && (
+                            <span className="text-[10px] font-medium text-slate-400 truncate mt-0.5">{(item as any).description}</span>
+                          )}
+                        </div>
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </div>
+                <DropdownMenuSeparator className="my-2 opacity-50" />
+                <div className="p-1">
+                  <Button variant="ghost" className="w-full justify-center text-[11px] font-black uppercase tracking-widest text-teal-600 hover:text-teal-700 hover:bg-teal-50 rounded-xl py-5 h-auto">
+                    Global Search Command (⌘K)
+                  </Button>
+                </div>
               </DropdownMenuContent>
             </DropdownMenu>
           )}
