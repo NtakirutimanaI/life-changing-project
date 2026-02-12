@@ -222,6 +222,11 @@ function AppContent() {
 
                     /* Icons */
                     .dark .lucide { color: inherit; }
+
+                    /* Responsive Helpers */
+                    @media (max-width: 450px) {
+                        .xs-hidden { display: none !important; }
+                    }
                 `}</style>
             )}
             {!hideGlobalElements && <Navbar />}
@@ -274,6 +279,7 @@ function AppContent() {
                             <Route path="tracking/add" element={<AddTrackingPage />} />
                             <Route path="resources" element={<BeneficiaryResourcesPage />} />
                             <Route path="resources/upload" element={<UploadDocumentPage />} />
+                            <Route path="search" element={<SearchResultsPage />} />
                         </Route>
                     </Route>
 
@@ -283,6 +289,7 @@ function AppContent() {
                             <Route index element={<DonorDashboard />} />
                             <Route path="donations" element={<DonorDonationsPage />} />
                             <Route path="reports" element={<ImpactReportsPage />} />
+                            <Route path="search" element={<SearchResultsPage />} />
                         </Route>
                     </Route>
 

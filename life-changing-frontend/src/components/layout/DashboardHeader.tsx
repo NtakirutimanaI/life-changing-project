@@ -22,6 +22,7 @@ import {
   FileText,
   ChevronDown,
   Globe,
+  X,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -51,16 +52,15 @@ export function DashboardHeader({ onMobileMenuClick }: DashboardHeaderProps) {
   const [messagesOpen, setMessagesOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      if (user?.userType === UserType.ADMIN) {
-        navigate(`/admin/search?q=${encodeURIComponent(searchQuery)}`);
-      } else {
-        // Generic search results for non-admins could be implemented later
-        toast.info("Search feature for beneficiaries is coming soon!");
-      }
+      const dashboardPrefix = user?.userType === UserType.ADMIN ? "/admin" :
+        user?.userType === UserType.DONOR ? "/donor" :
+          "/beneficiary";
+      navigate(`${dashboardPrefix}/search?q=${encodeURIComponent(searchQuery)}`);
       setSearchQuery("");
     }
   };
@@ -148,41 +148,62 @@ export function DashboardHeader({ onMobileMenuClick }: DashboardHeaderProps) {
               <Menu className="h-6 w-6" />
             </Button>
           )}
-          <Link to={getDashboardLink()} className="flex items-center gap-3 group transition-all hover:opacity-90">
-            <div className="bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-              <img src="/images/logo.png" alt="LCEO" className="h-8 w-8 object-contain" />
+          <Link to={getDashboardLink()} className="flex items-center gap-1 sm:gap-3 group transition-all hover:opacity-90">
+            <div className="bg-white dark:bg-slate-900 p-1 rounded-lg sm:p-1.5 sm:rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm shrink-0">
+              <img src="/images/logo.png" alt="LCEO" className="h-6 w-6 sm:h-8 sm:w-8 object-contain" />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-black tracking-tight text-teal-950 dark:text-white leading-none">
+              <span className="text-lg sm:text-xl font-black tracking-tight text-teal-950 dark:text-white leading-none">
                 LCEO<span className="text-teal-500">.</span>
               </span>
-              <span className="text-[11px] font-bold text-teal-600 dark:text-teal-500 tracking-[0.15em] uppercase leading-none mt-1 hidden sm:block">
-                Life Changing
+              <span className="text-[9px] sm:text-[11px] font-bold text-teal-600 dark:text-teal-500 tracking-[0.15em] uppercase leading-none mt-1 hidden sm:block xs-hidden">
+                Portal
               </span>
             </div>
           </Link>
         </div>
 
-        {/* Search */}
-        <form onSubmit={handleSearch} className="hidden sm:flex flex-1 items-center max-w-2xl mx-2 md:mx-4 group/search">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <Input
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 md:px-6 h-10 bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 rounded-l-full rounded-r-none focus-visible:bg-white dark:focus-visible:bg-slate-950 focus-visible:ring-4 focus-visible:ring-teal-500/10 focus-visible:border-teal-500 transition-all font-medium text-slate-900 dark:text-slate-100 placeholder:text-slate-400 border-r-0 text-sm pl-9"
-            />
-          </div>
-          <Button
-            type="submit"
-            className="hidden lg:flex h-10 px-8 rounded-r-full rounded-l-none bg-teal-600 hover:bg-teal-700 text-white font-bold transition-all shadow-md shadow-teal-500/10 hover:shadow-teal-500/20 active:scale-[0.98] border border-teal-600"
-          >
-            Search
-          </Button>
-        </form>
 
-        <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          {/* Collapsible Search - Compact Centered Pill */}
+          <div className="flex items-center">
+            {!searchOpen ? (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setSearchOpen(true)}
+                className="h-10 w-10 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-transparent hover:border-teal-100 dark:hover:border-teal-900 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition-all"
+                title="Open search"
+              >
+                <Search className="h-5 w-5 text-teal-600 dark:text-teal-400" />
+              </Button>
+            ) : (
+              <div className="absolute left-1/2 -translate-x-1/2 w-[280px] sm:w-[350px] lg:w-[450px] animate-in zoom-in-95 slide-in-from-top-2 duration-300 z-[70]">
+                <form onSubmit={handleSearch} className="relative flex items-center group">
+                  <div className="absolute left-3 flex items-center justify-center pointer-events-none">
+                    <Search className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+                  </div>
+                  <Input
+                    autoFocus
+                    placeholder="Search account..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full h-10 bg-white dark:bg-slate-900 border-teal-500/30 dark:border-teal-500/20 rounded-full focus-visible:ring-4 focus-visible:ring-teal-500/10 focus-visible:border-teal-500 transition-all font-medium text-slate-900 dark:text-slate-100 placeholder:text-slate-400 text-sm pl-12 pr-10 shadow-lg shadow-teal-500/5"
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setSearchOpen(false)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 h-8 w-8 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition-all flex items-center justify-center"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </form>
+              </div>
+            )}
+          </div>
+
           {/* Quick Add (+) */}
           {quickAddItems.length > 0 && (
             <DropdownMenu>

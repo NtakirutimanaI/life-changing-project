@@ -16,10 +16,14 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { mockBeneficiaries, mockDonors, mockPrograms, mockStaff } from '@/lib/mock-data';
 import { motion } from 'framer-motion';
+import { useAuth } from '@/lib/auth-context';
+import { UserType } from '@/lib/types';
 
 export function SearchResultsPage() {
+    const { user } = useAuth();
     const [searchParams] = useSearchParams();
     const query = searchParams.get('q') || '';
+    const isAdmin = user?.userType === UserType.ADMIN;
 
     const results = {
         beneficiaries: mockBeneficiaries.filter(b =>
@@ -118,7 +122,7 @@ export function SearchResultsPage() {
                                                     </Badge>
                                                 </div>
                                                 <Button size="icon" variant="ghost" className="shrink-0" asChild>
-                                                    <Link to={`/admin/beneficiaries?search=${encodeURIComponent(ben.fullName)}`}>
+                                                    <Link to={isAdmin ? `/admin/beneficiaries?search=${encodeURIComponent(ben.fullName)}` : '#'}>
                                                         <ArrowRight className="w-4 h-4" />
                                                     </Link>
                                                 </Button>
@@ -155,8 +159,8 @@ export function SearchResultsPage() {
                                                     {prog.description.en}
                                                 </p>
                                                 <Button variant="outline" size="sm" className="w-full" asChild>
-                                                    <Link to="/admin/programs" className="flex items-center justify-center gap-2">
-                                                        Manage Program <ExternalLink className="w-3 h-3" />
+                                                    <Link to={isAdmin ? "/admin/programs" : "/our-programs-details"} className="flex items-center justify-center gap-2">
+                                                        {isAdmin ? "Manage Program" : "View Details"} <ExternalLink className="w-3 h-3" />
                                                     </Link>
                                                 </Button>
                                             </CardContent>
