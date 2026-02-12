@@ -68,8 +68,11 @@ export default function DonorsPage() {
           <h1 className="text-4xl font-extrabold text-teal-900 dark:text-white tracking-tight">Donor Management</h1>
           <p className="text-teal-600 dark:text-teal-400 font-medium mt-1">Manage and engage with your donor community</p>
         </div>
-        <Button className="bg-red-600 hover:bg-red-700" onClick={() => navigate('/admin/donors/add')}>
-          <UserPlus className="w-4 h-4 mr-2" />
+        <Button
+          className="h-10 px-6 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-bold uppercase tracking-wider shadow-lg shadow-teal-600/10 transition-all active:scale-95 gap-2 text-xs"
+          onClick={() => navigate('/admin/donors/add')}
+        >
+          <UserPlus size={16} strokeWidth={3} />
           Add New Donor
         </Button>
       </div>
