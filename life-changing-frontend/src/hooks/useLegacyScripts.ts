@@ -22,11 +22,15 @@ export function useLegacyScripts() {
             }
         };
 
-        // AOS Init
+        // AOS Init - Optimized for smooth animations
         if (window.AOS) {
             window.AOS.init({
-                duration: 800,
-                easing: 'slide'
+                duration: 600, // Reduced from 800ms for snappier animations
+                easing: 'ease-out-cubic', // Changed from 'slide' for smoother motion
+                once: true, // Animate only once for better performance
+                offset: 100, // Trigger animations earlier
+                delay: 0, // Remove default delay
+                disable: false
             });
         }
 
@@ -60,29 +64,38 @@ export function useLegacyScripts() {
             $.Scrollax();
         });
 
-        // Carousel
+        // Carousel - Fixed initialization
         safeExecute('OwlCarousel', () => {
-            // Destroy existing if any to prevent duplication
             const $carousel = $('.carousel-cause');
-            if ($carousel.data('owl.carousel')) {
-                $carousel.trigger('destroy.owl.carousel');
+
+            // Only destroy if carousel is actually initialized
+            if ($carousel.length && $carousel.hasClass('owl-loaded')) {
+                try {
+                    $carousel.trigger('destroy.owl.carousel');
+                    $carousel.removeClass('owl-loaded owl-drag owl-grab');
+                } catch (e) {
+                    console.warn('OwlCarousel destroy warning:', e);
+                }
             }
 
-            $carousel.owlCarousel({
-                autoplay: true,
-                center: true,
-                loop: true,
-                items: 1,
-                margin: 30,
-                stagePadding: 0,
-                nav: true,
-                navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
-                responsive: {
-                    0: { items: 1, stagePadding: 0 },
-                    600: { items: 2, stagePadding: 50 },
-                    1000: { items: 3, stagePadding: 100 }
-                }
-            });
+            // Initialize carousel
+            if ($carousel.length) {
+                $carousel.owlCarousel({
+                    autoplay: true,
+                    center: true,
+                    loop: true,
+                    items: 1,
+                    margin: 30,
+                    stagePadding: 0,
+                    nav: true,
+                    navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
+                    responsive: {
+                        0: { items: 1, stagePadding: 0 },
+                        600: { items: 2, stagePadding: 50 },
+                        1000: { items: 3, stagePadding: 100 }
+                    }
+                });
+            }
         });
 
         // Counter
@@ -104,7 +117,7 @@ export function useLegacyScripts() {
             }, { offset: '95%' });
         });
 
-        // Content Waypoint
+        // Content Waypoint - Optimized for smoother animations
         safeExecute('ContentWaypoint', () => {
             $('.ftco-animate').waypoint(function (this: any, direction: string) {
                 if (direction === 'down' && !$(this.element).hasClass('ftco-animated')) {
@@ -127,11 +140,11 @@ export function useLegacyScripts() {
                                     el.addClass('fadeInUp ftco-animated');
                                 }
                                 el.removeClass('item-animate');
-                            }, k * 50, 'easeInOutExpo');
+                            }, k * 30, 'easeInOutExpo'); // Reduced from 50ms to 30ms for smoother cascade
                         });
-                    }, 100);
+                    }, 50); // Reduced from 100ms to 50ms for faster initial trigger
                 }
-            }, { offset: '95%' });
+            }, { offset: '85%' }); // Changed from 95% to 85% so animations trigger earlier
         });
 
         // Magnific Popup

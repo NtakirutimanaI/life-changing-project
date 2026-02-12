@@ -1,0 +1,357 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Search,
+  Plus,
+  Sun,
+  Moon,
+  MessageSquare,
+  Bell,
+  User,
+  LayoutDashboard,
+  LogOut,
+  Target,
+  Menu,
+  DollarSign,
+  Calendar,
+  Upload,
+  FolderKanban,
+  Heart,
+  Users,
+  UserPlus,
+  FileText,
+  ChevronDown,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/lib/auth-context";
+import { UserType } from "@/lib/types";
+import { useTheme } from "next-themes";
+
+interface DashboardHeaderProps {
+  onMobileMenuClick?: () => void;
+}
+
+export function DashboardHeader({ onMobileMenuClick }: DashboardHeaderProps) {
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+  const { theme, setTheme } = useTheme();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [messagesOpen, setMessagesOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/admin/search?q=${encodeURIComponent(searchQuery)}`);
+      setSearchQuery("");
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
+  const getDashboardLink = () => {
+    if (!user) return "/";
+    switch (user.userType) {
+      case UserType.ADMIN:
+        return "/admin";
+      case UserType.DONOR:
+        return "/donor";
+      case UserType.BENEFICIARY:
+        return "/beneficiary";
+      default:
+        return "/";
+    }
+  };
+
+  const initials = user?.fullName
+    ? user.fullName
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .substring(0, 2)
+      .toUpperCase()
+    : "U";
+
+  const quickAddItems = (() => {
+    if (!user) return [];
+
+    switch (user.userType) {
+      case UserType.ADMIN:
+        return [
+          { label: "Add Beneficiary", icon: UserPlus, href: "/admin/beneficiaries/add" },
+          { label: "Add Donor", icon: Heart, href: "/admin/donors/add" },
+          { label: "New Report", icon: FileText, href: "/admin/reports" },
+          { label: "Manage Programs", icon: FolderKanban, href: "/admin/programs" },
+        ];
+      case UserType.BENEFICIARY:
+        return [
+          { label: "Add New Goal", icon: Target, href: "/beneficiary/goals/add" },
+          { label: "Log Progress", icon: Calendar, href: "/beneficiary/tracking/add" },
+          { label: "Upload Document", icon: Upload, href: "/beneficiary/resources/upload" },
+        ];
+      case UserType.DONOR:
+        return [
+          { label: "Make Donation", icon: DollarSign, href: "/donate" },
+          { label: "Impact Reports", icon: FileText, href: "/donor/reports" },
+          { label: "Donation History", icon: Heart, href: "/donor/donations" },
+        ];
+      default:
+        return [];
+    }
+  })();
+
+  const mockNotifications = [
+    { id: 1, text: "New donation received: $500", time: "2 mins ago", type: "donation" },
+    { id: 2, text: "Beneficiary Ineza Keza updated goals", time: "1 hour ago", type: "update" },
+    { id: 3, text: "Quarterly report is ready for review", time: "5 hours ago", type: "report" },
+  ];
+
+  const mockMessages = [
+    { id: 1, sender: "Robert Donor", text: "I'd like to increase my monthly gift", time: "10 mins ago" },
+    { id: 2, sender: "Ineza Keza", text: "Thank you for the support!", time: "2 hours ago" },
+  ];
+
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 w-full h-16 border-b bg-white dark:bg-slate-950 shadow-sm transition-all duration-300">
+      <div className="flex h-full items-center justify-between gap-4 px-4 md:px-8 max-w-[1600px] mx-auto">
+        <div className="flex items-center gap-3 shrink-0">
+          {onMobileMenuClick && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden h-10 w-10 hover:bg-teal-50 dark:hover:bg-teal-950/30 text-teal-700 dark:text-teal-400"
+              onClick={onMobileMenuClick}
+            >
+              <Menu className="h-6 w-6" />
+            </Button>
+          )}
+          <Link to={getDashboardLink()} className="flex items-center gap-3 group transition-all hover:opacity-90">
+            <div className="bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+              <img src="/images/logo.png" alt="LCEO" className="h-8 w-8 object-contain" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl font-black tracking-tight text-teal-950 dark:text-white leading-none">
+                LCEO<span className="text-teal-500">.</span>
+              </span>
+              <span className="text-[11px] font-bold text-teal-600 dark:text-teal-500 tracking-[0.15em] uppercase leading-none mt-1 hidden sm:block">
+                Life Changing
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        {/* Search */}
+        <form onSubmit={handleSearch} className="flex-1 flex items-center max-w-2xl mx-4 group/search">
+          <div className="relative flex-1">
+            <Input
+              placeholder="Search beneficiaries, programs, reports..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-6 h-10 bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 rounded-l-full rounded-r-none focus-visible:bg-white dark:focus-visible:bg-slate-950 focus-visible:ring-4 focus-visible:ring-teal-500/10 focus-visible:border-teal-500 transition-all font-medium text-slate-900 dark:text-slate-100 placeholder:text-slate-400 border-r-0"
+            />
+          </div>
+          <Button
+            type="submit"
+            className="hidden md:flex h-10 px-8 rounded-r-full rounded-l-none bg-teal-600 hover:bg-teal-700 text-white font-bold transition-all shadow-md shadow-teal-500/10 hover:shadow-teal-500/20 active:scale-[0.98] border border-teal-600"
+          >
+            Search
+          </Button>
+        </form>
+
+        <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+          {/* Quick Add (+) */}
+          {quickAddItems.length > 0 && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-10 w-10 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-transparent hover:border-teal-100 dark:hover:border-teal-900 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition-all"
+                  aria-label="Quick add"
+                >
+                  <Plus className="h-5 w-5 text-teal-600 dark:text-teal-400" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl border-slate-200 dark:border-slate-800 shadow-2xl">
+                {quickAddItems.map((item) => (
+                  <DropdownMenuItem key={item.href} asChild className="rounded-xl focus:bg-teal-50 dark:focus:bg-teal-950/50">
+                    <Link to={item.href} className="flex items-center gap-3 py-2.5 cursor-pointer">
+                      <div className="p-1.5 bg-teal-100 dark:bg-teal-900 rounded-lg">
+                        <item.icon className="h-4 w-4 text-teal-600 dark:text-teal-400" />
+                      </div>
+                      <span className="font-semibold text-slate-700 dark:text-slate-200">{item.label}</span>
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+
+          {/* Theme Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="h-10 w-10 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-transparent hover:border-teal-100 dark:hover:border-teal-900 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition-all"
+          >
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5 text-amber-500" />
+            ) : (
+              <Moon className="h-5 w-5 text-slate-600" />
+            )}
+          </Button>
+
+          {/* Messages */}
+          <DropdownMenu open={messagesOpen} onOpenChange={setMessagesOpen}>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-10 w-10 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-transparent hover:border-teal-100 dark:hover:border-teal-900 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition-all relative"
+              >
+                <MessageSquare className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+                <span className="absolute top-2 right-2 w-2 h-2 bg-teal-500 rounded-full border-2 border-white dark:border-gray-950" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-80 p-0 rounded-2xl border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
+              <div className="p-4 bg-slate-50 dark:bg-slate-900/50 border-b">
+                <DropdownMenuLabel className="font-bold text-slate-900 dark:text-white p-0">Messages</DropdownMenuLabel>
+              </div>
+              <div className="max-h-80 overflow-y-auto">
+                {mockMessages.map(msg => (
+                  <DropdownMenuItem key={msg.id} className="p-4 border-b last:border-0 focus:bg-slate-50 dark:focus:bg-slate-900/50 gap-3">
+                    <Avatar className="h-10 w-10 border-2 border-teal-100 dark:border-teal-900">
+                      <AvatarFallback className="bg-teal-500 text-white font-bold">{msg.sender[0]}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-sm text-slate-900 dark:text-slate-200">{msg.sender}</p>
+                      <p className="text-xs text-slate-500 truncate">{msg.text}</p>
+                      <p className="text-[10px] text-teal-600 mt-1 font-medium">{msg.time}</p>
+                    </div>
+                  </DropdownMenuItem>
+                ))}
+              </div>
+              <div className="p-2 border-t text-center">
+                <Button variant="ghost" size="sm" className="w-full text-xs font-bold text-teal-600 hover:text-teal-700">View All Messages</Button>
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Notifications */}
+          <DropdownMenu open={notificationsOpen} onOpenChange={setNotificationsOpen}>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-10 w-10 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-transparent hover:border-teal-100 dark:hover:border-teal-900 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition-all relative"
+              >
+                <Bell className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+                <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-gray-950 animate-pulse" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-80 p-0 rounded-2xl border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
+              <div className="p-4 bg-slate-50 dark:bg-slate-900/50 border-b">
+                <DropdownMenuLabel className="font-bold text-slate-900 dark:text-white p-0">Recent Activity</DropdownMenuLabel>
+              </div>
+              <div className="max-h-80 overflow-y-auto">
+                {mockNotifications.map(note => (
+                  <DropdownMenuItem key={note.id} className="p-4 border-b last:border-0 focus:bg-slate-50 dark:focus:bg-slate-900/50 gap-3">
+                    <div className={`p-2 rounded-xl ${note.type === 'donation' ? 'bg-green-100 text-green-600' : 'bg-blue-100 text-blue-600'}`}>
+                      {note.type === 'donation' ? <Heart className="h-4 w-4" /> : <Bell className="h-4 w-4" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-slate-900 dark:text-slate-200 break-words line-clamp-2">{note.text}</p>
+                      <p className="text-[10px] text-slate-500 mt-1">{note.time}</p>
+                    </div>
+                  </DropdownMenuItem>
+                ))}
+              </div>
+              <div className="p-2 border-t text-center">
+                <Button variant="ghost" size="sm" className="w-full text-xs font-bold text-teal-600 hover:text-teal-700">Clear All Notifications</Button>
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Profile */}
+          <div className="flex items-center gap-0.5 bg-teal-50/50 dark:bg-teal-950/20 rounded-2xl border border-teal-100/50 dark:border-teal-900/50 h-11 transition-all">
+            <Link
+              to="/profile"
+              className="flex items-center gap-3 pl-2 pr-2 h-full hover:bg-teal-100 dark:hover:bg-teal-900 rounded-l-2xl transition-all group"
+            >
+              <Avatar className="h-8 w-8 ring-2 ring-white dark:ring-slate-900 shadow-md shrink-0">
+                <AvatarImage src={user?.profileImageUrl} alt="" />
+                <AvatarFallback className="bg-gradient-to-br from-teal-400 to-teal-600 text-white font-black text-xs">
+                  {initials}
+                </AvatarFallback>
+              </Avatar>
+              <div className="hidden lg:block text-left">
+                <p className="text-xs font-black text-teal-900 dark:text-white truncate max-w-[80px]">{user?.fullName?.split(' ')[0]}</p>
+                <p className="text-[10px] font-bold text-teal-600 uppercase tracking-tighter">Portal</p>
+              </div>
+            </Link>
+
+            <DropdownMenu open={profileMenuOpen} onOpenChange={setProfileMenuOpen}>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-full w-8 rounded-r-2xl hover:bg-teal-100 dark:hover:bg-teal-900 flex items-center justify-center p-0 border-l border-teal-100/50 dark:border-teal-900/50"
+                >
+                  <ChevronDown className={`h-4 w-4 text-teal-600 transition-transform duration-200 ${profileMenuOpen ? 'rotate-180' : ''}`} />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-64 p-2 rounded-2xl border-slate-200 dark:border-slate-800 shadow-2xl">
+                <DropdownMenuItem asChild className="p-0 rounded-xl focus:bg-transparent mb-1">
+                  <Link to="/profile" className="w-full px-3 py-3 bg-slate-50 dark:bg-slate-900 hover:bg-teal-50 dark:hover:bg-teal-900/40 rounded-xl transition-all block group/summary">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="h-10 w-10 border-2 border-white dark:border-slate-800 shrink-0">
+                        <AvatarImage src={user?.profileImageUrl} alt="" />
+                        <AvatarFallback className="bg-teal-500 text-white font-bold">{initials}</AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-black text-slate-900 dark:text-white truncate group-hover/summary:text-teal-600 transition-colors">{user?.fullName}</p>
+                        <p className="text-[10px] font-medium text-slate-500 truncate">{user?.email}</p>
+                      </div>
+                    </div>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="my-1 opacity-50" />
+                <DropdownMenuItem asChild className="rounded-xl">
+                  <Link to="/profile" className="flex items-center gap-3 py-2.5 font-semibold text-slate-700 dark:text-slate-200">
+                    <User className="h-4 w-4 text-teal-500" />
+                    View Profile
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="rounded-xl">
+                  <Link to={getDashboardLink()} className="flex items-center gap-3 py-2.5 font-semibold text-slate-700 dark:text-slate-200">
+                    <LayoutDashboard className="h-4 w-4 text-teal-500" />
+                    My Dashboard
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="my-2" />
+                <DropdownMenuItem className="rounded-xl focus:bg-red-50 dark:focus:bg-red-950/20 text-red-600 dark:text-red-400 font-bold" onClick={handleLogout}>
+                  <LogOut className="h-4 w-4 mr-3" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}

@@ -7,10 +7,10 @@ export const ImpactStoriesPage = () => {
 
     return (
         <>
-            <div className="hero-wrap hero-wrap-2" style={{ backgroundImage: "url('/images/bg_2.jpg')", height: '400px', minHeight: '400px' }} data-stellar-background-ratio="0.5">
+            <div className="hero-wrap hero-wrap-2" style={{ backgroundImage: "url('/images/bg_2.jpg')", height: '500px', minHeight: '500px' }} data-stellar-background-ratio="0.5">
                 <div className="overlay"></div>
                 <div className="container">
-                    <div className="row no-gutters slider-text align-items-center justify-content-center" style={{ height: '400px' }} data-scrollax-parent="true">
+                    <div className="row no-gutters slider-text align-items-center justify-content-center" style={{ height: '500px', paddingTop: '100px' }} data-scrollax-parent="true">
                         <div className="col-md-9 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
                             <p className="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span className="mr-2"><Link
                                 to="/">Home</Link></span> <span>Impact & Stories</span></p>
@@ -23,11 +23,37 @@ export const ImpactStoriesPage = () => {
                 </div>
             </div>
 
+            <section className="ftco-section" style={{ padding: '80px 0', backgroundColor: '#f8f9fa' }}>
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div className="col-md-10 text-center ftco-animate">
+                            <span className="badge px-4 py-2 mb-4" style={{
+                                backgroundColor: '#4FB1A1',
+                                color: '#fff',
+                                fontSize: '14px',
+                                fontWeight: 'bold',
+                                borderRadius: '25px',
+                                textTransform: 'none',
+                                letterSpacing: '0.5px'
+                            }}>
+                                Impact & Stories
+                            </span>
+                            <h1 className="mb-4 font-weight-bold" style={{ fontSize: '48px', lineHeight: '1.2', color: '#111' }}>
+                                Transforming Lives, Building Futures
+                            </h1>
+                            <p className="lead" style={{ fontSize: '18px', color: '#666', maxWidth: '800px', margin: '0 auto' }}>
+                                Every statistic represents a life changed. Every number tells a story of resilience, growth, and empowerment. See the real impact of LCEO's work.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section className="ftco-section">
                 <div className="container">
                     <div className="row justify-content-center mb-5 pb-3">
                         <div className="col-md-7 heading-section ftco-animate text-center">
-                            <h2 className="mb-4">Our Impact By The Numbers</h2>
+                            <h2 className="mb-4">Our Impact</h2>
                             <p>Measurable change across education, entrepreneurship, and empowerment.</p>
                         </div>
                     </div>
@@ -76,54 +102,153 @@ export const ImpactStoriesPage = () => {
                 </div>
             </section>
 
-            <section className="ftco-section bg-light">
+            <section className="ftco-section" style={{ backgroundColor: '#f8f9fa' }}>
                 <div className="container">
-                    <div className="row justify-content-center mb-5 pb-3">
-                        <div className="col-md-7 heading-section ftco-animate text-center">
-                            <h2 className="mb-4">Voices of Transformation</h2>
-                            <p>Real stories from beneficiaries who have overcome challenges and built new futures.</p>
+                    <div className="row justify-content-center mb-5">
+                        <div className="col-md-10 text-center ftco-animate">
+                            <span className="badge px-4 py-2 mb-4" style={{
+                                backgroundColor: '#4FB1A1',
+                                color: '#fff',
+                                fontSize: '14px',
+                                fontWeight: 'bold',
+                                borderRadius: '25px',
+                                textTransform: 'none',
+                                letterSpacing: '0.5px'
+                            }}>
+                                Global Impact
+                            </span>
+                            <h2 className="mb-4 font-weight-bold" style={{ fontSize: '36px', color: '#111' }}>
+                                Aligned with UN Sustainable Development Goals
+                            </h2>
+                            <p className="text-muted" style={{ fontSize: '16px' }}>
+                                Our work directly contributes to achieving the global 2030 Agenda
+                            </p>
                         </div>
                     </div>
+
                     <div className="row">
-                        <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
-                            <div className="staff text-center p-4 bg-white shadow-sm">
-                                <div className="img mb-4 mx-auto"
-                                    style={{ backgroundImage: "url(/images/person_1.jpg)", width: '120px', height: '120px', borderRadius: '50%', border: '4px solid #F6D8A2' }}>
-                                </div>
-                                <div className="info">
-                                    <h3>Uwera Grace</h3>
-                                    <span className="position d-block mb-3">IkiraroBiz Program</span>
-                                    <p className="italic text-muted font-italic">"LCEO transformed my life. From struggling to survive, I now run
-                                        my own tailoring business and support my younger siblings through school. The mentorship and seed
-                                        capital gave me hope and opportunity."</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
-                            <div className="staff text-center p-4 bg-white shadow-sm">
-                                <div className="img mb-4 mx-auto"
-                                    style={{ backgroundImage: "url(/images/person_2.jpg)", width: '120px', height: '120px', borderRadius: '50%', border: '4px solid #F6D8A2' }}>
-                                </div>
-                                <div className="info">
-                                    <h3>Mukamana Sarah</h3>
-                                    <span className="position d-block mb-3">School Retention Program</span>
-                                    <p className="italic text-muted font-italic">"Thanks to the Pad Box Initiative and safe spaces, I can attend
-                                        school with dignity. LCEO didn't just provide supplies; they gave me confidence and a supportive
-                                        community."</p>
+                        <div className="col-md-4 mb-4 ftco-animate">
+                            <div className="p-4 bg-white shadow-sm rounded h-100">
+                                <div className="d-flex align-items-start mb-3">
+                                    <div className="rounded-circle d-flex align-items-center justify-content-center mr-3"
+                                        style={{ width: '60px', height: '60px', backgroundColor: '#4FB1A1', color: '#fff', fontSize: '24px', fontWeight: 'bold', flexShrink: 0 }}>
+                                        1
+                                    </div>
+                                    <div className="flex-grow-1">
+                                        <h5 className="font-weight-bold mb-1" style={{ fontSize: '16px' }}>No Poverty</h5>
+                                        <div className="d-flex justify-content-between align-items-center mb-2">
+                                            <span className="small text-muted">Progress</span>
+                                            <span className="font-weight-bold" style={{ color: '#4FB1A1' }}>78%</span>
+                                        </div>
+                                        <div className="progress" style={{ height: '8px', backgroundColor: '#e9ecef' }}>
+                                            <div className="progress-bar" role="progressbar" style={{ width: '78%', backgroundColor: '#4FB1A1' }} aria-valuenow={78} aria-valuemin={0} aria-valuemax={100}></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
-                            <div className="staff text-center p-4 bg-white shadow-sm">
-                                <div className="img mb-4 mx-auto"
-                                    style={{ backgroundImage: "url(/images/person_3.jpg)", width: '120px', height: '120px', borderRadius: '50%', border: '4px solid #F6D8A2' }}>
+
+                        <div className="col-md-4 mb-4 ftco-animate">
+                            <div className="p-4 bg-white shadow-sm rounded h-100">
+                                <div className="d-flex align-items-start mb-3">
+                                    <div className="rounded-circle d-flex align-items-center justify-content-center mr-3"
+                                        style={{ width: '60px', height: '60px', backgroundColor: '#4FB1A1', color: '#fff', fontSize: '24px', fontWeight: 'bold', flexShrink: 0 }}>
+                                        3
+                                    </div>
+                                    <div className="flex-grow-1">
+                                        <h5 className="font-weight-bold mb-1" style={{ fontSize: '16px' }}>Good Health and Well-being</h5>
+                                        <div className="d-flex justify-content-between align-items-center mb-2">
+                                            <span className="small text-muted">Progress</span>
+                                            <span className="font-weight-bold" style={{ color: '#4FB1A1' }}>85%</span>
+                                        </div>
+                                        <div className="progress" style={{ height: '8px', backgroundColor: '#e9ecef' }}>
+                                            <div className="progress-bar" role="progressbar" style={{ width: '85%', backgroundColor: '#4FB1A1' }} aria-valuenow={85} aria-valuemin={0} aria-valuemax={100}></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="info">
-                                    <h3>Ineza Divine</h3>
-                                    <span className="position d-block mb-3">Human Capital Development</span>
-                                    <p className="italic text-muted font-italic">"The mindset transformation sessions helped me heal from trauma
-                                        and believe in myself again. Today, I mentor younger girls and advocate for women's rights in my
-                                        community."</p>
+                            </div>
+                        </div>
+
+                        <div className="col-md-4 mb-4 ftco-animate">
+                            <div className="p-4 bg-white shadow-sm rounded h-100">
+                                <div className="d-flex align-items-start mb-3">
+                                    <div className="rounded-circle d-flex align-items-center justify-content-center mr-3"
+                                        style={{ width: '60px', height: '60px', backgroundColor: '#4FB1A1', color: '#fff', fontSize: '24px', fontWeight: 'bold', flexShrink: 0 }}>
+                                        4
+                                    </div>
+                                    <div className="flex-grow-1">
+                                        <h5 className="font-weight-bold mb-1" style={{ fontSize: '16px' }}>Quality Education</h5>
+                                        <div className="d-flex justify-content-between align-items-center mb-2">
+                                            <span className="small text-muted">Progress</span>
+                                            <span className="font-weight-bold" style={{ color: '#4FB1A1' }}>92%</span>
+                                        </div>
+                                        <div className="progress" style={{ height: '8px', backgroundColor: '#e9ecef' }}>
+                                            <div className="progress-bar" role="progressbar" style={{ width: '92%', backgroundColor: '#4FB1A1' }} aria-valuenow={92} aria-valuemin={0} aria-valuemax={100}></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-md-4 mb-4 ftco-animate">
+                            <div className="p-4 bg-white shadow-sm rounded h-100">
+                                <div className="d-flex align-items-start mb-3">
+                                    <div className="rounded-circle d-flex align-items-center justify-content-center mr-3"
+                                        style={{ width: '60px', height: '60px', backgroundColor: '#4FB1A1', color: '#fff', fontSize: '24px', fontWeight: 'bold', flexShrink: 0 }}>
+                                        5
+                                    </div>
+                                    <div className="flex-grow-1">
+                                        <h5 className="font-weight-bold mb-1" style={{ fontSize: '16px' }}>Gender Equality</h5>
+                                        <div className="d-flex justify-content-between align-items-center mb-2">
+                                            <span className="small text-muted">Progress</span>
+                                            <span className="font-weight-bold" style={{ color: '#4FB1A1' }}>88%</span>
+                                        </div>
+                                        <div className="progress" style={{ height: '8px', backgroundColor: '#e9ecef' }}>
+                                            <div className="progress-bar" role="progressbar" style={{ width: '88%', backgroundColor: '#4FB1A1' }} aria-valuenow={88} aria-valuemin={0} aria-valuemax={100}></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-md-4 mb-4 ftco-animate">
+                            <div className="p-4 bg-white shadow-sm rounded h-100">
+                                <div className="d-flex align-items-start mb-3">
+                                    <div className="rounded-circle d-flex align-items-center justify-content-center mr-3"
+                                        style={{ width: '60px', height: '60px', backgroundColor: '#4FB1A1', color: '#fff', fontSize: '24px', fontWeight: 'bold', flexShrink: 0 }}>
+                                        8
+                                    </div>
+                                    <div className="flex-grow-1">
+                                        <h5 className="font-weight-bold mb-1" style={{ fontSize: '16px' }}>Decent Work and Economic Growth</h5>
+                                        <div className="d-flex justify-content-between align-items-center mb-2">
+                                            <span className="small text-muted">Progress</span>
+                                            <span className="font-weight-bold" style={{ color: '#4FB1A1' }}>75%</span>
+                                        </div>
+                                        <div className="progress" style={{ height: '8px', backgroundColor: '#e9ecef' }}>
+                                            <div className="progress-bar" role="progressbar" style={{ width: '75%', backgroundColor: '#4FB1A1' }} aria-valuenow={75} aria-valuemin={0} aria-valuemax={100}></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-md-4 mb-4 ftco-animate">
+                            <div className="p-4 bg-white shadow-sm rounded h-100">
+                                <div className="d-flex align-items-start mb-3">
+                                    <div className="rounded-circle d-flex align-items-center justify-content-center mr-3"
+                                        style={{ width: '60px', height: '60px', backgroundColor: '#4FB1A1', color: '#fff', fontSize: '24px', fontWeight: 'bold', flexShrink: 0 }}>
+                                        10
+                                    </div>
+                                    <div className="flex-grow-1">
+                                        <h5 className="font-weight-bold mb-1" style={{ fontSize: '16px' }}>Reduced Inequalities</h5>
+                                        <div className="d-flex justify-content-between align-items-center mb-2">
+                                            <span className="small text-muted">Progress</span>
+                                            <span className="font-weight-bold" style={{ color: '#4FB1A1' }}>82%</span>
+                                        </div>
+                                        <div className="progress" style={{ height: '8px', backgroundColor: '#e9ecef' }}>
+                                            <div className="progress-bar" role="progressbar" style={{ width: '82%', backgroundColor: '#4FB1A1' }} aria-valuenow={82} aria-valuemin={0} aria-valuemax={100}></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -131,7 +256,9 @@ export const ImpactStoriesPage = () => {
                 </div>
             </section>
 
-            <section className="ftco-section">
+
+
+            <section className="ftco-section pb-0">
                 <div className="container">
                     <div className="row justify-content-center mb-5 pb-3">
                         <div className="col-md-7 heading-section ftco-animate text-center">
@@ -228,74 +355,7 @@ export const ImpactStoriesPage = () => {
                 </div>
             </section>
 
-            <section className="ftco-section bg-gradient-to-br from-[#4c9789]/5 to-[#eacfa2]/10 py-20">
-                <div className="container">
-                    <div className="row justify-content-center mb-5 pb-3">
-                        <div className="col-md-7 heading-section ftco-animate text-center">
-                            <h2 className="mb-4">Global Impact</h2>
-                            <p>Aligned with UN Sustainable Development Goals – achieving the 2030 Agenda.</p>
-                        </div>
-                    </div>
-                    <div className="row text-center">
-                        <div className="col-md-2 col-sm-4 mb-4 ftco-animate">
-                            <div className="p-3 border rounded shadow-sm bg-white h-100">
-                                <div className="h3 font-weight-bold mb-1" style={{ color: '#e5243b' }}>1</div>
-                                <p className="small mb-2 font-weight-bold">No Poverty</p>
-                                <div className="progress" style={{ height: '8px' }}>
-                                    <div className="progress-bar" style={{ width: '78%', background: '#e5243b' }}></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-2 col-sm-4 mb-4 ftco-animate">
-                            <div className="p-3 border rounded shadow-sm bg-white h-100">
-                                <div className="h3 font-weight-bold mb-1" style={{ color: '#4c9f38' }}>3</div>
-                                <p className="small mb-2 font-weight-bold">Good Health</p>
-                                <div className="progress" style={{ height: '8px' }}>
-                                    <div className="progress-bar" style={{ width: '85%', background: '#4c9f38' }}></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-2 col-sm-4 mb-4 ftco-animate">
-                            <div className="p-3 border rounded shadow-sm bg-white h-100">
-                                <div className="h3 font-weight-bold mb-1" style={{ color: '#c5192d' }}>4</div>
-                                <p className="small mb-2 font-weight-bold">Quality Education</p>
-                                <div className="progress" style={{ height: '8px' }}>
-                                    <div className="progress-bar" style={{ width: '92%', background: '#c5192d' }}></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-2 col-sm-4 mb-4 ftco-animate">
-                            <div className="p-3 border rounded shadow-sm bg-white h-100">
-                                <div className="h3 font-weight-bold mb-1" style={{ color: '#ff3a21' }}>5</div>
-                                <p className="small mb-2 font-weight-bold">Gender Equality</p>
-                                <div className="progress" style={{ height: '8px' }}>
-                                    <div className="progress-bar" style={{ width: '88%', background: '#ff3a21' }}></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-2 col-sm-4 mb-4 ftco-animate">
-                            <div className="p-3 border rounded shadow-sm bg-white h-100">
-                                <div className="h3 font-weight-bold mb-1" style={{ color: '#a21942' }}>8</div>
-                                <p className="small mb-2 font-weight-bold">Decent Work</p>
-                                <div className="progress" style={{ height: '8px' }}>
-                                    <div className="progress-bar" style={{ width: '75%', background: '#a21942' }}></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-2 col-sm-4 mb-4 ftco-animate">
-                            <div className="p-3 border rounded shadow-sm bg-white h-100">
-                                <div className="h3 font-weight-bold mb-1" style={{ color: '#dd1367' }}>10</div>
-                                <p className="small mb-2 font-weight-bold">Reduced Inequalities</p>
-                                <div className="progress" style={{ height: '8px' }}>
-                                    <div className="progress-bar" style={{ width: '82%', background: '#dd1367' }}></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="ftco-section pb-5">
+            <section className="ftco-section pt-0 pb-5">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">

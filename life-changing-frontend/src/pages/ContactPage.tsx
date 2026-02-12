@@ -8,17 +8,19 @@ export const ContactPage = () => {
     // Re-initialize Google Map logic if needed (or just ensure the container exists)
     // For now assuming existing global scripts handle it, but in SPA navigation it might need a trigger.
     useEffect(() => {
-        if (window.google && window.google.maps && window.initMap) {
-            window.initMap();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const w = window as any;
+        if (w.google && w.google.maps && w.initMap) {
+            w.initMap();
         }
     }, []);
 
     return (
         <>
-            <div className="hero-wrap" style={{ backgroundImage: "url('/images/bg_2.jpg')" }} data-stellar-background-ratio="0.5">
+            <div className="hero-wrap" style={{ backgroundImage: "url('/images/bg_2.jpg')", height: '500px', minHeight: '500px' }} data-stellar-background-ratio="0.5">
                 <div className="overlay"></div>
                 <div className="container">
-                    <div className="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
+                    <div className="row no-gutters slider-text align-items-center justify-content-center" style={{ height: '500px', paddingTop: '100px' }} data-scrollax-parent="true">
                         <div className="col-md-7 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
                             <p className="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span className="mr-2"><Link
                                 to="/">Home</Link></span> <span>Contact</span></p>
@@ -37,13 +39,13 @@ export const ContactPage = () => {
                         </div>
                         <div className="w-100"></div>
                         <div className="col-md-3">
-                            <p><span>Address:</span> <span data-cms="address">198 West 21th Street, Suite 721 New York NY 10016</span></p>
+                            <p><span>Address</span> <span data-cms="address">Bugesera District, Nyamata Sector Eastern Province, Rwanda</span></p>
                         </div>
                         <div className="col-md-3">
-                            <p><span>Phone:</span> <a href="#" data-cms="phone">+ 1235 2355 98</a></p>
+                            <p><span>Phone</span> <a href="tel:+250788123456" data-cms="phone">+250 788 123 456</a></p>
                         </div>
                         <div className="col-md-3">
-                            <p><span>Email:</span> <a href="#" data-cms="email">info@yoursite.com</a></p>
+                            <p><span>Email</span> <a href="mailto:info.lceo@gmail.com" data-cms="email">info.lceo@gmail.com</a></p>
                         </div>
                         <div className="col-md-3">
                             <p><span>Website</span> <Link to="/">lceo.org</Link></p>

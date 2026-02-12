@@ -9,10 +9,10 @@ export const OurProgramsDetailsPage = () => {
     return (
         <>
             {/* Hero-like header section */}
-            <section className="hero-wrap hero-wrap-2" style={{ backgroundImage: 'url("/images/bg_7.jpg")', height: '300px' }} data-stellar-background-ratio="0.5">
+            <section className="hero-wrap hero-wrap-2" style={{ backgroundImage: 'url("/images/bg_7.jpg")', height: '500px', minHeight: '500px' }} data-stellar-background-ratio="0.5">
                 <div className="overlay"></div>
                 <div className="container">
-                    <div className="row no-gutters slider-text align-items-end justify-content-center">
+                    <div className="row no-gutters slider-text align-items-end justify-content-center" style={{ height: '500px', paddingTop: '100px' }}>
                         <div className="col-md-9 ftco-animate pb-5 text-center">
                             <h1 className="mb-3 bread">Program Details</h1>
                             <p className="breadcrumbs"><span className="mr-2"><Link to="/">Home</Link></span> <span>Programs</span></p>

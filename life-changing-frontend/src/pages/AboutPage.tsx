@@ -9,10 +9,10 @@ export const AboutPage = () => {
 
     return (
         <>
-            <div className="hero-wrap" style={{ backgroundImage: "url('/images/bg_7.jpg')" }} data-stellar-background-ratio="0.5">
+            <div className="hero-wrap" style={{ backgroundImage: "url('/images/bg_2.jpg')", height: '500px', minHeight: '500px' }} data-stellar-background-ratio="0.5">
                 <div className="overlay"></div>
                 <div className="container">
-                    <div className="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
+                    <div className="row no-gutters slider-text align-items-center justify-content-center" style={{ height: '500px', paddingTop: '100px' }} data-scrollax-parent="true">
                         <div className="col-md-7 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
                             <p className="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span className="mr-2"><Link
                                 to="/">Home</Link></span> <span>About</span></p>
@@ -157,36 +157,133 @@ export const AboutPage = () => {
                 <div className="container">
                     <div className="row justify-content-center mb-5 pb-3">
                         <div className="col-md-7 heading-section ftco-animate text-center">
-                            <h2 className="mb-4">Our Journey</h2>
-                            <p>Key milestones in our mission to empower vulnerable young women.</p>
+                            <h2 className="mb-4">Milestones & Achievements</h2>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="timeline">
-                                <div className="mb-4 p-4 bg-white shadow-sm rounded border-left"
-                                    style={{ borderLeft: '5px solid #4FB1A1 !important' }}>
-                                    <h5 className="font-weight-bold">2020: LCEO Founded</h5>
-                                    <p className="mb-0 text-muted">Established in Bugesera District with a vision to transform vulnerable lives.
-                                    </p>
+                    <div className="row justify-content-center">
+                        <div className="col-md-10">
+                            <div className="timeline-wrapper position-relative">
+                                {/* Vertical Line Connection */}
+                                <div style={{
+                                    position: 'absolute',
+                                    left: '30px',
+                                    top: '0',
+                                    height: '100%',
+                                    width: '2px',
+                                    backgroundColor: '#cbd5e1',
+                                    zIndex: 0
+                                }}></div>
+
+                                {/* 2020 */}
+                                <div className="timeline-item position-relative mb-4" style={{ paddingLeft: '90px' }}>
+                                    <div className="timeline-year d-flex align-items-center justify-content-center text-white font-weight-bold shadow-sm"
+                                        style={{
+                                            position: 'absolute',
+                                            left: '0',
+                                            top: '0',
+                                            width: '60px',
+                                            height: '60px',
+                                            borderRadius: '50%',
+                                            backgroundColor: '#4FB1A1',
+                                            zIndex: 1,
+                                            border: '4px solid #f8f9fa'
+                                        }}>
+                                        2020
+                                    </div>
+                                    <div className="bg-white p-4 rounded shadow-sm border">
+                                        <h5 className="font-weight-bold mb-2">LCEO Founded</h5>
+                                        <p className="text-muted mb-0">Established in Bugesera District with a vision to transform lives.</p>
+                                    </div>
                                 </div>
-                                <div className="mb-4 p-4 bg-white shadow-sm rounded border-left"
-                                    style={{ borderLeft: '5px solid #4FB1A1 !important' }}>
-                                    <h5 className="font-weight-bold">2021: First Program Launch</h5>
-                                    <p className="mb-0 text-muted">Girls' School Retention reaches its first 50 beneficiaries successfully.</p>
+
+                                {/* 2021 */}
+                                <div className="timeline-item position-relative mb-4" style={{ paddingLeft: '90px' }}>
+                                    <div className="timeline-year d-flex align-items-center justify-content-center text-white font-weight-bold shadow-sm"
+                                        style={{
+                                            position: 'absolute',
+                                            left: '0',
+                                            top: '0',
+                                            width: '60px',
+                                            height: '60px',
+                                            borderRadius: '50%',
+                                            backgroundColor: '#4FB1A1',
+                                            zIndex: 1,
+                                            border: '4px solid #f8f9fa'
+                                        }}>
+                                        2021
+                                    </div>
+                                    <div className="bg-white p-4 rounded shadow-sm border">
+                                        <h5 className="font-weight-bold mb-2">First Program Launch</h5>
+                                        <p className="text-muted mb-0">Girls School Retention program reaches 50 beneficiaries.</p>
+                                    </div>
                                 </div>
-                                <div className="mb-4 p-4 bg-white shadow-sm rounded border-left"
-                                    style={{ borderLeft: '5px solid #4FB1A1 !important' }}>
-                                    <h5 className="font-weight-bold">2022: IkiraroBiz Initiative</h5>
-                                    <p className="mb-0 text-muted">Launched entrepreneurship program, supporting 30 young women with seed capital.
-                                    </p>
+
+                                {/* 2022 */}
+                                <div className="timeline-item position-relative mb-4" style={{ paddingLeft: '90px' }}>
+                                    <div className="timeline-year d-flex align-items-center justify-content-center text-white font-weight-bold shadow-sm"
+                                        style={{
+                                            position: 'absolute',
+                                            left: '0',
+                                            top: '0',
+                                            width: '60px',
+                                            height: '60px',
+                                            borderRadius: '50%',
+                                            backgroundColor: '#4FB1A1',
+                                            zIndex: 1,
+                                            border: '4px solid #f8f9fa'
+                                        }}>
+                                        2022
+                                    </div>
+                                    <div className="bg-white p-4 rounded shadow-sm border">
+                                        <h5 className="font-weight-bold mb-2">IkiraroBiz Initiative</h5>
+                                        <p className="text-muted mb-0">Entrepreneurship program launched, supporting 30 young women.</p>
+                                    </div>
                                 </div>
-                                <div className="mb-4 p-4 bg-white shadow-sm rounded border-left"
-                                    style={{ borderLeft: '5px solid #4FB1A1 !important' }}>
-                                    <h5 className="font-weight-bold">2023: Major Expansion</h5>
-                                    <p className="mb-0 text-muted">Scaled to reach 200+ beneficiaries across education, health, and economic
-                                        sectors.</p>
+
+                                {/* 2023 */}
+                                <div className="timeline-item position-relative mb-4" style={{ paddingLeft: '90px' }}>
+                                    <div className="timeline-year d-flex align-items-center justify-content-center text-white font-weight-bold shadow-sm"
+                                        style={{
+                                            position: 'absolute',
+                                            left: '0',
+                                            top: '0',
+                                            width: '60px',
+                                            height: '60px',
+                                            borderRadius: '50%',
+                                            backgroundColor: '#4FB1A1',
+                                            zIndex: 1,
+                                            border: '4px solid #f8f9fa'
+                                        }}>
+                                        2023
+                                    </div>
+                                    <div className="bg-white p-4 rounded shadow-sm border">
+                                        <h5 className="font-weight-bold mb-2">Major Expansion</h5>
+                                        <p className="text-muted mb-0">Programs scaled to reach 200+ beneficiaries across multiple sectors.</p>
+                                    </div>
                                 </div>
+
+                                {/* 2024 */}
+                                <div className="timeline-item position-relative" style={{ paddingLeft: '90px' }}>
+                                    <div className="timeline-year d-flex align-items-center justify-content-center text-white font-weight-bold shadow-sm"
+                                        style={{
+                                            position: 'absolute',
+                                            left: '0',
+                                            top: '0',
+                                            width: '60px',
+                                            height: '60px',
+                                            borderRadius: '50%',
+                                            backgroundColor: '#4FB1A1',
+                                            zIndex: 1,
+                                            border: '4px solid #f8f9fa'
+                                        }}>
+                                        2024
+                                    </div>
+                                    <div className="bg-white p-4 rounded shadow-sm border">
+                                        <h5 className="font-weight-bold mb-2">Recognition & Growth</h5>
+                                        <p className="text-muted mb-0">Partnership with FAWE Rwanda, now serving 312 beneficiaries.</p>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -206,19 +303,6 @@ export const AboutPage = () => {
                 </div>
             </section>
 
-            <section className="ftco-section bg-light">
-                <div className="container">
-                    <div className="row justify-content-center mb-5 pb-3">
-                        <div className="col-md-7 heading-section ftco-animate text-center">
-                            <h2 className="mb-4">Our Partners</h2>
-                            <p>We work alongside global and national organizations to scale our impact.</p>
-                        </div>
-                    </div>
-                    <div id="partners-container" className="row partner-wrap">
-                        {/* Dynamically populated */}
-                    </div>
-                </div>
-            </section>
         </>
     );
 };

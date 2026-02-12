@@ -7,10 +7,10 @@ export const StrategicDirectionPage = () => {
 
     return (
         <>
-            <div className="hero-wrap" style={{ backgroundImage: "url('/images/bg_7.jpg')" }} data-stellar-background-ratio="0.5">
+            <div className="hero-wrap" style={{ backgroundImage: "url('/images/bg_2.jpg')", height: '500px', minHeight: '500px' }} data-stellar-background-ratio="0.5">
                 <div className="overlay"></div>
                 <div className="container">
-                    <div className="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
+                    <div className="row no-gutters slider-text align-items-center justify-content-center" style={{ height: '500px', paddingTop: '100px' }} data-scrollax-parent="true">
                         <div className="col-md-7 ftco-animate text-center" data-scrollax=" properties: { translateY: '70%' }">
                             <h1 className="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Empower a Future Today</h1>
                             <p className="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">We support girls, caregivers, and youth by promoting education, health, mentorship, and skills development to strengthen families and build resilient communities.</p>
@@ -191,146 +191,6 @@ export const StrategicDirectionPage = () => {
                 </div>
             </section>
 
-            <section className="ftco-section bg-light">
-                <div className="container-fluid">
-                    <div className="row justify-content-center mb-5 pb-3">
-                        <div className="col-md-5 heading-section ftco-animate text-center">
-                            <h2 className="mb-4">Our Programs</h2>
-                            <p>We implement integrated interventions that strengthen confidence, psychosocial wellbeing, education access,
-                                and economic empowerment.</p>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-12 ftco-animate">
-                            <div className="carousel-cause owl-carousel">
-                                {/* Dynamically populated by cms-core.js */}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="ftco-section">
-                <div className="container">
-                    <div className="row justify-content-center mb-5 pb-3">
-                        <div className="col-md-7 heading-section ftco-animate text-center">
-                            <h2 className="mb-4">Success Stories</h2>
-                            <p>Listen to the voices of the young women and girls whose lives have been transformed through our
-                                interventions.</p>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
-                            <div className="staff">
-                                <div className="d-flex mb-4">
-                                    <div className="img" style={{ backgroundImage: "url(/images/person_1.jpg)" }}></div>
-                                    <div className="info ml-4">
-                                        <h3>Aline M.</h3>
-                                        <span className="position">Beneficiary</span>
-                                        <div className="text">
-                                            <p>"LCEO helped me return to school through the Pad Box Initiative. Now I can study without worry."
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
-                            <div className="staff">
-                                <div className="d-flex mb-4">
-                                    <div className="img" style={{ backgroundImage: "url(/images/person_2.jpg)" }}></div>
-                                    <div className="info ml-4">
-                                        <h3>Divine U.</h3>
-                                        <span className="position">Entrepreneur</span>
-                                        <div className="text">
-                                            <p>"Through IkiraroBiz, I started my own tailoring business. I am now economically independent and
-                                                supporting my family."</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 d-flex mb-sm-4 ftco-animate">
-                            <div className="staff">
-                                <div className="d-flex mb-4">
-                                    <div className="img" style={{ backgroundImage: "url(/images/person_3.jpg)" }}></div>
-                                    <div className="info ml-4">
-                                        <h3>Kevaline I.</h3>
-                                        <span className="position">Change Champion</span>
-                                        <div className="text">
-                                            <p>"The mental resilience training changed my mindset. I am now a leader in my community, advocating
-                                                for girls' rights."</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="ftco-gallery">
-                <div className="d-md-flex">
-                    <a href="/images/cause-2.jpg"
-                        className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
-                        style={{ backgroundImage: "url(/images/cause-2.jpg)" }}>
-                        <div className="icon d-flex justify-content-center align-items-center">
-                            <span className="icon-search"></span>
-                        </div>
-                    </a>
-                    <a href="/images/cause-3.jpg"
-                        className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
-                        style={{ backgroundImage: "url(/images/cause-3.jpg)" }}>
-                        <div className="icon d-flex justify-content-center align-items-center">
-                            <span className="icon-search"></span>
-                        </div>
-                    </a>
-                    <a href="/images/cause-4.jpg"
-                        className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
-                        style={{ backgroundImage: "url(/images/cause-4.jpg)" }}>
-                        <div className="icon d-flex justify-content-center align-items-center">
-                            <span className="icon-search"></span>
-                        </div>
-                    </a>
-                    <a href="/images/cause-5.jpg"
-                        className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
-                        style={{ backgroundImage: "url(/images/cause-5.jpg)" }}>
-                        <div className="icon d-flex justify-content-center align-items-center">
-                            <span className="icon-search"></span>
-                        </div>
-                    </a>
-                </div>
-                <div className="d-md-flex">
-                    <a href="/images/cause-6.jpg"
-                        className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
-                        style={{ backgroundImage: "url(/images/cause-6.jpg)" }}>
-                        <div className="icon d-flex justify-content-center align-items-center">
-                            <span className="icon-search"></span>
-                        </div>
-                    </a>
-                    <a href="/images/image_3.jpg"
-                        className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
-                        style={{ backgroundImage: "url(/images/image_3.jpg)" }}>
-                        <div className="icon d-flex justify-content-center align-items-center">
-                            <span className="icon-search"></span>
-                        </div>
-                    </a>
-                    <a href="/images/image_1.jpg"
-                        className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
-                        style={{ backgroundImage: "url(/images/image_1.jpg)" }}>
-                        <div className="icon d-flex justify-content-center align-items-center">
-                            <span className="icon-search"></span>
-                        </div>
-                    </a>
-                    <a href="/images/image_2.jpg"
-                        className="gallery image-popup d-flex justify-content-center align-items-center img ftco-animate"
-                        style={{ backgroundImage: "url(/images/image_2.jpg)" }}>
-                        <div className="icon d-flex justify-content-center align-items-center">
-                            <span className="icon-search"></span>
-                        </div>
-                    </a>
-                </div>
-            </section>
 
             <section className="ftco-section-3 img" style={{ backgroundImage: "url(/images/bg_3.jpg)" }}>
                 <div className="overlay"></div>
@@ -345,19 +205,6 @@ export const StrategicDirectionPage = () => {
                 </div>
             </section>
 
-            <section className="ftco-section bg-light">
-                <div className="container">
-                    <div className="row justify-content-center mb-5 pb-3">
-                        <div className="col-md-7 heading-section ftco-animate text-center">
-                            <h2 className="mb-4">Our Partners</h2>
-                            <p>We work alongside global and national organizations to scale our impact.</p>
-                        </div>
-                    </div>
-                    <div id="partners-container" className="row partner-wrap">
-                        {/* Dynamically populated */}
-                    </div>
-                </div>
-            </section>
         </>
     );
 };

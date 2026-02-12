@@ -47,7 +47,7 @@ function init() {
         var addresses = ['New York'];
 
         for (var x = 0; x < addresses.length; x++) {
-            $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address=' + addresses[x] + '&sensor=false', null, function (data) {
+            $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' + addresses[x], null, function (data) {
                 var p = data.results[0].geometry.location
                 var latlng = new google.maps.LatLng(p.lat, p.lng);
                 new google.maps.Marker({
@@ -61,4 +61,18 @@ function init() {
     }
 
 }
-google.maps.event.addDomListener(window, 'load', init);
+
+// Callback function for async Google Maps loading
+function initMap() {
+    if (typeof google !== 'undefined' && google.maps) {
+        init();
+    }
+}
+
+// Use standard addEventListener instead of deprecated addDomListener
+if (typeof google !== 'undefined' && google.maps) {
+    window.addEventListener('load', init);
+} else {
+    // If Google Maps isn't loaded yet, initMap callback will handle it
+    console.log('Waiting for Google Maps to load...');
+}

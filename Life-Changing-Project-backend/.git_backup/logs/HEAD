@@ -1,5 +1,0 @@
-0000000000000000000000000000000000000000 3ca3d54d1170243954f7fb829f671793c5000e30 Ntakirutimana Innocent <innocentntakir@gmail.com> 1769597673 -0800	clone: from https://github.com/Solvit-Africa-Training-Center/life-changing-backend
-3ca3d54d1170243954f7fb829f671793c5000e30 3ca3d54d1170243954f7fb829f671793c5000e30 Ntakirutimana Innocent <innocentntakir@gmail.com> 1769610374 -0800	checkout: moving from main to beneficiaries
-3ca3d54d1170243954f7fb829f671793c5000e30 3a8d49bda6ccbbca12b00d25e6c773bbe5996ac5 Ntakirutimana Innocent <innocentntakir@gmail.com> 1769610608 -0800	commit: feat(beneficiaries): implement program info, updates and USSD summary endpoints
-3a8d49bda6ccbbca12b00d25e6c773bbe5996ac5 5dbe8329c1088073d2402dc4eea5169728793ec8 Ntakirutimana Innocent <innocentntakir@gmail.com> 1769614468 -0800	commit: feat(beneficiaries): add tracking, goals, profile endpoints and documentation
-5dbe8329c1088073d2402dc4eea5169728793ec8 e18c2017eecd70dcf3ab58b5be6d0cf8cf4b2e32 Ntakirutimana Innocent <innocentntakir@gmail.com> 1769758022 -0800	commit: feat: implement beneficiary document upload and refactor module structure

@@ -32,10 +32,37 @@
   <link rel="stylesheet" href="/css/style.css" id="public-style">
   <link rel="stylesheet" href="/css/admin.css" id="admin-style" disabled>
   <style>
-    /* Failsafe to ensure content is visible even if jQuery/Waypoints fails */
+    /* Absolute visibility override to prevent "disappearing" content */
+    body {
+      opacity: 1 !important;
+      visibility: visible !important;
+      display: block !important;
+      background-color: #ffffff;
+    }
+
     .ftco-animate {
       opacity: 1 !important;
       visibility: visible !important;
+      transform: none !important;
+    }
+
+    .hero-wrap,
+    .ftco-navbar,
+    .ftco-footer,
+    #root {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    /* Smooth transitions for animated elements */
+    .ftco-animate.ftco-animated {
+      animation-duration: 0.6s !important;
+      animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
     }
   </style>
 </head>
@@ -58,8 +85,8 @@
   <script src="/js/bootstrap-datepicker.js"></script>
   <script src="/js/jquery.timepicker.min.js"></script>
   <script src="/js/scrollax.min.js"></script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&loading=async&callback=initMap"></script>
   <script src="/js/google-map.js"></script>
   <script src="/js/cms-core.js"></script>
   <script src="/js/main.js"></script>
