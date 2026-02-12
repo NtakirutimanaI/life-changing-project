@@ -23,6 +23,7 @@ import {
   CheckCircle2,
   Clock,
   AlertCircle,
+  Plus,
 } from 'lucide-react';
 
 export default function GoalsPage() {
@@ -116,7 +117,7 @@ export default function GoalsPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-teal-600">
-              {currentBeneficiary.goals.length > 0 
+              {currentBeneficiary.goals.length > 0
                 ? Math.round((achievedGoals.length / currentBeneficiary.goals.length) * 100)
                 : 0}%
             </div>
@@ -143,7 +144,7 @@ export default function GoalsPage() {
               const Icon = getGoalIcon(goal.type);
               const progress = (goal.currentProgress / goal.targetAmount) * 100;
               const daysUntil = Math.ceil((new Date(goal.targetDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-              
+
               return (
                 <Card key={goal.id} className="hover:shadow-md transition-shadow">
                   <CardHeader>
@@ -174,7 +175,7 @@ export default function GoalsPage() {
                       <Progress value={progress} className="h-2" />
                       <p className="text-xs text-gray-500 mt-1">{progress.toFixed(1)}% complete</p>
                     </div>
-                    
+
                     <div className="flex items-center justify-between pt-2 border-t">
                       <div className="flex items-center gap-2 text-sm text-gray-600">
                         <Clock className="w-4 h-4" />
@@ -222,7 +223,7 @@ export default function GoalsPage() {
           <div className="grid gap-4 md:grid-cols-2">
             {achievedGoals.map((goal) => {
               const Icon = getGoalIcon(goal.type);
-              
+
               return (
                 <Card key={goal.id} className="bg-green-50 border-green-200">
                   <CardHeader>
@@ -263,7 +264,7 @@ export default function GoalsPage() {
           <div className="grid gap-4 md:grid-cols-2">
             {notStartedGoals.map((goal) => {
               const Icon = getGoalIcon(goal.type);
-              
+
               return (
                 <Card key={goal.id}>
                   <CardHeader>

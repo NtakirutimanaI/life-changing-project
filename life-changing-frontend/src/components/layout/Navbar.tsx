@@ -180,16 +180,35 @@ export const Navbar = () => {
                 }
 
                 /* Dark mode overrides for navbar */
+                /* Keep login/register header light even in dark mode */
                 .dark .navbar.navbar-donation-steps {
-                    background: #020617 !important;
-                    border-bottom: 1px solid #1e293b !important;
+                    background: #ffffff !important;
+                    border-bottom: 1px solid #f0f0f0 !important;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.08) !important;
                 }
                 .dark .navbar-donation-steps .nav-link {
-                    color: #e2e8f0 !important;
+                    color: #212529 !important;
                 }
                 .dark .navbar-donation-steps .navbar-brand,
                 .dark .navbar-donation-steps .navbar-brand span {
-                    color: #ffffff !important;
+                    color: #122f2b !important;
+                }
+                .dark .navbar-donation-steps .navbar-toggler {
+                    color: #212529 !important;
+                    border-color: rgba(0,0,0,0.1) !important;
+                }
+                .dark .navbar-donation-steps .navbar-toggler .oi-menu {
+                    color: #212529 !important;
+                }
+                /* Icons and utility text within the header */
+                .dark .navbar-donation-steps .text-dark,
+                .dark .navbar-donation-steps .search-icon,
+                .dark .navbar-donation-steps .icon-search,
+                .dark .navbar-donation-steps .lucide {
+                    color: #212529 !important;
+                }
+                .dark .navbar-donation-steps .search-icon:hover {
+                    color: #4FB1A1 !important;
                 }
                 .dark .dropdown-menu {
                     background-color: #0f172a !important;
@@ -205,8 +224,9 @@ export const Navbar = () => {
                 .dark .bg-emerald-light {
                     background-color: rgba(23, 209, 172, 0.2) !important;
                 }
-                .dark .font-weight-bold[style*="color: rgb(18, 47, 43)"] {
-                    color: #f1f5f9 !important;
+                /* Do NOT force dashboard role text to be light in this header if it's white */
+                .dark .navbar-donation-steps .font-weight-bold[style*="color: rgb(18, 47, 43)"] {
+                    color: #122f2b !important;
                 }
             `}</style>
 

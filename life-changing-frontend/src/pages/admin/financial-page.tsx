@@ -1,11 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { 
-  DollarSign, 
-  TrendingUp, 
+import {
+  DollarSign,
+  TrendingUp,
   TrendingDown,
-  Download, 
+  Download,
   Filter,
   Calendar,
   PieChart as PieChartIcon,
@@ -72,17 +72,17 @@ export default function FinancialPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Financial Management</h1>
           <p className="text-gray-600">Track budgets, donations, and expenses</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline">
+        <div className="flex gap-2 w-full sm:w-auto">
+          <Button variant="outline" className="flex-1 sm:flex-none">
             <Filter className="w-4 h-4 mr-2" />
             Filter
           </Button>
-          <Button className="bg-teal-600 hover:bg-teal-700">
+          <Button className="bg-teal-600 hover:bg-teal-700 flex-1 sm:flex-none">
             <Download className="w-4 h-4 mr-2" />
             Export Report
           </Button>
@@ -90,7 +90,7 @@ export default function FinancialPage() {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="hover:shadow-lg transition-shadow border-2 border-green-200 bg-gradient-to-br from-green-50 to-white">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Total Budget</CardTitle>
@@ -185,17 +185,17 @@ export default function FinancialPage() {
                   }}
                 />
                 <Legend />
-                <Line 
-                  type="monotone" 
-                  dataKey="income" 
-                  stroke="#4c9789" 
+                <Line
+                  type="monotone"
+                  dataKey="income"
+                  stroke="#4c9789"
                   strokeWidth={2}
                   name="Income"
                 />
-                <Line 
-                  type="monotone" 
-                  dataKey="expenses" 
-                  stroke="#ef4444" 
+                <Line
+                  type="monotone"
+                  dataKey="expenses"
+                  stroke="#ef4444"
                   strokeWidth={2}
                   name="Expenses"
                 />
@@ -265,7 +265,7 @@ export default function FinancialPage() {
                 {programBudgets.map((program) => {
                   const utilizationPercent = (program.utilized / program.budget) * 100;
                   const allocationPercent = (program.allocated / program.budget) * 100;
-                  
+
                   return (
                     <div key={program.name} className="space-y-3">
                       <div className="flex items-center justify-between">
@@ -284,14 +284,14 @@ export default function FinancialPage() {
                           </p>
                         </div>
                       </div>
-                      
+
                       <div className="space-y-2">
                         <div className="flex items-center justify-between text-xs text-gray-600">
                           <span>Utilization</span>
                           <span>{utilizationPercent.toFixed(1)}%</span>
                         </div>
                         <Progress value={utilizationPercent} className="h-2" />
-                        
+
                         <div className="flex items-center justify-between text-xs text-gray-600">
                           <span>Allocation</span>
                           <span>{allocationPercent.toFixed(1)}%</span>
@@ -383,90 +383,92 @@ export default function FinancialPage() {
               <CardDescription>Latest financial activities</CardDescription>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead>Category</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead className="text-right">Amount</TableHead>
-                    <TableHead>Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>Jun 15, 2024</TableCell>
-                    <TableCell>Donation from John Smith</TableCell>
-                    <TableCell>General Fund</TableCell>
-                    <TableCell>
-                      <Badge className="bg-green-100 text-green-700">Income</Badge>
-                    </TableCell>
-                    <TableCell className="text-right font-semibold text-green-600">
-                      +$500.00
-                    </TableCell>
-                    <TableCell>
-                      <Badge className="bg-green-100 text-green-700">Completed</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Jun 14, 2024</TableCell>
-                    <TableCell>Training materials purchase</TableCell>
-                    <TableCell>Program Delivery</TableCell>
-                    <TableCell>
-                      <Badge className="bg-red-100 text-red-700">Expense</Badge>
-                    </TableCell>
-                    <TableCell className="text-right font-semibold text-red-600">
-                      -$350.00
-                    </TableCell>
-                    <TableCell>
-                      <Badge className="bg-green-100 text-green-700">Completed</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Jun 13, 2024</TableCell>
-                    <TableCell>Monthly recurring donation</TableCell>
-                    <TableCell>IkiraroBiz Program</TableCell>
-                    <TableCell>
-                      <Badge className="bg-green-100 text-green-700">Income</Badge>
-                    </TableCell>
-                    <TableCell className="text-right font-semibold text-green-600">
-                      +$100.00
-                    </TableCell>
-                    <TableCell>
-                      <Badge className="bg-green-100 text-green-700">Completed</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Jun 12, 2024</TableCell>
-                    <TableCell>Staff salaries - June</TableCell>
-                    <TableCell>Staff Salaries</TableCell>
-                    <TableCell>
-                      <Badge className="bg-red-100 text-red-700">Expense</Badge>
-                    </TableCell>
-                    <TableCell className="text-right font-semibold text-red-600">
-                      -$5,000.00
-                    </TableCell>
-                    <TableCell>
-                      <Badge className="bg-green-100 text-green-700">Completed</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Jun 10, 2024</TableCell>
-                    <TableCell>Office rent payment</TableCell>
-                    <TableCell>Administration</TableCell>
-                    <TableCell>
-                      <Badge className="bg-red-100 text-red-700">Expense</Badge>
-                    </TableCell>
-                    <TableCell className="text-right font-semibold text-red-600">
-                      -$800.00
-                    </TableCell>
-                    <TableCell>
-                      <Badge className="bg-green-100 text-green-700">Completed</Badge>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Description</TableHead>
+                      <TableHead>Category</TableHead>
+                      <TableHead>Type</TableHead>
+                      <TableHead className="text-right">Amount</TableHead>
+                      <TableHead>Status</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>Jun 15, 2024</TableCell>
+                      <TableCell>Donation from John Smith</TableCell>
+                      <TableCell>General Fund</TableCell>
+                      <TableCell>
+                        <Badge className="bg-green-100 text-green-700">Income</Badge>
+                      </TableCell>
+                      <TableCell className="text-right font-semibold text-green-600">
+                        +$500.00
+                      </TableCell>
+                      <TableCell>
+                        <Badge className="bg-green-100 text-green-700">Completed</Badge>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Jun 14, 2024</TableCell>
+                      <TableCell>Training materials purchase</TableCell>
+                      <TableCell>Program Delivery</TableCell>
+                      <TableCell>
+                        <Badge className="bg-red-100 text-red-700">Expense</Badge>
+                      </TableCell>
+                      <TableCell className="text-right font-semibold text-red-600">
+                        -$350.00
+                      </TableCell>
+                      <TableCell>
+                        <Badge className="bg-green-100 text-green-700">Completed</Badge>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Jun 13, 2024</TableCell>
+                      <TableCell>Monthly recurring donation</TableCell>
+                      <TableCell>IkiraroBiz Program</TableCell>
+                      <TableCell>
+                        <Badge className="bg-green-100 text-green-700">Income</Badge>
+                      </TableCell>
+                      <TableCell className="text-right font-semibold text-green-600">
+                        +$100.00
+                      </TableCell>
+                      <TableCell>
+                        <Badge className="bg-green-100 text-green-700">Completed</Badge>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Jun 12, 2024</TableCell>
+                      <TableCell>Staff salaries - June</TableCell>
+                      <TableCell>Staff Salaries</TableCell>
+                      <TableCell>
+                        <Badge className="bg-red-100 text-red-700">Expense</Badge>
+                      </TableCell>
+                      <TableCell className="text-right font-semibold text-red-600">
+                        -$5,000.00
+                      </TableCell>
+                      <TableCell>
+                        <Badge className="bg-green-100 text-green-700">Completed</Badge>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Jun 10, 2024</TableCell>
+                      <TableCell>Office rent payment</TableCell>
+                      <TableCell>Administration</TableCell>
+                      <TableCell>
+                        <Badge className="bg-red-100 text-red-700">Expense</Badge>
+                      </TableCell>
+                      <TableCell className="text-right font-semibold text-red-600">
+                        -$800.00
+                      </TableCell>
+                      <TableCell>
+                        <Badge className="bg-green-100 text-green-700">Completed</Badge>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

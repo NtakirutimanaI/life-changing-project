@@ -62,8 +62,12 @@ import ImpactReportsPage from './pages/donor/impact-reports-page';
 
 function AppContent() {
     const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const isPreview = queryParams.get('preview') === 'true';
+
     const dashboardRoutes = ['/admin', '/beneficiary', '/donor', '/dashboard', '/profile'];
     const isDashboard = dashboardRoutes.some(route => location.pathname.startsWith(route));
+    const hideGlobalElements = isDashboard || isPreview;
 
     React.useEffect(() => {
         if ('scrollRestoration' in window.history) {
@@ -124,20 +128,104 @@ function AppContent() {
                     .dark {
                         --background: #020617;
                         --foreground: #f8fafc;
+                        --card: #0f172a;
+                        --card-foreground: #f8fafc;
+                        --border: #1e293b;
+                        --muted: #1e293b;
+                        --muted-foreground: #94a3b8;
                     }
 
-                    .dark .text-slate-900 { color: #f1f5f9 !important; }
-                    .dark .bg-white, .dark .bg-light { background-color: #0f172a !important; color: #f1f5f9 !important; }
-                    .dark .border-slate-200 { border-color: #1e293b !important; }
+                    /* Global Text Overrides */
+                    .dark .text-slate-900, 
+                    .dark .text-gray-900, 
+                    .dark .text-teal-900,
+                    .dark .text-teal-950,
+                    .dark .text-dark,
+                    .dark .text-slate-800, 
+                    .dark .text-gray-800,
+                    .dark .heading,
+                    .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 { color: #f8fafc !important; }
+                    
+                    .dark .text-slate-700, 
+                    .dark .text-gray-700,
+                    .dark .text-slate-600, 
+                    .dark .text-gray-600, 
+                    .dark .text-teal-600,
+                    .dark .lead,
+                    .dark .subheading { color: #cbd5e1 !important; }
+                    
+                    .dark .text-slate-500, 
+                    .dark .text-gray-500,
+                    .dark .text-muted,
+                    .dark p,
+                    .dark label,
+                    .dark .label,
+                    .dark .text-black { color: #94a3b8 !important; }
+                    
+                    /* Background Overrides */
+                    .dark .bg-white, 
+                    .dark .bg-light,
+                    .dark .bg-slate-50,
+                    .dark .bg-gray-50,
+                    .dark .ftco-section,
+                    .dark .ftco-counter,
+                    .dark [style*="background-color: #fcfdfd"],
+                    .dark [style*="background-color: #ffffff"],
+                    .dark [style*="background-color: #f9fbfb"],
+                    .dark [style*="background: #fff"],
+                    .dark [style*="background: white"] { background-color: #0f172a !important; color: #f1f5f9 !important; }
+                    
+                    .dark .bg-slate-100,
+                    .dark .bg-gray-100,
+                    .dark .block-18:not(.color-4) { background-color: #1e293b !important; }
+
+                    /* Border Overrides */
+                    .dark .border-slate-200, 
+                    .dark .border-gray-200,
+                    .dark .border-teal-100,
+                    .dark .border,
+                    .dark .border-bottom,
+                    .dark .border-top,
+                    .dark [style*="border: 1px solid #eee"],
+                    .dark [style*="border-bottom: 1px solid #f0f0f0"] { border-color: #1e293b !important; }
+                    
                     .dark .active-donation-card { background-color: #0d2a25 !important; border-color: #17d1ac !important; }
                     .dark .donation-card:not(.active-donation-card) { background-color: #0f172a !important; }
                     .dark .btn-light { background-color: #1e293b !important; color: #f1f5f9 !important; border-color: #334155 !important; }
                     .dark .btn-white { background-color: #1e293b !important; color: #ffffff !important; border-color: #ffffff !important; }
-                    .dark .bg-slate-50 { background-color: #0f172a !important; }
+                    
+                    /* Inline Style Overrides (Targeting legacy hardcoded colors) */
+                    .dark [style*="color: #555"], 
+                    .dark [style*="color: #666"], 
+                    .dark [style*="color: #111"], 
+                    .dark [style*="color: #212529"],
+                    .dark [style*="color: rgb(18, 47, 43)"],
+                    .dark [style*="color: #6c757d"],
+                    .dark [style*="color: #122f2b"] { color: #f1f5f9 !important; }
+                    
+                    /* Table fixes */
+                    .dark table { color: #f1f5f9 !important; }
+                    .dark thead tr { background-color: #1e293b !important; }
+                    .dark tbody tr:hover { background-color: #1e293b/50 !important; }
+                    .dark td, .dark th { border-color: #1e293b !important; }
+                    
+                    /* UI Components */
+                    .dark .card, .dark .block-6, .dark .login-container { background-color: #0f172a !important; border-color: #1e293b !important; }
+                    
+                    /* Inputs */
+                    .dark input:not(.btn), .dark textarea, .dark select { 
+                        background-color: #020617 !important; 
+                        color: #f1f5f9 !important; 
+                        border-color: #1e293b !important; 
+                    }
+                    .dark input::placeholder { color: #64748b !important; }
+
+                    /* Icons */
+                    .dark .lucide { color: inherit; }
                 `}</style>
             )}
-            {!isDashboard && <Navbar />}
-            <main style={{ flex: 1, paddingTop: isDashboard ? '0' : '0' }}>
+            {!hideGlobalElements && <Navbar />}
+            <main style={{ flex: 1, paddingTop: '0' }}>
                 <Routes>
                     {/* Public Routes */}
                     <Route path="/" element={<HomePage />} />
@@ -201,10 +289,10 @@ function AppContent() {
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </main>
-            {!isDashboard && <Footer />}
-            {!isDashboard && <SearchModal />}
-            {!isDashboard && <FloatingScrollToTop />}
-            {!isDashboard && <Chatbot />}
+            {!hideGlobalElements && <Footer />}
+            {!hideGlobalElements && <SearchModal />}
+            {!hideGlobalElements && <FloatingScrollToTop />}
+            {!hideGlobalElements && <Chatbot />}
         </div>
     );
 }

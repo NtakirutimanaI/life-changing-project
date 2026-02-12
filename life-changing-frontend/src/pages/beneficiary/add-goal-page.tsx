@@ -25,7 +25,7 @@ export default function AddGoalPage() {
   ]);
   const [actionPlanSteps, setActionPlanSteps] = useState<string[]>(['']);
   const [resourcesNeeded, setResourcesNeeded] = useState<string[]>(['']);
-  
+
   const [formData, setFormData] = useState({
     description: '',
     type: '',
@@ -49,7 +49,7 @@ export default function AddGoalPage() {
     setTimeout(() => {
       toast.success('Goal created successfully!');
       setIsLoading(false);
-      navigate('/dashboard/goals');
+      navigate('/beneficiary/goals');
     }, 1500);
   };
 
@@ -106,7 +106,7 @@ export default function AddGoalPage() {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => navigate('/dashboard/goals')}
+          onClick={() => navigate('/beneficiary/goals')}
           className="rounded-full"
         >
           <ArrowLeft className="w-5 h-5" />
@@ -145,7 +145,7 @@ export default function AddGoalPage() {
                 <h3 className="text-lg font-semibold text-[#4c9789] border-b pb-2">
                   Basic Information
                 </h3>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="description">Goal Description *</Label>
                   <Textarea
@@ -161,7 +161,7 @@ export default function AddGoalPage() {
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="type">Goal Type *</Label>
-                    <Select 
+                    <Select
                       value={formData.type}
                       onValueChange={(value) => handleChange('type', value)}
                     >
@@ -213,7 +213,7 @@ export default function AddGoalPage() {
                 <p className="text-sm text-muted-foreground">
                   Break down your goal into smaller, achievable milestones
                 </p>
-                
+
                 {milestones.map((milestone, index) => (
                   <Card key={index} className="bg-gray-50">
                     <CardContent className="pt-6">
@@ -231,7 +231,7 @@ export default function AddGoalPage() {
                             </Button>
                           )}
                         </div>
-                        
+
                         <div className="space-y-2">
                           <Label htmlFor={`milestone-desc-${index}`}>Description</Label>
                           <Input
@@ -297,7 +297,7 @@ export default function AddGoalPage() {
                 <h3 className="text-lg font-semibold text-[#4c9789] border-b pb-2">
                   Action Plan (Optional)
                 </h3>
-                
+
                 {/* Steps */}
                 <div className="space-y-2">
                   <Label>Action Steps</Label>
@@ -394,7 +394,7 @@ export default function AddGoalPage() {
                 <h3 className="text-lg font-semibold text-[#4c9789] border-b pb-2">
                   Additional Information
                 </h3>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="notes">Notes</Label>
                   <Textarea
@@ -412,7 +412,7 @@ export default function AddGoalPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => navigate('/dashboard/goals')}
+                  onClick={() => navigate('/beneficiary/goals')}
                   className="flex-1"
                   disabled={isLoading}
                 >

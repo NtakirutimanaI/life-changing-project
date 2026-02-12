@@ -19,7 +19,7 @@ export default function UploadDocumentPage() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
-  
+
   const [formData, setFormData] = useState({
     documentType: '',
     notes: ''
@@ -73,7 +73,7 @@ export default function UploadDocumentPage() {
     setTimeout(() => {
       toast.success('Document uploaded successfully!');
       setIsLoading(false);
-      navigate('/dashboard/resources');
+      navigate('/beneficiary/resources');
     }, 1500);
   };
 
@@ -83,7 +83,7 @@ export default function UploadDocumentPage() {
 
   const getFileIcon = () => {
     if (!uploadedFile) return File;
-    
+
     const fileType = uploadedFile.file.type;
     if (fileType.startsWith('image/')) return ImageIcon;
     if (fileType === 'application/pdf') return FileText;
@@ -105,7 +105,7 @@ export default function UploadDocumentPage() {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => navigate('/dashboard/resources')}
+          onClick={() => navigate('/beneficiary/resources')}
           className="rounded-full"
         >
           <ArrowLeft className="w-5 h-5" />
@@ -144,10 +144,10 @@ export default function UploadDocumentPage() {
                 <h3 className="text-lg font-semibold text-[#4c9789] border-b pb-2">
                   Document Information
                 </h3>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="documentType">Document Type *</Label>
-                  <Select 
+                  <Select
                     value={formData.documentType}
                     onValueChange={(value) => handleChange('documentType', value)}
                   >
@@ -171,7 +171,7 @@ export default function UploadDocumentPage() {
                 <h3 className="text-lg font-semibold text-[#4c9789] border-b pb-2">
                   Upload File
                 </h3>
-                
+
                 {!uploadedFile ? (
                   <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-[#4c9789] transition-colors">
                     <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
@@ -210,7 +210,7 @@ export default function UploadDocumentPage() {
                             })()}
                           </div>
                         )}
-                        
+
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between gap-2">
                             <div className="min-w-0 flex-1">
@@ -231,7 +231,7 @@ export default function UploadDocumentPage() {
                               <X className="w-4 h-4" />
                             </Button>
                           </div>
-                          
+
                           <div className="mt-2">
                             <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
                               <div className="h-full bg-[#4c9789] w-full" />
@@ -250,7 +250,7 @@ export default function UploadDocumentPage() {
                 <h3 className="text-lg font-semibold text-[#4c9789] border-b pb-2">
                   Additional Information
                 </h3>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="notes">Notes (Optional)</Label>
                   <textarea
@@ -281,7 +281,7 @@ export default function UploadDocumentPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => navigate('/dashboard/resources')}
+                  onClick={() => navigate('/beneficiary/resources')}
                   className="flex-1"
                   disabled={isLoading}
                 >

@@ -283,7 +283,8 @@ const PageContentEditor = () => {
         };
 
         const path = routes[pageId || 'home'] || '/';
-        let url = `/#${path}`;
+        // Add preview=true query param to hide global navbar/footer in preview
+        let url = `/#${path}?preview=true`;
         if (sectionId) {
             url += `#${sectionId}`;
         }
@@ -292,13 +293,24 @@ const PageContentEditor = () => {
 
     const [previewUrl, setPreviewUrl] = useState(getPreviewUrl());
 
+    // Sync preview URL when page changes
+    React.useEffect(() => {
+        setPreviewUrl(getPreviewUrl());
+    }, [pageId]);
+
     const scrollToSection = (id: string) => {
+        const baseUrl = getPreviewUrl();
+        // Construct URL with hash for scrolling
+        const urlWithHash = `${baseUrl}${baseUrl.includes('?') ? '' : '?'}&section=${id}`;
+        // For simplicity with HashRouter and scrolling, we'll just use the hash if it works, 
+        // but given the current getPreviewUrl logic:
         setPreviewUrl(getPreviewUrl(id));
-        // Reset URL after a short delay so clicking the same button again works (reloads iframe with hash)
+        // Reset URL after a short delay so clicking the same button again works
         setTimeout(() => setPreviewUrl(getPreviewUrl(id)), 50);
     };
 
     const handleLiveSite = () => {
+        setPreviewUrl(getPreviewUrl());
         setShowPreview(true);
     };
 
@@ -430,18 +442,18 @@ const PageContentEditor = () => {
                             <Globe size={14} />
                             <span>Page Management</span>
                         </div>
-                        <h2 className="text-5xl font-black text-slate-900 dark:text-white tracking-tight">Editing <span className="text-teal-600">{pageName}</span></h2>
+                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">Editing <span className="text-teal-600">{pageName}</span></h2>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
                         <Button
                             variant="outline"
-                            className="h-14 px-8 rounded-2xl bg-white shadow-sm border-slate-200 font-bold text-slate-600 hover:bg-slate-50 transition-all hover:shadow-md"
+                            className="h-12 md:h-14 px-8 rounded-2xl bg-white shadow-sm border-slate-200 font-bold text-slate-600 hover:bg-slate-50 transition-all hover:shadow-md w-full sm:w-auto"
                             onClick={handleLiveSite}
                         >
                             <Eye size={20} className="mr-2" /> Live Site
                         </Button>
                         <Button
-                            className="h-14 px-10 rounded-2xl bg-teal-600 hover:bg-teal-700 text-white shadow-2xl shadow-teal-500/30 font-black uppercase tracking-widest text-xs transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70"
+                            className="h-12 md:h-14 px-10 rounded-2xl bg-teal-600 hover:bg-teal-700 text-white shadow-2xl shadow-teal-500/30 font-black uppercase tracking-widest text-xs transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 w-full sm:w-auto"
                             onClick={handlePublish}
                             disabled={isPublishing}
                         >
@@ -582,7 +594,7 @@ const WebContentsMenu = () => {
     ];
 
     return (
-        <div className="max-w-[320px] animate-in slide-in-from-left-4 duration-500">
+        <div className="max-w-full md:max-w-[320px] animate-in slide-in-from-left-4 duration-500">
             <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200/60 dark:border-slate-800 shadow-2xl overflow-hidden">
                 <div className="p-8 pb-4">
                     <div className="flex items-center gap-4 mb-10">

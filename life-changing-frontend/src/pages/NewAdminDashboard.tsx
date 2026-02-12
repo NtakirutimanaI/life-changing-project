@@ -67,9 +67,9 @@ export function AdminDashboard() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="pt-8">
-        <h1 className="text-4xl font-extrabold text-teal-900 dark:text-white mb-2 tracking-tight">Dashboard Overview</h1>
-        <p className="text-muted-foreground">
+      <div className="pt-4 md:pt-8">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-teal-900 dark:text-white mb-2 tracking-tight">Dashboard Overview</h1>
+        <p className="text-muted-foreground text-sm md:text-base">
           Welcome back! Here's what's happening with LCEO today.
         </p>
       </div>
@@ -205,31 +205,33 @@ export function AdminDashboard() {
               <Link to="/admin/donors">View All</Link>
             </Button>
           </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Country</TableHead>
-                  <TableHead className="text-right">Total Donated</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {mockDonors.slice(0, 5).map((donor) => (
-                  <TableRow key={donor.id}>
-                    <TableCell className="text-sm">
-                      {donor.anonymityPreference ? 'Anonymous' : donor.fullName}
-                    </TableCell>
-                    <TableCell className="text-sm">
-                      {donor.country}
-                    </TableCell>
-                    <TableCell className="text-sm text-right font-medium">
-                      {formatCurrency(donor.totalDonated)}
-                    </TableCell>
+          <CardContent className="p-0 sm:p-6 sm:pt-0">
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Country</TableHead>
+                    <TableHead className="text-right">Total Donated</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {mockDonors.slice(0, 5).map((donor) => (
+                    <TableRow key={donor.id}>
+                      <TableCell className="text-sm">
+                        {donor.anonymityPreference ? 'Anonymous' : donor.fullName}
+                      </TableCell>
+                      <TableCell className="text-sm">
+                        {donor.country}
+                      </TableCell>
+                      <TableCell className="text-sm text-right font-medium">
+                        {formatCurrency(donor.totalDonated)}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </CardContent>
         </Card>
 
@@ -288,38 +290,40 @@ export function AdminDashboard() {
             <Link to="/admin/beneficiaries">View All</Link>
           </Button>
         </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead>Program</TableHead>
-                <TableHead>Enrollment Date</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {mockBeneficiaries.slice(0, 5).map((beneficiary) => (
-                <TableRow key={beneficiary.id}>
-                  <TableCell className="font-medium">
-                    {beneficiary.fullName}
-                  </TableCell>
-                  <TableCell>{beneficiary.location.sector}, {beneficiary.location.district}</TableCell>
-                  <TableCell>{beneficiary.program.name.en}</TableCell>
-                  <TableCell>{formatDate(beneficiary.enrollmentDate)}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={beneficiary.status === BeneficiaryStatus.ACTIVE ? 'default' : 'secondary'}
-                      className={beneficiary.status === BeneficiaryStatus.ACTIVE ? 'bg-primary' : ''}
-                    >
-                      {beneficiary.status}
-                    </Badge>
-                  </TableCell>
+        <CardContent className="p-0 sm:p-6 sm:pt-0">
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Location</TableHead>
+                  <TableHead>Program</TableHead>
+                  <TableHead>Enrollment Date</TableHead>
+                  <TableHead>Status</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {mockBeneficiaries.slice(0, 5).map((beneficiary) => (
+                  <TableRow key={beneficiary.id}>
+                    <TableCell className="font-medium whitespace-nowrap">
+                      {beneficiary.fullName}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">{beneficiary.location.sector}, {beneficiary.location.district}</TableCell>
+                    <TableCell className="whitespace-nowrap">{beneficiary.program.name.en}</TableCell>
+                    <TableCell className="whitespace-nowrap">{formatDate(beneficiary.enrollmentDate)}</TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={beneficiary.status === BeneficiaryStatus.ACTIVE ? 'default' : 'secondary'}
+                        className={beneficiary.status === BeneficiaryStatus.ACTIVE ? 'bg-primary' : ''}
+                      >
+                        {beneficiary.status}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

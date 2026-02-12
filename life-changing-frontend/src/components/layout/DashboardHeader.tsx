@@ -21,7 +21,9 @@ import {
   UserPlus,
   FileText,
   ChevronDown,
+  Globe,
 } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -53,7 +55,12 @@ export function DashboardHeader({ onMobileMenuClick }: DashboardHeaderProps) {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/admin/search?q=${encodeURIComponent(searchQuery)}`);
+      if (user?.userType === UserType.ADMIN) {
+        navigate(`/admin/search?q=${encodeURIComponent(searchQuery)}`);
+      } else {
+        // Generic search results for non-admins could be implemented later
+        toast.info("Search feature for beneficiaries is coming soon!");
+      }
       setSearchQuery("");
     }
   };
@@ -157,18 +164,19 @@ export function DashboardHeader({ onMobileMenuClick }: DashboardHeaderProps) {
         </div>
 
         {/* Search */}
-        <form onSubmit={handleSearch} className="flex-1 flex items-center max-w-2xl mx-4 group/search">
-          <div className="relative flex-1">
+        <form onSubmit={handleSearch} className="hidden sm:flex flex-1 items-center max-w-2xl mx-2 md:mx-4 group/search">
+          <div className="flex-1 relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <Input
-              placeholder="Search beneficiaries, programs, reports..."
+              placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-6 h-10 bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 rounded-l-full rounded-r-none focus-visible:bg-white dark:focus-visible:bg-slate-950 focus-visible:ring-4 focus-visible:ring-teal-500/10 focus-visible:border-teal-500 transition-all font-medium text-slate-900 dark:text-slate-100 placeholder:text-slate-400 border-r-0"
+              className="w-full px-4 md:px-6 h-10 bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 rounded-l-full rounded-r-none focus-visible:bg-white dark:focus-visible:bg-slate-950 focus-visible:ring-4 focus-visible:ring-teal-500/10 focus-visible:border-teal-500 transition-all font-medium text-slate-900 dark:text-slate-100 placeholder:text-slate-400 border-r-0 text-sm pl-9"
             />
           </div>
           <Button
             type="submit"
-            className="hidden md:flex h-10 px-8 rounded-r-full rounded-l-none bg-teal-600 hover:bg-teal-700 text-white font-bold transition-all shadow-md shadow-teal-500/10 hover:shadow-teal-500/20 active:scale-[0.98] border border-teal-600"
+            className="hidden lg:flex h-10 px-8 rounded-r-full rounded-l-none bg-teal-600 hover:bg-teal-700 text-white font-bold transition-all shadow-md shadow-teal-500/10 hover:shadow-teal-500/20 active:scale-[0.98] border border-teal-600"
           >
             Search
           </Button>

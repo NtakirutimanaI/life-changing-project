@@ -90,23 +90,23 @@ export function BeneficiariesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between mb-8 pt-2">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pt-2">
         <div>
-          <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Beneficiaries</h1>
-          <p className="text-teal-600 dark:text-teal-400 text-xs font-black uppercase tracking-widest mt-1">Management Portal</p>
+          <h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">Beneficiaries</h1>
+          <p className="text-teal-600 dark:text-teal-400 text-[10px] md:text-xs font-black uppercase tracking-widest mt-1">Management Portal</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full sm:w-auto">
           <Button
             variant="outline"
             size="sm"
-            className="h-10 rounded-xl font-bold border-slate-200 hover:bg-slate-50 text-xs"
+            className="flex-1 sm:flex-none h-10 rounded-xl font-bold border-slate-200 hover:bg-slate-50 text-xs"
             onClick={handleExport}
           >
             <Download className="w-3.5 h-3.5 mr-2" />
-            Export Data
+            Export
           </Button>
           <Button
-            className="h-10 px-5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-bold text-[10px] uppercase tracking-wider shadow-lg shadow-teal-600/10 transition-all active:scale-95 gap-2"
+            className="flex-1 sm:flex-none h-10 px-5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-bold text-[10px] uppercase tracking-wider shadow-lg shadow-teal-600/10 transition-all active:scale-95 gap-2"
             onClick={() => navigate('/admin/beneficiaries/add')}
           >
             <Plus size={14} strokeWidth={3} />
@@ -116,7 +116,7 @@ export function BeneficiariesPage() {
       </div>
 
       {/* Filters and Search - Professional Redesign */}
-      <div className="flex flex-col lg:flex-row gap-4 p-2 bg-slate-50/50 dark:bg-slate-900/30 rounded-[2rem] border border-slate-200/60 dark:border-slate-800/60 backdrop-blur-xl shadow-sm">
+      <div className="flex flex-col xl:flex-row gap-4 p-3 bg-slate-50/50 dark:bg-slate-900/30 rounded-[2rem] border border-slate-200/60 dark:border-slate-800/60 backdrop-blur-xl shadow-sm">
         <div className="flex-1">
           <Input
             placeholder="Search by name, district, or phone..."
@@ -126,9 +126,9 @@ export function BeneficiariesPage() {
           />
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-3">
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-[150px] h-12 rounded-2xl bg-white dark:bg-slate-950 border-slate-100 dark:border-slate-800/50 focus:ring-4 focus:ring-teal-500/10 shadow-sm transition-all px-4">
+            <SelectTrigger className="w-full sm:w-[160px] h-12 rounded-2xl bg-white dark:bg-slate-950 border-slate-100 dark:border-slate-800/50 focus:ring-4 focus:ring-teal-500/10 shadow-sm transition-all px-4">
               <div className="flex items-center gap-2.5 text-slate-600 dark:text-slate-400 font-bold text-[10px] uppercase tracking-wider">
                 <Filter className="h-3.5 w-3.5 text-teal-600" />
                 <SelectValue placeholder="Status" />
@@ -143,7 +143,7 @@ export function BeneficiariesPage() {
           </Select>
 
           <Select value={programFilter} onValueChange={setProgramFilter}>
-            <SelectTrigger className="w-[180px] h-12 rounded-2xl bg-white dark:bg-slate-950 border-slate-100 dark:border-slate-800/50 focus:ring-4 focus:ring-teal-500/10 shadow-sm transition-all px-4">
+            <SelectTrigger className="w-full sm:w-[200px] h-12 rounded-2xl bg-white dark:bg-slate-950 border-slate-100 dark:border-slate-800/50 focus:ring-4 focus:ring-teal-500/10 shadow-sm transition-all px-4">
               <div className="flex items-center gap-2.5 text-slate-600 dark:text-slate-400 font-bold text-[10px] uppercase tracking-wider">
                 <FileText className="h-3.5 w-3.5 text-teal-600" />
                 <SelectValue placeholder="Program" />
@@ -160,8 +160,8 @@ export function BeneficiariesPage() {
       </div>
 
       {/* Table */}
-      <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm shadow-sm overflow-hidden">
-        <Table>
+      <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm shadow-sm overflow-x-auto">
+        <Table className="min-w-[1000px] lg:min-w-full">
           <TableHeader className="bg-slate-50/50 dark:bg-slate-900/50">
             <TableRow className="border-slate-200 dark:border-slate-800 hover:bg-transparent">
               <TableHead className="w-[50px]"></TableHead>

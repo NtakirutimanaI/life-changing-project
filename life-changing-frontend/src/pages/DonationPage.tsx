@@ -77,8 +77,8 @@ export function DonationPage() {
                 </div>
             </div>
 
-            <h1 className="display-4 font-weight-bold mb-3 text-dark" style={{ letterSpacing: '-1.5px', color: '#122f2b' }}>Empower a Future Today</h1>
-            <p className="lead text-muted mb-5 mx-auto" style={{ maxWidth: '800px', fontSize: '1.25rem', lineHeight: '1.8' }}>
+            <h1 className="h2 md:display-4 font-weight-bold mb-3 text-dark responsive-title" style={{ letterSpacing: '-1px', color: '#122f2b' }}>Empower a Future Today</h1>
+            <p className="lead text-muted mb-4 md:mb-5 mx-auto px-2 responsive-lead" style={{ maxWidth: '800px', lineHeight: '1.6' }}>
                 We support girls, caregivers, and youth by promoting education, health, mentorship, and skills development to strengthen families and build resilient communities.
             </p>
 
@@ -134,9 +134,9 @@ export function DonationPage() {
     );
 
     const renderQuickDonation = () => (
-        <div className="row no-gutters shadow-lg rounded-xl overflow-hidden" style={{ minHeight: '650px', border: '1px solid rgba(0,0,0,0.05)' }}>
+        <div className="row no-gutters shadow-lg rounded-xl overflow-hidden" style={{ minHeight: 'auto', border: '1px solid rgba(0,0,0,0.05)' }}>
             {/* Left Side: Impact */}
-            <div className="col-lg-5 p-5 d-flex flex-column justify-content-center text-white position-relative" style={{ backgroundColor: '#122f2b', backgroundImage: 'linear-gradient(rgba(18, 47, 43, 0.88), rgba(18, 47, 43, 0.98)), url("https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1000")', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+            <div className="col-lg-5 p-4 md:p-5 d-flex flex-column justify-content-center text-white position-relative" style={{ minHeight: '300px', backgroundColor: '#122f2b', backgroundImage: 'linear-gradient(rgba(18, 47, 43, 0.88), rgba(18, 47, 43, 0.98)), url("https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1000")', backgroundSize: 'cover', backgroundPosition: 'center' }}>
                 <div className="position-relative z-index-1">
                     <div className="rounded-circle d-inline-flex p-3 mb-4 shadow-sm" style={{
                         background: 'rgba(255,255,255,0.15)',
@@ -145,8 +145,7 @@ export function DonationPage() {
                     }}>
                         <Heart size={36} color="#4c9789" fill="#4c9789" />
                     </div>
-                    <h1 className="font-weight-bold mb-3" style={{
-                        fontSize: '2.8rem',
+                    <h1 className="font-weight-bold mb-3 responsive-impact-title" style={{
                         lineHeight: '1.1',
                         color: '#ffffff',
                         textShadow: '0 2px 4px rgba(0,0,0,0.2)',
@@ -255,7 +254,7 @@ export function DonationPage() {
 
                 <button
                     className="btn btn-block py-3 font-weight-bold text-white mb-4 shadow-sm transition-all hover-scale"
-                    style={{ backgroundColor: '#122f2b', borderRadius: '12px', fontSize: '1.1rem', height: '60px' }}
+                    style={{ backgroundColor: '#122f2b', borderRadius: '12px', fontSize: '1rem', minHeight: '60px' }}
                     onClick={handleCompleteDonation}
                     disabled={loading || !selectedAmount || !formData.email || !formData.name}
                 >
@@ -789,6 +788,14 @@ export function DonationPage() {
                 .gap-2 { gap: 0.5rem; }
                 .gap-3 { gap: 1rem; }
                 .gap-4 { gap: 1.5rem; }
+                .responsive-title { font-size: 1.75rem; }
+                .responsive-lead { font-size: 0.95rem; }
+                .responsive-impact-title { font-size: 2rem; }
+                @media (min-width: 768px) {
+                    .responsive-title { font-size: 3.5rem; }
+                    .responsive-lead { font-size: 1.25rem; }
+                    .responsive-impact-title { font-size: 2.8rem; }
+                }
             `}</style>
             <div className="container">
                 <div className="row justify-content-center">

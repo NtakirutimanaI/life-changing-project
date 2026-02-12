@@ -17,7 +17,7 @@ export default function AddTrackingPage() {
   const [nextWeekTasks, setNextWeekTasks] = useState<string[]>(['']);
   const [nextWeekGoals, setNextWeekGoals] = useState<string[]>(['']);
   const [supportNeeded, setSupportNeeded] = useState<string[]>(['']);
-  
+
   const [formData, setFormData] = useState({
     weekEnding: '',
     attendance: '',
@@ -48,7 +48,7 @@ export default function AddTrackingPage() {
     setTimeout(() => {
       toast.success('Weekly tracking submitted successfully!');
       setIsLoading(false);
-      navigate('/dashboard/tracking');
+      navigate('/beneficiary/tracking');
     }, 1500);
   };
 
@@ -90,7 +90,7 @@ export default function AddTrackingPage() {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => navigate('/dashboard/tracking')}
+          onClick={() => navigate('/beneficiary/tracking')}
           className="rounded-full"
         >
           <ArrowLeft className="w-5 h-5" />
@@ -129,7 +129,7 @@ export default function AddTrackingPage() {
                 <h3 className="text-lg font-semibold text-[#4c9789] border-b pb-2">
                   Basic Information
                 </h3>
-                
+
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="weekEnding">Week Ending *</Label>
@@ -144,7 +144,7 @@ export default function AddTrackingPage() {
 
                   <div className="space-y-2">
                     <Label htmlFor="attendance">Attendance *</Label>
-                    <Select 
+                    <Select
                       value={formData.attendance}
                       onValueChange={(value) => handleChange('attendance', value)}
                     >
@@ -166,7 +166,7 @@ export default function AddTrackingPage() {
                 <h3 className="text-lg font-semibold text-[#4c9789] border-b pb-2">
                   Weekly Tasks
                 </h3>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="taskGiven">Task Given This Week</Label>
                   <Textarea
@@ -180,7 +180,7 @@ export default function AddTrackingPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="taskCompletionStatus">Task Completion Status</Label>
-                  <Select 
+                  <Select
                     value={formData.taskCompletionStatus}
                     onValueChange={(value) => handleChange('taskCompletionStatus', value)}
                   >
@@ -201,7 +201,7 @@ export default function AddTrackingPage() {
                 <h3 className="text-lg font-semibold text-[#4c9789] border-b pb-2">
                   Financial Information
                 </h3>
-                
+
                 <div className="grid gap-4 md:grid-cols-3">
                   <div className="space-y-2">
                     <Label htmlFor="incomeThisWeek">Income This Week (RWF)</Label>
@@ -249,7 +249,7 @@ export default function AddTrackingPage() {
                 <h3 className="text-lg font-semibold text-[#4c9789] border-b pb-2">
                   Sales Information
                 </h3>
-                
+
                 <div className="grid gap-4 md:grid-cols-3">
                   <div className="space-y-2">
                     <Label htmlFor="unitsSold">Units Sold</Label>
@@ -293,7 +293,7 @@ export default function AddTrackingPage() {
                 <h3 className="text-lg font-semibold text-[#4c9789] border-b pb-2">
                   Challenges & Solutions
                 </h3>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="challenges">Challenges Faced</Label>
                   <Textarea
@@ -333,7 +333,7 @@ export default function AddTrackingPage() {
                 <h3 className="text-lg font-semibold text-[#4c9789] border-b pb-2">
                   Next Week's Plan
                 </h3>
-                
+
                 {/* Tasks */}
                 <div className="space-y-2">
                   <Label>Planned Tasks</Label>
@@ -448,7 +448,7 @@ export default function AddTrackingPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => navigate('/dashboard/tracking')}
+                  onClick={() => navigate('/beneficiary/tracking')}
                   className="flex-1"
                   disabled={isLoading}
                 >

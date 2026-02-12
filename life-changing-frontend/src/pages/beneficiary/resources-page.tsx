@@ -1,13 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { 
-  BookOpen, 
-  FileText, 
-  Video, 
-  Download, 
-  Phone, 
-  Mail, 
+import {
+  BookOpen,
+  FileText,
+  Video,
+  Download,
+  Phone,
+  Mail,
   AlertCircle,
   Search,
   ExternalLink,
@@ -167,11 +167,11 @@ export default function ResourcesPage() {
         {/* Training Materials Tab */}
         <TabsContent value="training" className="space-y-4">
           <div className="flex gap-4 mb-6">
-            <div className="flex-1">
-              <Input 
-                placeholder="Search training materials..." 
-                className="w-full"
-                icon={<Search className="w-4 h-4" />}
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Input
+                placeholder="Search training materials..."
+                className="w-full pl-9"
               />
             </div>
             <Button variant="outline">
@@ -188,12 +188,10 @@ export default function ResourcesPage() {
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex items-start gap-3">
-                        <div className={`p-2 rounded-lg ${
-                          material.type === 'Video' ? 'bg-purple-100' : 'bg-blue-100'
-                        }`}>
-                          <Icon className={`w-5 h-5 ${
-                            material.type === 'Video' ? 'text-purple-600' : 'text-blue-600'
-                          }`} />
+                        <div className={`p-2 rounded-lg ${material.type === 'Video' ? 'bg-purple-100' : 'bg-blue-100'
+                          }`}>
+                          <Icon className={`w-5 h-5 ${material.type === 'Video' ? 'text-purple-600' : 'text-blue-600'
+                            }`} />
                         </div>
                         <div className="flex-1">
                           <CardTitle className="text-base">{material.title}</CardTitle>
@@ -240,9 +238,9 @@ export default function ResourcesPage() {
                   <CardTitle>Uploaded Documents</CardTitle>
                   <CardDescription>Your personal documents and certificates</CardDescription>
                 </div>
-                <Button 
+                <Button
                   className="bg-teal-600 hover:bg-teal-700"
-                  onClick={() => navigate('/dashboard/resources/upload')}
+                  onClick={() => navigate('/beneficiary/resources/upload')}
                 >
                   <FileText className="w-4 h-4 mr-2" />
                   Upload New
@@ -252,8 +250,8 @@ export default function ResourcesPage() {
             <CardContent>
               <div className="space-y-3">
                 {documents.map((doc) => (
-                  <div 
-                    key={doc.id} 
+                  <div
+                    key={doc.id}
                     className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
                   >
                     <div className="flex items-center gap-3">
@@ -270,10 +268,10 @@ export default function ResourcesPage() {
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Badge 
+                      <Badge
                         className={
-                          doc.status === 'verified' 
-                            ? 'bg-green-100 text-green-700' 
+                          doc.status === 'verified'
+                            ? 'bg-green-100 text-green-700'
                             : 'bg-yellow-100 text-yellow-700'
                         }
                       >
@@ -406,7 +404,7 @@ export default function ResourcesPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Message</label>
-                    <textarea 
+                    <textarea
                       className="w-full border rounded-md p-2 min-h-[120px]"
                       placeholder="Please describe your issue or question in detail..."
                     />

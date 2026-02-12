@@ -26,6 +26,7 @@ export function ProgramsPage() {
   const location = useLocation();
   const { user } = useAuth();
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Check if we're in admin context
   const isAdminContext = location.pathname.startsWith('/admin');
@@ -70,16 +71,15 @@ export function ProgramsPage() {
     <div className="space-y-10 pb-20 pt-10">
       {/* Main Content with proper margins */}
       <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pt-2">
           <div>
-            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Programs</h1>
+            <h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">Programs</h1>
             <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">
               {mockPrograms.length} Total Programs
             </p>
           </div>
           <Button
-            className="h-10 px-6 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-bold uppercase tracking-wider shadow-lg shadow-teal-600/10 transition-all active:scale-95 gap-2 text-xs"
+            className="w-full sm:w-auto h-10 px-6 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-bold uppercase tracking-wider shadow-lg shadow-teal-600/10 transition-all active:scale-95 gap-2 text-xs"
             onClick={() => setCreateDialogOpen(true)}
           >
             <Plus size={16} strokeWidth={3} />
@@ -89,19 +89,32 @@ export function ProgramsPage() {
 
         {/* Search & Action Bar */}
         <div className="flex flex-col md:flex-row gap-4 mb-8">
-          <Card className="flex-1 shadow-sm border-slate-200/60">
-            <CardContent className="p-0 flex items-center px-4 h-12">
-              <Search className="w-4 h-4 text-slate-400 mr-3" />
-              <Input
-                placeholder="Search programs by name or category..."
-                className="border-none shadow-none focus-visible:ring-0 p-0 text-sm font-bold"
-              />
-            </CardContent>
-          </Card>
+          <div className="relative flex-1 group max-w-2xl">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+              <Search className="h-4 w-4 text-slate-400 group-focus-within:text-teal-600 transition-colors" />
+            </div>
+            <input
+              type="text"
+              placeholder="Search programs..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="block w-full h-11 pl-10 pr-24 rounded-xl bg-slate-50/50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/60 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-teal-500/5 focus:border-teal-500/50 transition-all outline-none text-xs font-bold shadow-sm group-hover:shadow-md"
+            />
+            <div className="absolute inset-y-0 right-1 flex items-center">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-9 px-3 text-slate-500 hover:text-teal-600 hover:bg-white dark:hover:bg-slate-800 rounded-lg gap-2 font-bold text-[10px] uppercase tracking-wider"
+              >
+                <MoreVertical className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Advanced</span> Filters
+              </Button>
+            </div>
+          </div>
         </div>
 
         {/* Program Stats */}
-        <div className="grid gap-4 md:grid-cols-3 mb-8">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-8">
           <Card className="bg-primary/5 border-primary/20">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -153,107 +166,113 @@ export function ProgramsPage() {
 
         {/* Programs Grid */}
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {mockPrograms.map((program) => {
-            const target = program.kpiTargets?.graduates || program.kpiTargets?.peopleReached || 100;
-            const current = 65;
-            const beneficiaryProgress = (current / target) * 100;
-            const budgetProgress = (program.fundsUtilized / program.budget) * 100;
+          {mockPrograms
+            .filter(program =>
+              program.name.en.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              program.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              program.status.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+            .map((program) => {
+              const target = program.kpiTargets?.graduates || program.kpiTargets?.peopleReached || 100;
+              const current = 65;
+              const beneficiaryProgress = (current / target) * 100;
+              const budgetProgress = (program.fundsUtilized / program.budget) * 100;
 
-            return (
-              <Card key={program.id} className="group hover:shadow-xl transition-all duration-300 overflow-hidden border-slate-200/60 dark:border-slate-800 flex flex-col h-full bg-white dark:bg-slate-900/50">
-                {/* Compact Image Header */}
-                {program.coverImage && (
-                  <div className="relative h-32 w-full overflow-hidden">
-                    <img
-                      src={program.coverImage}
-                      alt={program.name.en}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                    <div className="absolute bottom-3 left-3 flex gap-2">
-                      <Badge className={`${getCategoryColor(program.category)} text-[9px] h-5 px-2 font-black uppercase tracking-wider border-none shadow-sm`}>
-                        {program.category}
-                      </Badge>
-                    </div>
-                  </div>
-                )}
-
-                <CardHeader className="p-4 pb-2">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className={`w-1.5 h-1.5 rounded-full ${program.status === ProgramStatus.ACTIVE ? 'bg-emerald-500' : 'bg-slate-300'}`}></span>
-                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[1px]">{program.status}</span>
-                      </div>
-                      <CardTitle className="text-[15px] font-black text-slate-900 dark:text-white leading-tight line-clamp-1 group-hover:text-teal-600 transition-colors">
-                        {program.name.en}
-                      </CardTitle>
-                    </div>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-7 w-7 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
-                          <MoreVertical className="w-4 h-4 text-slate-400" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-44 p-1 rounded-xl shadow-xl border-slate-200/60">
-                        <DropdownMenuItem className="font-bold text-[11px] rounded-lg cursor-pointer" onClick={() => navigate(`/programs/${program.id}`)}>
-                          <Search className="w-3.5 h-3.5 mr-2 opacity-50" /> View Analytics
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="font-bold text-[11px] rounded-lg cursor-pointer">
-                          <Plus className="w-3.5 h-3.5 mr-2 opacity-50" /> Update Data
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive font-bold text-[11px] rounded-lg cursor-pointer">
-                          Archive Program
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-                </CardHeader>
-
-                <CardContent className="p-4 pt-1 flex-1 flex flex-col">
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 mb-4">
-                    {program.description.en}
-                  </p>
-
-                  <div className="mt-auto space-y-3.5">
-                    {/* Compact Meta Grid */}
-                    <div className="grid grid-cols-2 gap-4 border-y border-slate-50 dark:border-slate-800/50 py-3">
-                      <div className="flex flex-col">
-                        <span className="text-[9px] font-bold text-slate-300 uppercase tracking-wider mb-0.5">Reach</span>
-                        <span className="text-[11px] font-black text-slate-800 dark:text-slate-200">{current} <span className="text-slate-400 font-bold">/ {target}</span></span>
-                      </div>
-                      <div className="flex flex-col text-right">
-                        <span className="text-[9px] font-bold text-slate-300 uppercase tracking-wider mb-0.5">Budget</span>
-                        <span className="text-[11px] font-black text-slate-800 dark:text-slate-200">{Math.round(budgetProgress)}% <span className="text-slate-400 font-bold">Used</span></span>
+              return (
+                <Card key={program.id} className="group hover:shadow-xl transition-all duration-300 overflow-hidden border-slate-200/60 dark:border-slate-800 flex flex-col h-full bg-white dark:bg-slate-900/50">
+                  {/* Compact Image Header */}
+                  {program.coverImage && (
+                    <div className="relative h-32 w-full overflow-hidden">
+                      <img
+                        src={program.coverImage}
+                        alt={program.name.en}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                      <div className="absolute bottom-3 left-3 flex gap-2">
+                        <Badge className={`${getCategoryColor(program.category)} text-[9px] h-5 px-2 font-black uppercase tracking-wider border-none shadow-sm`}>
+                          {program.category}
+                        </Badge>
                       </div>
                     </div>
+                  )}
 
-                    <div className="pt-1">
-                      <div className="flex items-center justify-between text-[10px] mb-1.5">
-                        <span className="font-black text-teal-600 uppercase tracking-widest">Efficiency</span>
-                        <span className="font-black text-slate-400">85%</span>
+                  <CardHeader className="p-4 pb-2">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className={`w-1.5 h-1.5 rounded-full ${program.status === ProgramStatus.ACTIVE ? 'bg-emerald-500' : 'bg-slate-300'}`}></span>
+                          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[1px]">{program.status}</span>
+                        </div>
+                        <CardTitle className="text-[15px] font-black text-slate-900 dark:text-white leading-tight line-clamp-1 group-hover:text-teal-600 transition-colors">
+                          {program.name.en}
+                        </CardTitle>
                       </div>
-                      <div className="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-teal-500 rounded-full opacity-70 shadow-[0_0_8px_rgba(20,184,166,0.3)] transition-all duration-1000"
-                          style={{ width: `85%` }}
-                        ></div>
-                      </div>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-7 w-7 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <MoreVertical className="w-4 h-4 text-slate-400" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-44 p-1 rounded-xl shadow-xl border-slate-200/60">
+                          <DropdownMenuItem className="font-bold text-[11px] rounded-lg cursor-pointer" onClick={() => navigate(`/programs/${program.id}`)}>
+                            <Search className="w-3.5 h-3.5 mr-2 opacity-50" /> View Analytics
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="font-bold text-[11px] rounded-lg cursor-pointer">
+                            <Plus className="w-3.5 h-3.5 mr-2 opacity-50" /> Update Data
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="text-destructive font-bold text-[11px] rounded-lg cursor-pointer">
+                            Archive Program
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
+                  </CardHeader>
 
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full h-8 text-[10px] font-black uppercase tracking-[1.5px] border-slate-100 dark:border-slate-800 hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all rounded-lg mt-2"
-                      onClick={() => navigate(`/programs/${program.id}`)}
-                    >
-                      Management Dashboard
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+                  <CardContent className="p-4 pt-1 flex-1 flex flex-col">
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 mb-4">
+                      {program.description.en}
+                    </p>
+
+                    <div className="mt-auto space-y-3.5">
+                      {/* Compact Meta Grid */}
+                      <div className="grid grid-cols-2 gap-4 border-y border-slate-50 dark:border-slate-800/50 py-3">
+                        <div className="flex flex-col">
+                          <span className="text-[9px] font-bold text-slate-300 uppercase tracking-wider mb-0.5">Reach</span>
+                          <span className="text-[11px] font-black text-slate-800 dark:text-slate-200">{current} <span className="text-slate-400 font-bold">/ {target}</span></span>
+                        </div>
+                        <div className="flex flex-col text-right">
+                          <span className="text-[9px] font-bold text-slate-300 uppercase tracking-wider mb-0.5">Budget</span>
+                          <span className="text-[11px] font-black text-slate-800 dark:text-slate-200">{Math.round(budgetProgress)}% <span className="text-slate-400 font-bold">Used</span></span>
+                        </div>
+                      </div>
+
+                      <div className="pt-1">
+                        <div className="flex items-center justify-between text-[10px] mb-1.5">
+                          <span className="font-black text-teal-600 uppercase tracking-widest">Efficiency</span>
+                          <span className="font-black text-slate-400">85%</span>
+                        </div>
+                        <div className="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-teal-500 rounded-full opacity-70 shadow-[0_0_8px_rgba(20,184,166,0.3)] transition-all duration-1000"
+                            style={{ width: `85%` }}
+                          ></div>
+                        </div>
+                      </div>
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full h-8 text-[10px] font-black uppercase tracking-[1.5px] border-slate-100 dark:border-slate-800 hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all rounded-lg mt-2"
+                        onClick={() => navigate(`/programs/${program.id}`)}
+                      >
+                        Management Dashboard
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
         </div>
 
         {/* Create Program Dialog */}
@@ -324,6 +343,6 @@ export function ProgramsPage() {
           </DialogContent>
         </Dialog>
       </div>
-    </div>
+    </div >
   );
 }

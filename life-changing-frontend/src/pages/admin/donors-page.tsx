@@ -63,13 +63,13 @@ export default function DonorsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center pt-2">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-2">
         <div>
-          <h1 className="text-4xl font-extrabold text-teal-900 dark:text-white tracking-tight">Donor Management</h1>
-          <p className="text-teal-600 dark:text-teal-400 font-medium mt-1">Manage and engage with your donor community</p>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-teal-900 dark:text-white tracking-tight">Donor Management</h1>
+          <p className="text-teal-600 dark:text-teal-400 font-medium mt-1 text-sm md:text-base">Manage and engage with your donor community</p>
         </div>
         <Button
-          className="h-10 px-6 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-bold uppercase tracking-wider shadow-lg shadow-teal-600/10 transition-all active:scale-95 gap-2 text-xs"
+          className="w-full sm:w-auto h-10 px-6 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-bold uppercase tracking-wider shadow-lg shadow-teal-600/10 transition-all active:scale-95 gap-2 text-xs"
           onClick={() => navigate('/admin/donors/add')}
         >
           <UserPlus size={16} strokeWidth={3} />
@@ -78,7 +78,7 @@ export default function DonorsPage() {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-gray-500">Total Donors</CardTitle>
@@ -195,212 +195,218 @@ export default function DonorsPage() {
         </TabsList>
 
         {/* Filters */}
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1">
             <Input
               placeholder="Search donors by name, email, or country..."
-              className="w-full"
+              className="w-full h-10"
             />
           </div>
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Country" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Countries</SelectItem>
-              <SelectItem value="usa">USA</SelectItem>
-              <SelectItem value="uk">UK</SelectItem>
-              <SelectItem value="canada">Canada</SelectItem>
-              <SelectItem value="rwanda">Rwanda</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button variant="outline">
-            <Filter className="w-4 h-4 mr-2" />
-            More Filters
-          </Button>
-          <Button variant="outline">
-            <Download className="w-4 h-4 mr-2" />
-            Export
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Select>
+              <SelectTrigger className="w-full md:w-[180px] h-10">
+                <SelectValue placeholder="Country" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Countries</SelectItem>
+                <SelectItem value="usa">USA</SelectItem>
+                <SelectItem value="uk">UK</SelectItem>
+                <SelectItem value="canada">Canada</SelectItem>
+                <SelectItem value="rwanda">Rwanda</SelectItem>
+              </SelectContent>
+            </Select>
+            <div className="flex gap-2 w-full md:w-auto">
+              <Button variant="outline" className="flex-1 md:flex-none h-10">
+                <Filter className="w-4 h-4 mr-2" />
+                Filters
+              </Button>
+              <Button variant="outline" className="flex-1 md:flex-none h-10">
+                <Download className="w-4 h-4 mr-2" />
+                Export
+              </Button>
+            </div>
+          </div>
         </div>
 
         {/* All Donors Tab */}
         <TabsContent value="all">
           <Card>
-            <CardHeader>
+            <CardHeader className="px-4 py-6 md:px-6">
               <CardTitle>All Donors</CardTitle>
               <CardDescription>Complete list of all donors</CardDescription>
             </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Country</TableHead>
-                    <TableHead>Total Donated</TableHead>
-                    <TableHead>Last Donation</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {mockDonors.map((donor) => (
-                    <TableRow key={donor.id}>
-                      <TableCell className="font-medium">
-                        {donor.anonymityPreference ? 'Anonymous' : donor.fullName}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <Mail className="w-4 h-4" />
-                          {donor.user.email}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <Globe className="w-4 h-4 text-gray-400" />
-                          {donor.country}
-                        </div>
-                      </TableCell>
-                      <TableCell className="font-semibold">
-                        ${donor.totalDonated.toLocaleString()}
-                      </TableCell>
-                      <TableCell>
-                        {donor.lastDonationDate
-                          ? new Date(donor.lastDonationDate).toLocaleDateString()
-                          : 'Never'
-                        }
-                      </TableCell>
-                      <TableCell>
-                        {donor.isRecurringDonor ? (
-                          <Badge className="bg-blue-100 text-blue-700">Recurring</Badge>
-                        ) : (
-                          <Badge variant="outline">One-Time</Badge>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <Badge className="bg-green-100 text-green-700">Active</Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button variant="ghost" size="sm">
-                              <Eye className="w-4 h-4" />
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="max-w-2xl">
-                            <DialogHeader>
-                              <DialogTitle>Donor Details</DialogTitle>
-                            </DialogHeader>
-                            <div className="space-y-6 py-4">
-                              {/* Personal Information */}
-                              <div>
-                                <h3 className="font-semibold mb-3">Personal Information</h3>
-                                <div className="grid grid-cols-2 gap-4">
-                                  <div>
-                                    <p className="text-sm text-gray-500">Full Name</p>
-                                    <p className="font-medium">{donor.fullName}</p>
-                                  </div>
-                                  <div>
-                                    <p className="text-sm text-gray-500">Email</p>
-                                    <p className="font-medium">{donor.user.email}</p>
-                                  </div>
-                                  <div>
-                                    <p className="text-sm text-gray-500">Phone</p>
-                                    <p className="font-medium">{donor.user.phone}</p>
-                                  </div>
-                                  <div>
-                                    <p className="text-sm text-gray-500">Country</p>
-                                    <p className="font-medium">{donor.country}</p>
-                                  </div>
-                                  <div>
-                                    <p className="text-sm text-gray-500">Preferred Currency</p>
-                                    <p className="font-medium">{donor.preferredCurrency}</p>
-                                  </div>
-                                  <div>
-                                    <p className="text-sm text-gray-500">Member Since</p>
-                                    <p className="font-medium">
-                                      {new Date(donor.createdAt).toLocaleDateString()}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* Donation Summary */}
-                              <div>
-                                <h3 className="font-semibold mb-3">Donation Summary</h3>
-                                <div className="grid grid-cols-3 gap-4">
-                                  <Card>
-                                    <CardContent className="pt-4">
-                                      <p className="text-sm text-gray-500">Total Donated</p>
-                                      <p className="text-2xl font-bold text-teal-600">
-                                        ${donor.totalDonated.toLocaleString()}
-                                      </p>
-                                    </CardContent>
-                                  </Card>
-                                  <Card>
-                                    <CardContent className="pt-4">
-                                      <p className="text-sm text-gray-500">Total Donations</p>
-                                      <p className="text-2xl font-bold">{donor.donations.length}</p>
-                                    </CardContent>
-                                  </Card>
-                                  <Card>
-                                    <CardContent className="pt-4">
-                                      <p className="text-sm text-gray-500">Recurring</p>
-                                      <p className="text-2xl font-bold text-blue-600">
-                                        {donor.recurringDonations.length}
-                                      </p>
-                                    </CardContent>
-                                  </Card>
-                                </div>
-                              </div>
-
-                              {/* Preferences */}
-                              <div>
-                                <h3 className="font-semibold mb-3">Preferences</h3>
-                                <div className="space-y-2">
-                                  <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                    <span className="text-sm">Receipt Preference</span>
-                                    <Badge variant="outline">{donor.receiptPreference}</Badge>
-                                  </div>
-                                  <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                    <span className="text-sm">Newsletter Subscription</span>
-                                    <Badge className={donor.receiveNewsletter ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}>
-                                      {donor.receiveNewsletter ? 'Subscribed' : 'Not Subscribed'}
-                                    </Badge>
-                                  </div>
-                                  <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                    <span className="text-sm">Anonymous Giving</span>
-                                    <Badge className={donor.anonymityPreference ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700'}>
-                                      {donor.anonymityPreference ? 'Yes' : 'No'}
-                                    </Badge>
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* Actions */}
-                              <div className="flex gap-2 pt-4 border-t">
-                                <Button variant="outline" size="sm">
-                                  <Mail className="w-4 h-4 mr-2" />
-                                  Send Email
-                                </Button>
-                                <Button variant="outline" size="sm">
-                                  <Download className="w-4 h-4 mr-2" />
-                                  Export Data
-                                </Button>
-                                <Button variant="outline" size="sm">
-                                  View Donations
-                                </Button>
-                              </div>
-                            </div>
-                          </DialogContent>
-                        </Dialog>
-                      </TableCell>
+            <CardContent className="p-0 sm:p-6 sm:pt-0">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Email</TableHead>
+                      <TableHead>Country</TableHead>
+                      <TableHead>Total Donated</TableHead>
+                      <TableHead>Last Donation</TableHead>
+                      <TableHead>Type</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead></TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {mockDonors.map((donor) => (
+                      <TableRow key={donor.id}>
+                        <TableCell className="font-medium">
+                          {donor.anonymityPreference ? 'Anonymous' : donor.fullName}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <Mail className="w-4 h-4" />
+                            {donor.user.email}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Globe className="w-4 h-4 text-gray-400" />
+                            {donor.country}
+                          </div>
+                        </TableCell>
+                        <TableCell className="font-semibold">
+                          ${donor.totalDonated.toLocaleString()}
+                        </TableCell>
+                        <TableCell>
+                          {donor.lastDonationDate
+                            ? new Date(donor.lastDonationDate).toLocaleDateString()
+                            : 'Never'
+                          }
+                        </TableCell>
+                        <TableCell>
+                          {donor.isRecurringDonor ? (
+                            <Badge className="bg-blue-100 text-blue-700">Recurring</Badge>
+                          ) : (
+                            <Badge variant="outline">One-Time</Badge>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <Badge className="bg-green-100 text-green-700">Active</Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button variant="ghost" size="sm">
+                                <Eye className="w-4 h-4" />
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-2xl">
+                              <DialogHeader>
+                                <DialogTitle>Donor Details</DialogTitle>
+                              </DialogHeader>
+                              <div className="space-y-6 py-4">
+                                {/* Personal Information */}
+                                <div>
+                                  <h3 className="font-semibold mb-3">Personal Information</h3>
+                                  <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                      <p className="text-sm text-gray-500">Full Name</p>
+                                      <p className="font-medium">{donor.fullName}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-sm text-gray-500">Email</p>
+                                      <p className="font-medium">{donor.user.email}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-sm text-gray-500">Phone</p>
+                                      <p className="font-medium">{donor.user.phone}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-sm text-gray-500">Country</p>
+                                      <p className="font-medium">{donor.country}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-sm text-gray-500">Preferred Currency</p>
+                                      <p className="font-medium">{donor.preferredCurrency}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-sm text-gray-500">Member Since</p>
+                                      <p className="font-medium">
+                                        {new Date(donor.createdAt).toLocaleDateString()}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Donation Summary */}
+                                <div>
+                                  <h3 className="font-semibold mb-3">Donation Summary</h3>
+                                  <div className="grid grid-cols-3 gap-4">
+                                    <Card>
+                                      <CardContent className="pt-4">
+                                        <p className="text-sm text-gray-500">Total Donated</p>
+                                        <p className="text-2xl font-bold text-teal-600">
+                                          ${donor.totalDonated.toLocaleString()}
+                                        </p>
+                                      </CardContent>
+                                    </Card>
+                                    <Card>
+                                      <CardContent className="pt-4">
+                                        <p className="text-sm text-gray-500">Total Donations</p>
+                                        <p className="text-2xl font-bold">{donor.donations.length}</p>
+                                      </CardContent>
+                                    </Card>
+                                    <Card>
+                                      <CardContent className="pt-4">
+                                        <p className="text-sm text-gray-500">Recurring</p>
+                                        <p className="text-2xl font-bold text-blue-600">
+                                          {donor.recurringDonations.length}
+                                        </p>
+                                      </CardContent>
+                                    </Card>
+                                  </div>
+                                </div>
+
+                                {/* Preferences */}
+                                <div>
+                                  <h3 className="font-semibold mb-3">Preferences</h3>
+                                  <div className="space-y-2">
+                                    <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                                      <span className="text-sm">Receipt Preference</span>
+                                      <Badge variant="outline">{donor.receiptPreference}</Badge>
+                                    </div>
+                                    <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                                      <span className="text-sm">Newsletter Subscription</span>
+                                      <Badge className={donor.receiveNewsletter ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}>
+                                        {donor.receiveNewsletter ? 'Subscribed' : 'Not Subscribed'}
+                                      </Badge>
+                                    </div>
+                                    <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                                      <span className="text-sm">Anonymous Giving</span>
+                                      <Badge className={donor.anonymityPreference ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700'}>
+                                        {donor.anonymityPreference ? 'Yes' : 'No'}
+                                      </Badge>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Actions */}
+                                <div className="flex gap-2 pt-4 border-t">
+                                  <Button variant="outline" size="sm">
+                                    <Mail className="w-4 h-4 mr-2" />
+                                    Send Email
+                                  </Button>
+                                  <Button variant="outline" size="sm">
+                                    <Download className="w-4 h-4 mr-2" />
+                                    Export Data
+                                  </Button>
+                                  <Button variant="outline" size="sm">
+                                    View Donations
+                                  </Button>
+                                </div>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -412,42 +418,44 @@ export default function DonorsPage() {
               <CardTitle>Recurring Donors</CardTitle>
               <CardDescription>Donors with active recurring donations</CardDescription>
             </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Country</TableHead>
-                    <TableHead>Monthly Amount</TableHead>
-                    <TableHead>Active Since</TableHead>
-                    <TableHead>Total Contributed</TableHead>
-                    <TableHead></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {mockDonors.filter(d => d.isRecurringDonor).map((donor) => {
-                    const recurringDonation = donor.recurringDonations[0];
-                    return (
-                      <TableRow key={donor.id}>
-                        <TableCell className="font-medium">{donor.fullName}</TableCell>
-                        <TableCell>{donor.country}</TableCell>
-                        <TableCell className="font-semibold text-blue-600">
-                          ${recurringDonation?.amount.toFixed(2)} / {recurringDonation?.frequency}
-                        </TableCell>
-                        <TableCell>
-                          {new Date(donor.createdAt).toLocaleDateString()}
-                        </TableCell>
-                        <TableCell className="font-semibold">
-                          ${donor.totalDonated.toLocaleString()}
-                        </TableCell>
-                        <TableCell>
-                          <Button variant="ghost" size="sm">View</Button>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
+            <CardContent className="p-0 sm:p-6 sm:pt-0">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Country</TableHead>
+                      <TableHead>Monthly Amount</TableHead>
+                      <TableHead>Active Since</TableHead>
+                      <TableHead>Total Contributed</TableHead>
+                      <TableHead></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {mockDonors.filter(d => d.isRecurringDonor).map((donor) => {
+                      const recurringDonation = donor.recurringDonations[0];
+                      return (
+                        <TableRow key={donor.id}>
+                          <TableCell className="font-medium">{donor.fullName}</TableCell>
+                          <TableCell>{donor.country}</TableCell>
+                          <TableCell className="font-semibold text-blue-600">
+                            ${recurringDonation?.amount.toFixed(2)} / {recurringDonation?.frequency}
+                          </TableCell>
+                          <TableCell>
+                            {new Date(donor.createdAt).toLocaleDateString()}
+                          </TableCell>
+                          <TableCell className="font-semibold">
+                            ${donor.totalDonated.toLocaleString()}
+                          </TableCell>
+                          <TableCell>
+                            <Button variant="ghost" size="sm">View</Button>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -459,45 +467,47 @@ export default function DonorsPage() {
               <CardTitle>Major Donors</CardTitle>
               <CardDescription>Donors with contributions over $500</CardDescription>
             </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Country</TableHead>
-                    <TableHead>Total Donated</TableHead>
-                    <TableHead>Last Donation</TableHead>
-                    <TableHead>Impact Level</TableHead>
-                    <TableHead></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {mockDonors
-                    .filter(d => d.totalDonated >= 500)
-                    .sort((a, b) => b.totalDonated - a.totalDonated)
-                    .map((donor) => (
-                      <TableRow key={donor.id}>
-                        <TableCell className="font-medium">{donor.fullName}</TableCell>
-                        <TableCell>{donor.country}</TableCell>
-                        <TableCell className="font-semibold text-green-600">
-                          ${donor.totalDonated.toLocaleString()}
-                        </TableCell>
-                        <TableCell>
-                          {donor.lastDonationDate
-                            ? new Date(donor.lastDonationDate).toLocaleDateString()
-                            : 'N/A'
-                          }
-                        </TableCell>
-                        <TableCell>
-                          <Badge className="bg-amber-100 text-amber-700">Gold</Badge>
-                        </TableCell>
-                        <TableCell>
-                          <Button variant="ghost" size="sm">View</Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                </TableBody>
-              </Table>
+            <CardContent className="p-0 sm:p-6 sm:pt-0">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Country</TableHead>
+                      <TableHead>Total Donated</TableHead>
+                      <TableHead>Last Donation</TableHead>
+                      <TableHead>Impact Level</TableHead>
+                      <TableHead></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {mockDonors
+                      .filter(d => d.totalDonated >= 500)
+                      .sort((a, b) => b.totalDonated - a.totalDonated)
+                      .map((donor) => (
+                        <TableRow key={donor.id}>
+                          <TableCell className="font-medium">{donor.fullName}</TableCell>
+                          <TableCell>{donor.country}</TableCell>
+                          <TableCell className="font-semibold text-green-600">
+                            ${donor.totalDonated.toLocaleString()}
+                          </TableCell>
+                          <TableCell>
+                            {donor.lastDonationDate
+                              ? new Date(donor.lastDonationDate).toLocaleDateString()
+                              : 'N/A'
+                            }
+                          </TableCell>
+                          <TableCell>
+                            <Badge className="bg-amber-100 text-amber-700">Gold</Badge>
+                          </TableCell>
+                          <TableCell>
+                            <Button variant="ghost" size="sm">View</Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

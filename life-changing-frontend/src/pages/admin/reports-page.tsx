@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { 
-  Download, 
-  FileText, 
+import {
+  Download,
+  FileText,
   BarChart3,
   TrendingUp,
   Users,
@@ -108,17 +108,17 @@ export default function ReportsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Reports & Analytics</h1>
           <p className="text-gray-600">Generate insights and download comprehensive reports</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline">
+        <div className="flex gap-2 w-full sm:w-auto">
+          <Button variant="outline" className="flex-1 sm:flex-none">
             <Filter className="w-4 h-4 mr-2" />
             Filter
           </Button>
-          <Button className="bg-teal-600 hover:bg-teal-700">
+          <Button className="bg-teal-600 hover:bg-teal-700 flex-1 sm:flex-none">
             <FileText className="w-4 h-4 mr-2" />
             Generate Report
           </Button>
@@ -126,7 +126,7 @@ export default function ReportsPage() {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-gray-500">Active Programs</CardTitle>
@@ -170,7 +170,7 @@ export default function ReportsPage() {
           <CardContent>
             <div className="flex items-center justify-between">
               <div className="text-3xl font-bold text-blue-600">
-                {mockBeneficiaries.length > 0 
+                {mockBeneficiaries.length > 0
                   ? Math.round((graduatedBeneficiaries / mockBeneficiaries.length) * 100)
                   : 0}%
               </div>
@@ -201,24 +201,24 @@ export default function ReportsPage() {
                   }}
                 />
                 <Legend />
-                <Line 
-                  type="monotone" 
-                  dataKey="active" 
-                  stroke="#4c9789" 
+                <Line
+                  type="monotone"
+                  dataKey="active"
+                  stroke="#4c9789"
                   strokeWidth={2}
                   name="Active"
                 />
-                <Line 
-                  type="monotone" 
-                  dataKey="new" 
-                  stroke="#6fb3a6" 
+                <Line
+                  type="monotone"
+                  dataKey="new"
+                  stroke="#6fb3a6"
                   strokeWidth={2}
                   name="New"
                 />
-                <Line 
-                  type="monotone" 
-                  dataKey="graduated" 
-                  stroke="#eacfa2" 
+                <Line
+                  type="monotone"
+                  dataKey="graduated"
+                  stroke="#eacfa2"
                   strokeWidth={2}
                   name="Graduated"
                 />
