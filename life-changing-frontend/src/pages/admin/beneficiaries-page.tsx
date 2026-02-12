@@ -107,44 +107,44 @@ export function BeneficiariesPage() {
         </div>
       </div>
 
-      {/* Filters and Search */}
-      <div className="flex flex-col md:flex-row gap-4 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div className="relative flex-1 group">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-teal-600 transition-colors" />
+      {/* Filters and Search - Professional Redesign */}
+      <div className="flex flex-col lg:flex-row gap-4 p-2 bg-slate-50/50 dark:bg-slate-900/30 rounded-[2rem] border border-slate-200/60 dark:border-slate-800/60 backdrop-blur-xl shadow-sm">
+        <div className="flex-1">
           <Input
-            placeholder="Search by name or district..."
-            className="pl-11 h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-xl focus-visible:ring-2 focus-visible:ring-teal-500/20 focus-visible:border-teal-500 transition-all font-medium"
+            placeholder="Search by name, district, or phone..."
+            className="h-12 bg-white dark:bg-slate-950 border-slate-100 dark:border-slate-800/50 rounded-2xl focus-visible:ring-4 focus-visible:ring-teal-500/10 focus-visible:border-teal-500/50 transition-all font-bold text-sm px-6 shadow-sm placeholder:text-slate-400"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <div className="flex gap-3">
+
+        <div className="flex gap-2">
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-[180px] h-11 rounded-xl bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 focus:ring-teal-500/20">
-              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-                <Filter className="h-4 w-4" />
+            <SelectTrigger className="w-[160px] h-12 rounded-2xl bg-white dark:bg-slate-950 border-slate-100 dark:border-slate-800/50 focus:ring-4 focus:ring-teal-500/10 shadow-sm transition-all px-4">
+              <div className="flex items-center gap-2.5 text-slate-600 dark:text-slate-400 font-bold text-[11px] uppercase tracking-wider">
+                <Filter className="h-3.5 w-3.5 text-teal-600" />
                 <SelectValue placeholder="Status" />
               </div>
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value={BeneficiaryStatus.ACTIVE}>Active</SelectItem>
-              <SelectItem value={BeneficiaryStatus.GRADUATED}>Graduated</SelectItem>
-              <SelectItem value={BeneficiaryStatus.INACTIVE}>Inactive</SelectItem>
+            <SelectContent className="rounded-2xl border-slate-100 shadow-2xl">
+              <SelectItem value="all" className="font-bold text-xs py-2.5">All Statuses</SelectItem>
+              <SelectItem value={BeneficiaryStatus.ACTIVE} className="font-bold text-xs py-2.5">Active</SelectItem>
+              <SelectItem value={BeneficiaryStatus.GRADUATED} className="font-bold text-xs py-2.5">Graduated</SelectItem>
+              <SelectItem value={BeneficiaryStatus.INACTIVE} className="font-bold text-xs py-2.5">Inactive</SelectItem>
             </SelectContent>
           </Select>
 
           <Select value={programFilter} onValueChange={setProgramFilter}>
-            <SelectTrigger className="w-[180px] h-11 rounded-xl bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 focus:ring-teal-500/20">
-              <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-                <FileText className="h-4 w-4" />
+            <SelectTrigger className="w-[180px] h-12 rounded-2xl bg-white dark:bg-slate-950 border-slate-100 dark:border-slate-800/50 focus:ring-4 focus:ring-teal-500/10 shadow-sm transition-all px-4">
+              <div className="flex items-center gap-2.5 text-slate-600 dark:text-slate-400 font-bold text-[11px] uppercase tracking-wider">
+                <FileText className="h-3.5 w-3.5 text-teal-600" />
                 <SelectValue placeholder="Program" />
               </div>
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Programs</SelectItem>
+            <SelectContent className="rounded-2xl border-slate-100 shadow-2xl">
+              <SelectItem value="all" className="font-bold text-xs py-2.5">All Programs</SelectItem>
               {mockPrograms.map(p => (
-                <SelectItem key={p.id} value={p.id}>{p.name.en}</SelectItem>
+                <SelectItem key={p.id} value={p.id} className="font-bold text-xs py-2.5">{p.name.en}</SelectItem>
               ))}
             </SelectContent>
           </Select>

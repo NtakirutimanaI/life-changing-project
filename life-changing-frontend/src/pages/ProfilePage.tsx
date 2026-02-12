@@ -110,10 +110,10 @@ export function ProfilePage() {
             />
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="absolute bottom-[-8px] right-[-8px] p-1.5 bg-white dark:bg-slate-900 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 hover:scale-110 transition-transform active:scale-95"
+              className="absolute bottom-0 right-0 h-9 w-9 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 hover:scale-110 transition-transform active:scale-95 flex items-center justify-center translate-x-2 translate-y-2"
               title="Change Photo"
             >
-              <Camera className="h-4 w-4 text-teal-600" />
+              <Camera className="h-5 w-5 text-teal-600" />
             </button>
           </div>
 
