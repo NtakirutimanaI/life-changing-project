@@ -72,10 +72,19 @@ export function ProgramsPage() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Programs</h1>
-          <p className="hidden md:block text-slate-400 text-xs font-bold uppercase tracking-widest">
-            {mockPrograms.length} Total Programs
-          </p>
+          <div>
+            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Programs</h1>
+            <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">
+              {mockPrograms.length} Total Programs
+            </p>
+          </div>
+          <Button
+            className="h-10 px-6 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-bold uppercase tracking-wider shadow-lg shadow-teal-600/10 transition-all active:scale-95 gap-2 text-xs"
+            onClick={() => setCreateDialogOpen(true)}
+          >
+            <Plus size={16} strokeWidth={3} />
+            Create Program
+          </Button>
         </div>
 
         {/* Search & Action Bar */}
@@ -89,14 +98,6 @@ export function ProgramsPage() {
               />
             </CardContent>
           </Card>
-
-          <Button
-            className="h-12 px-8 bg-teal-600 hover:bg-teal-700 text-white rounded-2xl font-black uppercase tracking-widest shadow-lg shadow-teal-600/20 transition-all active:scale-95 gap-2"
-            onClick={() => setCreateDialogOpen(true)}
-          >
-            <Plus size={18} strokeWidth={3} />
-            Create Program
-          </Button>
         </div>
 
         {/* Program Stats */}
