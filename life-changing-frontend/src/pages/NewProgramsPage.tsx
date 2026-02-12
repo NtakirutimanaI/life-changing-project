@@ -29,7 +29,7 @@ export function ProgramsPage() {
 
   // Check if we're in admin context
   const isAdminContext = location.pathname.startsWith('/admin');
-  const canManagePrograms = user?.userType === UserType.ADMIN && isAdminContext;
+  const canManagePrograms = isAdminContext;
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -71,30 +71,33 @@ export function ProgramsPage() {
       {/* Main Content with proper margins */}
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground mb-2">Programs</h1>
-            <p className="text-muted-foreground">
-              Manage LCEO programs and track their impact
-            </p>
-          </div>
-          {canManagePrograms && (
-            <Button className="gap-2 bg-primary hover:bg-primary/90" onClick={() => setCreateDialogOpen(true)}>
-              <Plus className="w-4 h-4" />
-              Create Program
-            </Button>
-          )}
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Programs</h1>
+          <p className="hidden md:block text-slate-400 text-xs font-bold uppercase tracking-widest">
+            {mockPrograms.length} Total Programs
+          </p>
         </div>
 
-        {/* Search */}
-        <Card className="mb-6">
-          <CardContent className="pt-6">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input placeholder="Search programs..." className="pl-9" />
-            </div>
-          </CardContent>
-        </Card>
+        {/* Search & Action Bar */}
+        <div className="flex flex-col md:flex-row gap-4 mb-8">
+          <Card className="flex-1 shadow-sm border-slate-200/60">
+            <CardContent className="p-0 flex items-center px-4 h-12">
+              <Search className="w-4 h-4 text-slate-400 mr-3" />
+              <Input
+                placeholder="Search programs by name or category..."
+                className="border-none shadow-none focus-visible:ring-0 p-0 text-sm font-bold"
+              />
+            </CardContent>
+          </Card>
+
+          <Button
+            className="h-12 px-8 bg-teal-600 hover:bg-teal-700 text-white rounded-2xl font-black uppercase tracking-widest shadow-lg shadow-teal-600/20 transition-all active:scale-95 gap-2"
+            onClick={() => setCreateDialogOpen(true)}
+          >
+            <Plus size={18} strokeWidth={3} />
+            Create Program
+          </Button>
+        </div>
 
         {/* Program Stats */}
         <div className="grid gap-4 md:grid-cols-3 mb-8">

@@ -90,21 +90,20 @@ export function BeneficiariesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
+      <div className="flex items-center justify-between mb-8 pt-2">
         <div>
-          <h1 className="text-4xl font-extrabold text-teal-900 dark:text-white tracking-tight">Beneficiaries</h1>
-          <p className="text-teal-600 dark:text-teal-400 font-medium mt-1">Manage and track beneficiary information</p>
+          <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Beneficiaries</h1>
+          <p className="text-teal-600 dark:text-teal-400 text-xs font-black uppercase tracking-widest mt-1">Management Portal</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={handleExport}>
-            <Download className="w-4 h-4 mr-2" />
-            Export
-          </Button>
-          <Button className="bg-[#4c9789] hover:bg-[#3d7a6e]" onClick={() => navigate('/admin/beneficiaries/add')}>
-            <Plus className="w-4 h-4 mr-2" />
-            Add Beneficiary
-          </Button>
-        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          className="rounded-xl font-bold border-slate-200 hover:bg-slate-50"
+          onClick={handleExport}
+        >
+          <Download className="w-3.5 h-3.5 mr-2" />
+          Export Data
+        </Button>
       </div>
 
       {/* Filters and Search - Professional Redesign */}
@@ -120,8 +119,8 @@ export function BeneficiariesPage() {
 
         <div className="flex gap-2">
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-[160px] h-12 rounded-2xl bg-white dark:bg-slate-950 border-slate-100 dark:border-slate-800/50 focus:ring-4 focus:ring-teal-500/10 shadow-sm transition-all px-4">
-              <div className="flex items-center gap-2.5 text-slate-600 dark:text-slate-400 font-bold text-[11px] uppercase tracking-wider">
+            <SelectTrigger className="w-[150px] h-12 rounded-2xl bg-white dark:bg-slate-950 border-slate-100 dark:border-slate-800/50 focus:ring-4 focus:ring-teal-500/10 shadow-sm transition-all px-4">
+              <div className="flex items-center gap-2.5 text-slate-600 dark:text-slate-400 font-bold text-[10px] uppercase tracking-wider">
                 <Filter className="h-3.5 w-3.5 text-teal-600" />
                 <SelectValue placeholder="Status" />
               </div>
@@ -134,20 +133,13 @@ export function BeneficiariesPage() {
             </SelectContent>
           </Select>
 
-          <Select value={programFilter} onValueChange={setProgramFilter}>
-            <SelectTrigger className="w-[180px] h-12 rounded-2xl bg-white dark:bg-slate-950 border-slate-100 dark:border-slate-800/50 focus:ring-4 focus:ring-teal-500/10 shadow-sm transition-all px-4">
-              <div className="flex items-center gap-2.5 text-slate-600 dark:text-slate-400 font-bold text-[11px] uppercase tracking-wider">
-                <FileText className="h-3.5 w-3.5 text-teal-600" />
-                <SelectValue placeholder="Program" />
-              </div>
-            </SelectTrigger>
-            <SelectContent className="rounded-2xl border-slate-100 shadow-2xl">
-              <SelectItem value="all" className="font-bold text-xs py-2.5">All Programs</SelectItem>
-              {mockPrograms.map(p => (
-                <SelectItem key={p.id} value={p.id} className="font-bold text-xs py-2.5">{p.name.en}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Button
+            className="h-12 px-6 bg-teal-600 hover:bg-teal-700 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-lg shadow-teal-600/20 transition-all active:scale-95 gap-2"
+            onClick={() => navigate('/admin/beneficiaries/add')}
+          >
+            <Plus size={16} strokeWidth={3} />
+            Add New
+          </Button>
         </div>
       </div>
 
