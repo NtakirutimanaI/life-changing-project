@@ -23,6 +23,8 @@ import {
   ChevronDown,
   Globe,
   X,
+  Layout,
+  BookOpen,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -99,12 +101,12 @@ export function DashboardHeader({ onMobileMenuClick }: DashboardHeaderProps) {
     switch (user.userType) {
       case UserType.ADMIN:
         return [
-          { label: "New Beneficiary", icon: UserPlus, href: "/admin/beneficiaries/add", description: "Register a new girl/woman" },
-          { label: "New Donor", icon: Heart, href: "/admin/donors/add", description: "Record a new supporter" },
-          { label: "Financial Entry", icon: DollarSign, href: "/admin/financial", description: "Log income or expense" },
-          { label: "Create Program", icon: Plus, href: "/admin/programs", description: "Launch a new initiative" },
-          { label: "Manage Content", icon: Globe, href: "/admin/web-contents", description: "Update website sections" },
-          { label: "Impact Report", icon: FileText, href: "/admin/reports", description: "Generate new analytics" },
+          { label: "New Beneficiary", icon: UserPlus, href: "/admin/beneficiaries/add", description: "Register a new person" },
+          { label: "New Donor", icon: Heart, href: "/admin/donors/add", description: "Record a contribution" },
+          { label: "Create Program", icon: FolderKanban, href: "/admin/programs", description: "Launch initiative" },
+          { label: "Edit Home Page", icon: Layout, href: "/admin/web-contents/home", description: "Update landing content" },
+          { label: "Manage Stories", icon: BookOpen, href: "/admin/web-contents/impact-stories", description: "Add impact stories" },
+          { label: "Update Resources", icon: FileText, href: "/admin/web-contents/resources", description: "Manage documents" },
         ];
       case UserType.BENEFICIARY:
         return [
@@ -178,24 +180,21 @@ export function DashboardHeader({ onMobileMenuClick }: DashboardHeaderProps) {
                 <Search className="h-5 w-5 text-teal-600 dark:text-teal-400" />
               </Button>
             ) : (
-              <div className="absolute left-1/2 -translate-x-1/2 w-[280px] sm:w-[350px] lg:w-[450px] animate-in zoom-in-95 slide-in-from-top-2 duration-300 z-[70]">
+              <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[95%] md:w-[600px] md:left-64 md:translate-x-0 animate-in zoom-in-95 slide-in-from-top-2 duration-300 z-[70]">
                 <form onSubmit={handleSearch} className="relative flex items-center group">
-                  <div className="absolute left-3 flex items-center justify-center pointer-events-none">
-                    <Search className="w-4 h-4 text-teal-600 dark:text-teal-400" />
-                  </div>
                   <Input
                     autoFocus
                     placeholder="Search account..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full h-10 bg-white dark:bg-slate-900 border-teal-500/30 dark:border-teal-500/20 rounded-full focus-visible:ring-4 focus-visible:ring-teal-500/10 focus-visible:border-teal-500 transition-all font-medium text-slate-900 dark:text-slate-100 placeholder:text-slate-400 text-sm pl-12 pr-10 shadow-lg shadow-teal-500/5"
+                    className="w-full h-10 bg-transparent border-0 border-b-2 border-slate-200 dark:border-slate-800 rounded-none focus-visible:ring-0 focus-visible:border-teal-500 transition-all font-medium text-slate-900 dark:text-slate-100 placeholder:text-slate-400 text-base pl-2 pr-10 shadow-none"
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="icon"
                     onClick={() => setSearchOpen(false)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 h-7 w-7 h-8 w-8 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition-all flex items-center justify-center"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition-all flex items-center justify-center opacity-70 hover:opacity-100"
                   >
                     <X className="h-4 w-4" />
                   </Button>

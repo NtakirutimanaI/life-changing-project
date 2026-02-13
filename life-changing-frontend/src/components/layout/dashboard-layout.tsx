@@ -59,6 +59,7 @@ export function DashboardLayout() {
           { href: "/admin/financial", label: "Financial", icon: DollarSign },
           { href: "/admin/reports", label: "Reports", icon: PieChart },
           { href: "/admin/web-contents", label: "Web Contents", icon: Globe },
+          { href: "/admin/users", label: "Manage Users", icon: Users },
           { href: "/admin/settings", label: "Settings", icon: Settings },
           { href: "/profile", label: "Profile", icon: User },
         ];

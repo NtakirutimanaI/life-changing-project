@@ -40,6 +40,7 @@ import DonorsPage from './pages/admin/donors-page';
 import FinancialPage from './pages/admin/financial-page';
 import ReportsPage from './pages/admin/reports-page';
 import SettingsPage from './pages/admin/settings-page';
+import { ManageUsersPage } from './pages/admin/manage-users-page';
 import AddBeneficiaryPage from './pages/admin/add-beneficiary-page';
 import AddDonorPage from './pages/admin/add-donor-page';
 import { ProgramsPage } from './pages/NewProgramsPage';
@@ -264,6 +265,7 @@ function AppContent() {
                             <Route path="programs" element={<ProgramsPage />} />
                             <Route path="financial" element={<FinancialPage />} />
                             <Route path="reports" element={<ReportsPage />} />
+                            <Route path="users" element={<ManageUsersPage />} />
                             <Route path="settings" element={<SettingsPage />} />
                         </Route>
                     </Route>
