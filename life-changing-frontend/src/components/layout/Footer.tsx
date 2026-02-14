@@ -5,13 +5,29 @@ import { Chatbot } from './Chatbot';
 
 export const Footer = () => {
     return (
-        <footer className="ftco-footer ftco-section" style={{ background: 'linear-gradient(180deg, #2c5f56 0%, #1e4139 100%)', paddingTop: '60px', paddingBottom: '0px', marginBottom: '0px', color: 'rgba(255,255,255,0.9)', position: 'relative' }}>
+        <footer className="ftco-footer ftco-section" style={{
+            backgroundColor: '#051a1aff',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23ffffff' stroke-width='0.5' stroke-opacity='0.05'%3E%3Cpath d='M30 0L60 30 30 60 0 30z'/%3E%3Cpath d='M30 5L55 30 30 55 5 30z'/%3E%3Cpath d='M30 10L50 30 30 50 10 30z'/%3E%3Cpath d='M30 15L45 30 30 45 15 30z'/%3E%3Cpath d='M30 20L40 30 30 40 20 30z'/%3E%3Cpath d='M30 25L35 30 30 35 25 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            paddingTop: '0px',
+            paddingBottom: '0px',
+            marginBottom: '0px',
+            color: 'rgba(255,255,255,0.9)',
+            position: 'relative'
+        }}>
+            <div style={{
+                height: '24px',
+                width: '100%',
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='24' viewBox='0 0 40 24' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='24' fill='%23003399'/%3E%3Cpath d='M0 24 L20 4 L40 24 M0 18 L20 -2 L40 18 M0 30 L20 10 L40 30' stroke='white' stroke-width='3' fill='none'/%3E%3C/svg%3E")`,
+                backgroundRepeat: 'repeat-x',
+                marginBottom: '56px',
+                boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
+            }}></div>
             <div className="container">
 
                 <div className="row justify-content-center mb-5 pb-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
                     <div className="col-md-10 text-center ftco-animate">
                         <h2 className="mb-2 text-white font-weight-bold" style={{ fontSize: '36px', letterSpacing: '-1px' }}>Stay Connected</h2>
-                        <p className="mb-4" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '18px' }}>
+                        <p className="mb-4" style={{ color: 'rgba(204, 201, 201, 0.7)', fontSize: '18px' }}>
                             Subscribe to our newsletter for updates, impact stories, and ways to get involved
                         </p>
                         <form className="subscribe-form d-flex justify-content-center mt-4">

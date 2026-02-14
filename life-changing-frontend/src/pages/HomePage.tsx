@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../lib/language-context';
 import { useLegacyScripts } from '../hooks/useLegacyScripts';
-import { ContentService, Story } from '../services/content.service';
-import { ProgramsService, Program } from '../services/program.service';
+import { mockPrograms, mockStories } from '../lib/mock-data';
+import { ProgramCategory } from '../lib/types';
 
 export const HomePage = () => {
     useLegacyScripts();
@@ -23,76 +23,36 @@ export const HomePage = () => {
 
     const [missionText, setMissionText] = useState('Life-Changing Endeavor Organization (LCEO) is a non-governmental organization based in Bugesera District, Rwanda. We support girls, caregivers, and youth by promoting education, health, mentorship, and skills development to strengthen families and build resilient communities.');
 
-    const [programs, setPrograms] = useState<Program[]>([]);
-    const [stories, setStories] = useState<Story[]>([]);
-    const [loading, setLoading] = useState(true);
+    // Typing effect state for Mission section
+    const [typingText, setTypingText] = useState('');
+    const typingPhrases = ["And Improvements.", "Empowering Communities.", "Changing Lives.", "For a Better Future."];
+    const [phraseIdx, setPhraseIdx] = useState(0);
+    const [isDeleting, setIsDeleting] = useState(false);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Fetch page content - gracefully handle if backend is unavailable
-                try {
-                    const pageData = await ContentService.getPageContent('home');
+    React.useEffect(() => {
+        let timer: NodeJS.Timeout;
+        const currentPhrase = typingPhrases[phraseIdx];
 
-                    // Process page content into state found by key
-                    const heroTitle = pageData.find(c => c.section === 'hero' && c.key === 'title')?.value;
-                    const heroSubtitle = pageData.find(c => c.section === 'hero' && c.key === 'subtitle')?.value;
-                    const heroBg = pageData.find(c => c.section === 'hero' && c.key === 'bg_image')?.value;
-
-                    if (heroTitle) setHeroContent(prev => ({ ...prev, title: heroTitle }));
-                    if (heroSubtitle) setHeroContent(prev => ({ ...prev, subtitle: heroSubtitle }));
-                    if (heroBg) setHeroContent(prev => ({ ...prev, bgImage: heroBg }));
-
-                    const counterWomen = pageData.find(c => c.section === 'counters' && c.key === 'women')?.value;
-                    const counterBiz = pageData.find(c => c.section === 'counters' && c.key === 'businesses')?.value;
-                    const counterHealth = pageData.find(c => c.section === 'counters' && c.key === 'health')?.value;
-                    const counterSuccess = pageData.find(c => c.section === 'counters' && c.key === 'success')?.value;
-
-                    if (counterWomen || counterBiz) {
-                        setCounters(prev => ({
-                            women: counterWomen || prev.women,
-                            education: counterHealth || prev.education,
-                            livelihoods: counterBiz || prev.livelihoods,
-                            leadership: counterSuccess || prev.leadership
-                        }));
-                    }
-
-                    const mission = pageData.find(c => c.section === 'welcome' && c.key === 'mission')?.value;
-                    if (mission) setMissionText(mission);
-                } catch (contentError) {
-                    // Silently use default content if backend is unavailable
-                    console.warn('Using default content - backend unavailable');
+        if (isDeleting) {
+            timer = setTimeout(() => {
+                setTypingText(currentPhrase.substring(0, typingText.length - 1));
+                if (typingText.length <= 1) {
+                    setIsDeleting(false);
+                    setPhraseIdx((prev) => (prev + 1) % typingPhrases.length);
                 }
-
-                // Fetch Programs
-                try {
-                    const programData = await ProgramsService.getAll();
-                    // Duplicate programs if <= 3 to ensure carousel scroll works beautifully
-                    const displayPrograms = programData.length <= 3
-                        ? [...programData, ...programData]
-                        : programData;
-                    setPrograms(displayPrograms);
-                } catch (programError) {
-                    console.warn('Using default programs - backend unavailable');
+            }, 50);
+        } else {
+            timer = setTimeout(() => {
+                setTypingText(currentPhrase.substring(0, typingText.length + 1));
+                if (typingText.length === currentPhrase.length) {
+                    // Wait for 5 seconds before starting to delete
+                    setTimeout(() => setIsDeleting(true), 5000);
                 }
+            }, 100);
+        }
 
-                // Fetch Stories
-                try {
-                    const storyData = await ContentService.getStories('story');
-                    setStories(storyData.slice(0, 3)); // Limit to 3
-                } catch (storyError) {
-                    console.warn('Using default stories - backend unavailable');
-                }
-
-            } catch (error) {
-                console.warn('Homepage loaded with default content');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, []);
+        return () => clearTimeout(timer);
+    }, [typingText, isDeleting, phraseIdx]);
 
     // Helper to calculate percentage
     const getPercentage = (allocated: number = 0, budget: number = 100) => {
@@ -101,6 +61,16 @@ export const HomePage = () => {
     };
 
     const { t } = useLanguage();
+
+    const getCategoryColor = (category: ProgramCategory) => {
+        const colors = {
+            [ProgramCategory.EDUCATION]: 'text-blue-600 bg-blue-50',
+            [ProgramCategory.ENTREPRENEURSHIP]: 'text-green-600 bg-green-50',
+            [ProgramCategory.HEALTH]: 'text-pink-600 bg-pink-50',
+            [ProgramCategory.CROSS_CUTTING]: 'text-purple-600 bg-purple-50',
+        };
+        return colors[category] || 'text-gray-600 bg-gray-50';
+    };
 
     return (
         <>
@@ -176,172 +146,445 @@ export const HomePage = () => {
                 </div>
             </section>
 
-            <section className="ftco-section" id="mission" style={{ padding: '80px 0' }}>
+            <section className="ftco-section" id="mission" style={{
+                padding: '100px 0',
+                backgroundColor: '#fff',
+                backgroundImage: 'radial-gradient(#e5e7eb 1.5px, transparent 1.5px)',
+                backgroundSize: '24px 24px'
+            }}>
                 <div className="container">
-                    <div className="row justify-content-center mb-5">
-                        <div className="col-md-10 heading-section ftco-animate text-center">
-                            <span className="subheading" style={{ color: '#4FB1A1', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '10px' }}>Our Mission</span>
-                            <h2 className="mb-4" style={{ fontSize: '40px', fontWeight: 'bold' }}>Protecting the Dignity and Rights of Women and Girls</h2>
-                            <p className="lead px-md-5" style={{ fontSize: '18px', color: '#555' }}>{missionText}</p>
-                            <p className="mt-4"><Link to="/about" className="btn btn-primary px-5 py-3" style={{ borderRadius: '50px' }}>Learn More About Us</Link></p>
-                        </div>
-                    </div>
-                    <div className="row">
-                        {[
-                            { title: 'Join Our Impact Circle', text: 'Become a recurring donor and sustain education, livelihoods, and leadership for vulnerable girls.', icon: '💫' },
-                            { title: 'Our Roots', text: 'Based in Bugesera District, we work at the grassroots level to create lasting community change through resilience.', icon: '🌿' },
-                            { title: 'Sustainable Change', text: 'We believe that sustainable change begins with dignity, agency, and inner resilience for every woman we serve.', icon: '🏗️' }
-                        ].map((item, idx) => (
-                            <div className="col-md-4 d-flex align-self-stretch ftco-animate mb-4" key={idx}>
-                                <div className="media block-6 d-flex services p-4 py-5 d-block text-center shadow-sm w-100 transition-all hover:translate-y-[-5px]"
-                                    style={{ borderRadius: '25px', backgroundColor: '#f9fbfb', border: '1px solid #eef2f2' }}>
-                                    <div className="media-body">
-                                        <div style={{ fontSize: '45px', marginBottom: '20px' }}>{item.icon}</div>
-                                        <h3 className="heading mb-3" style={{ fontSize: '20px', fontWeight: 'bold' }}>{item.title}</h3>
-                                        <p style={{ color: '#666', fontSize: '15px' }}>{item.text}</p>
-                                        <p className="mt-4"><Link to="/donate" className="font-weight-bold" style={{ color: '#4FB1A1', borderBottom: '2px solid' }}>Join Now →</Link></p>
+                    <div className="row align-items-center">
+                        {/* Left Column: Text Content */}
+                        <div className="col-lg-6 mb-5 mb-lg-0 ftco-animate">
+                            <style>
+                                {`
+                                @keyframes tripleBounce {
+                                    0% { transform: translateY(-300px); opacity: 0; }
+                                    20% { transform: translateY(0); opacity: 1; }
+                                    40% { transform: translateY(-40px); }
+                                    60% { transform: translateY(0); }
+                                    80% { transform: translateY(-20px); }
+                                    90% { transform: translateY(0); }
+                                    95% { transform: translateY(-10px); }
+                                    100% { transform: translateY(0); opacity: 1; }
+                                }
+                                .mission-bounce.ftco-animated {
+                                    animation: tripleBounce 2s ease-out forwards !important;
+                                }
+                                .typing-cursor {
+                                    border-right: 3px solid #076c5b;
+                                    animation: blink 0.7s infinite;
+                                    margin-left: 4px;
+                                }
+                                @keyframes blink {
+                                    0%, 100% { border-color: transparent; }
+                                    50% { border-color: #076c5b; }
+                                }
+                                `}
+                            </style>
+                            <span className="badge badge-light px-3 py-2 mb-3 font-weight-bold" style={{ color: '#076c5b', backgroundColor: '#e2f5f2', borderRadius: '50px', fontSize: '12px', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                                Our Mission
+                            </span>
+                            <h2 className="mb-4 font-weight-bold ftco-animate mission-bounce" style={{ fontSize: '42px', lineHeight: '1.2', color: '#111' }}>
+                                Protecting the Dignity and <span style={{ color: '#076c5b' }}>Rights of Women and Girls.</span>
+                                <br />
+                                <span style={{ color: '#076c5b', fontSize: '32px', opacity: 0.8 }}>
+                                    {typingText}<span className="typing-cursor"></span>
+                                </span>
+                            </h2>
+                            <p className="lead mb-4 ftco-animate" style={{ fontSize: '16px', color: '#666', lineHeight: '1.8' }}>
+                                Whether through education scholarships, business seed funding, or mental health support, we deliver the comprehensive care needed to transform lives. From grassroots community engagement to systemic advocacy, we help vulnerable women and girls convert challenges into measurable impact, strengthen resilience, and accelerate their journey to independence in Bugesera and beyond.
+                            </p>
+
+                            <div className="row mb-5">
+                                <div className="col-md-6 mb-3 ftco-animate">
+                                    <div className="d-flex align-items-center">
+                                        <div className="icon-wrap d-flex align-items-center justify-content-center mr-3" style={{ width: '24px', height: '24px', borderRadius: '50%', backgroundColor: '#e8f7f5' }}>
+                                            <span className="icon-check" style={{ color: '#076c5b', fontSize: '12px' }}></span>
+                                        </div>
+                                        <span style={{ fontSize: '15px', color: '#333', fontWeight: 500 }}>Economic Empowerment</span>
+                                    </div>
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <div className="d-flex align-items-center">
+                                        <div className="icon-wrap d-flex align-items-center justify-content-center mr-3" style={{ width: '24px', height: '24px', borderRadius: '50%', backgroundColor: '#e8f7f5' }}>
+                                            <span className="icon-check" style={{ color: '#076c5b', fontSize: '12px' }}></span>
+                                        </div>
+                                        <span style={{ fontSize: '15px', color: '#333', fontWeight: 500 }}>Education Access</span>
+                                    </div>
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <div className="d-flex align-items-center">
+                                        <div className="icon-wrap d-flex align-items-center justify-content-center mr-3" style={{ width: '24px', height: '24px', borderRadius: '50%', backgroundColor: '#e8f7f5' }}>
+                                            <span className="icon-check" style={{ color: '#076c5b', fontSize: '12px' }}></span>
+                                        </div>
+                                        <span style={{ fontSize: '15px', color: '#333', fontWeight: 500 }}>Mental Health Support</span>
+                                    </div>
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <div className="d-flex align-items-center">
+                                        <div className="icon-wrap d-flex align-items-center justify-content-center mr-3" style={{ width: '24px', height: '24px', borderRadius: '50%', backgroundColor: '#e8f7f5' }}>
+                                            <span className="icon-check" style={{ color: '#076c5b', fontSize: '12px' }}></span>
+                                        </div>
+                                        <span style={{ fontSize: '15px', color: '#333', fontWeight: 500 }}>Community Advocacy</span>
                                     </div>
                                 </div>
                             </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
 
-
-            <section className="ftco-section bg-light" id="programs">
-                <div className="container-fluid">
-                    <div className="row justify-content-center mb-5 pb-3">
-                        <div className="col-md-5 heading-section ftco-animate text-center">
-                            <h2 className="mb-4">Our Programs</h2>
-                            <p>We implement integrated interventions that strengthen confidence, psychosocial wellbeing, education access,
-                                and economic empowerment.</p>
+                            <div className="ftco-animate">
+                                <Link to="/about" className="btn px-4 py-3 font-weight-bold shadow-sm" style={{ backgroundColor: '#076c5b', color: '#fff', borderRadius: '8px' }}>
+                                    Learn More About Us
+                                </Link>
+                            </div>
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-12 ftco-animate">
-                            <div className="carousel-cause owl-carousel">
-                                {programs.length > 0 ? (
-                                    programs.map((program, index) => (
-                                        <div className="item" key={`${program.id}-${index}`}>
-                                            <div className="cause-entry">
-                                                <Link to="/how-we-work" className="img" style={{ backgroundImage: `url(${program.coverImage || '/images/cause-1.jpg'})` }}></Link>
-                                                <div className="text p-3 p-md-4 text-center">
-                                                    <h3><Link to="/how-we-work">{program.name?.en || 'Program Name'}</Link></h3>
-                                                    <p style={{ color: '#4FB1A1', fontStyle: 'italic', marginTop: '-10px', fontSize: '0.9rem', marginBottom: '15px' }}>
-                                                        {program.name?.rw}
-                                                    </p>
-                                                    <p>{program.description?.en?.substring(0, 100)}...</p>
-                                                    <div className="progress custom-progress-success mb-3" style={{ height: '8px' }}>
-                                                        <div className="progress-bar bg-primary" role="progressbar"
-                                                            style={{ width: getPercentage(program.fundsAllocated, program.budget) + '%' }}
-                                                            aria-valuenow={getPercentage(program.fundsAllocated, program.budget)}
-                                                            aria-valuemin={0} aria-valuemax={100}></div>
-                                                    </div>
-                                                    <span className="fund-raised d-block mb-3 font-weight-bold" style={{ color: '#122f2b' }}>
-                                                        ${program.fundsAllocated?.toLocaleString()} raised of ${program.budget?.toLocaleString()}
-                                                    </span>
-                                                    <p>
-                                                        <Link to="/donate" className="btn btn-primary px-3 py-2 mr-2">Donate Now</Link>
-                                                        <Link to="/our-programs-details" className="btn btn-outline-primary px-3 py-2">Learn More</Link>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    // Fallback static content if no programs
-                                    <div className="item">
-                                        <div className="cause-entry">
-                                            <Link to="/how-we-work" className="img" style={{ backgroundImage: "url(/images/cause-1.jpg)" }}></Link>
-                                            <div className="text p-3 p-md-4 text-center">
-                                                <h3><Link to="/how-we-work">She Can Code</Link></h3>
-                                                <p style={{ color: '#4FB1A1', fontStyle: 'italic', marginTop: '-15px', fontSize: '0.9rem' }}>Abakobwa Mu
-                                                    Ikoranabuhanga</p>
-                                                <p>Empowering young women with software development skills to bridge the gender gap in tech.</p>
-                                                <div className="progress custom-progress-success mb-3" style={{ height: '8px' }}>
-                                                    <div className="progress-bar bg-primary" role="progressbar" style={{ width: '75%' }} aria-valuenow={75}
-                                                        aria-valuemin={0} aria-valuemax={100}></div>
-                                                </div>
-                                                <span className="fund-raised d-block mb-3 font-weight-bold" style={{ color: '#122f2b' }}>$15,000 raised of
-                                                    $20,000</span>
-                                                <p>
-                                                    <Link to="/donate" className="btn btn-primary px-3 py-2 mr-2">Donate Now</Link>
-                                                    <Link to="/our-programs-details" className="btn btn-outline-primary px-3 py-2">Learn More</Link>
-                                                </p>
-                                            </div>
-                                        </div>
+
+                        {/* Right Column: Image Composition */}
+                        <div className="col-lg-6 position-relative">
+                            <div className="position-relative" style={{ height: '500px' }}>
+                                {/* Main Image */}
+                                <div className="shadow-lg ftco-animate" style={{
+                                    backgroundImage: "url('/images/bg_3.jpg')",
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    borderRadius: '24px',
+                                    width: '75%',
+                                    height: '85%',
+                                    position: 'absolute',
+                                    top: 0,
+                                    right: 0,
+                                    zIndex: 1
+                                }}></div>
+
+                                {/* Floating Image 1 (Left Overlap) */}
+                                <div className="shadow-lg ftco-animate" style={{
+                                    backgroundImage: "url('/images/cause-1.jpg')",
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    borderRadius: '16px',
+                                    width: '45%',
+                                    height: '40%',
+                                    position: 'absolute',
+                                    bottom: '30px',
+                                    left: '10px',
+                                    zIndex: 2,
+                                    border: '4px solid #fff'
+                                }}></div>
+
+                                {/* Floating Stat Card 1 */}
+                                <div className="bg-white shadow-sm p-3 d-flex align-items-center ftco-animate" style={{
+                                    position: 'absolute',
+                                    top: '40px',
+                                    left: '0',
+                                    borderRadius: '12px',
+                                    zIndex: 3,
+                                    maxWidth: '180px'
+                                }}>
+                                    <div className="mr-3 p-2 rounded-circle" style={{ backgroundColor: '#e2f5f2' }}>
+                                        <span className="icon-users" style={{ color: '#076c5b', fontSize: '16px' }}></span>
                                     </div>
-                                )}
+                                    <div>
+                                        <span className="d-block font-weight-bold" style={{ fontSize: '16px', color: '#111' }}>150+</span>
+                                        <span style={{ fontSize: '11px', color: '#888' }}>Lives Changed</span>
+                                    </div>
+                                </div>
+
+                                {/* Floating Stat Card 2 */}
+                                <div className="bg-white shadow-sm p-3 d-flex align-items-center ftco-animate" style={{
+                                    position: 'absolute',
+                                    bottom: '100px',
+                                    right: '-20px',
+                                    borderRadius: '12px',
+                                    zIndex: 3,
+                                    maxWidth: '200px'
+                                }}>
+                                    <div className="mr-3 p-2 rounded-circle" style={{ backgroundColor: '#fff0f3' }}>
+                                        <span className="icon-heart" style={{ color: '#ff4757', fontSize: '16px' }}></span>
+                                    </div>
+                                    <div>
+                                        <span className="d-block font-weight-bold" style={{ fontSize: '14px', color: '#111' }}>Sustainable Impact</span>
+                                        <span className="text-success font-weight-bold" style={{ fontSize: '10px' }}>⚡ 95% Success Rate</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className="ftco-section" id="stories" style={{ backgroundColor: '#076c5b', padding: '60px 0' }}>
+
+            <section className="ftco-section" id="programs" style={{
+                position: 'relative',
+                padding: '100px 0',
+                backgroundColor: '#fcfdfd',
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='%234FB1A1' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+                backgroundAttachment: 'fixed'
+            }}>
+                <div className="container">
+                    <div className="row justify-content-center mb-5 pb-3">
+                        <div className="col-md-7 heading-section ftco-animate text-center">
+                            <h2 className="mb-4" style={{
+                                fontSize: '40px',
+                                fontWeight: 'bold',
+                                color: '#122f2b',
+                                position: 'relative',
+                                display: 'inline-block',
+                                paddingBottom: '15px'
+                            }}>
+                                Our Programs
+                                <span style={{
+                                    position: 'absolute',
+                                    bottom: '0',
+                                    left: '50%',
+                                    transform: 'translateX(-50%)',
+                                    width: '60px',
+                                    height: '4px',
+                                    backgroundColor: '#4FB1A1',
+                                    borderRadius: '2px'
+                                }}></span>
+                            </h2>
+                            <p className="lead mt-3" style={{ fontSize: '18px', color: '#555', maxWidth: '800px', margin: '0 auto' }}>
+                                We implement integrated interventions that strengthen confidence, psychosocial wellbeing, education access,
+                                and economic empowerment in Bugesera.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        {mockPrograms.map((program, index) => {
+                            // Map existing data to the new design format using BRAND COLORS
+                            interface ProgramDesignInfo {
+                                icon: string;
+                                iconBg: string;
+                                iconColor: string;
+                                subtitle: string;
+                                featuresTitle: string;
+                                features: string[];
+                                status: string;
+                                statusColor: string;
+                                statusIconColor: string;
+                                borderColor: string;
+                                secondaryBorder: string;
+                            }
+
+                            const programMap: Record<string, ProgramDesignInfo> = {
+                                p1: {
+                                    icon: 'icon-graduation-cap',
+                                    iconBg: '#4FB1A115',
+                                    iconColor: '#4FB1A1',
+                                    subtitle: 'Boarding School Development',
+                                    featuresTitle: 'Key Features:',
+                                    features: ['Advanced STEM curriculum', 'Entrepreneurship incubator', 'International partnerships', 'Scholarship programs'],
+                                    status: 'Development Phase',
+                                    statusColor: '#4FB1A110',
+                                    statusIconColor: '#4FB1A1',
+                                    borderColor: '#4FB1A1',
+                                    secondaryBorder: '#eacfa2'
+                                },
+                                p2: {
+                                    icon: 'icon-briefcase',
+                                    iconBg: '#076c5b15',
+                                    iconColor: '#076c5b',
+                                    subtitle: 'Entrepreneurship & Skills',
+                                    featuresTitle: 'Impact Metrics:',
+                                    features: ['Business seed funding', 'Mentorship & coaching', 'Market access support', 'Financial literacy training'],
+                                    status: 'Active Implementation',
+                                    statusColor: '#076c5b10',
+                                    statusIconColor: '#076c5b',
+                                    borderColor: '#076c5b',
+                                    secondaryBorder: '#4FB1A1'
+                                },
+                                p3: {
+                                    icon: 'icon-heart',
+                                    iconBg: '#eacfa230',
+                                    iconColor: '#d4b47e', // Darker tan for readability
+                                    subtitle: 'Holistic Health Support',
+                                    featuresTitle: 'Program Scope:',
+                                    features: ['Reproductive health kits', 'Mental health counseling', 'Hygiene & sanitation', 'Community outreach'],
+                                    status: 'Scale-up Phase',
+                                    statusColor: '#eacfa220',
+                                    statusIconColor: '#d4b47e',
+                                    borderColor: '#eacfa2',
+                                    secondaryBorder: '#4FB1A1'
+                                }
+                            };
+
+                            const programInfo = programMap[program.id] || {
+                                icon: 'icon-star',
+                                iconBg: '#f0f4f8',
+                                iconColor: '#4a5568',
+                                subtitle: 'Special Initiative',
+                                featuresTitle: 'Highlights:',
+                                features: ['Community impact', 'Sustainable growth', 'Strategic alignment'],
+                                status: 'Ongoing',
+                                statusColor: '#edf2f7',
+                                statusIconColor: '#4a5568',
+                                borderColor: '#4FB1A1',
+                                secondaryBorder: '#076c5b'
+                            };
+
+                            return (
+                                <div className="col-md-6 col-lg-4 ftco-animate mb-5" key={program.id}>
+                                    <div className="bg-white overflow-hidden transition-all hover:translate-y-[-8px]" style={{
+                                        borderRadius: '20px',
+                                        boxShadow: '0 15px 40px rgba(18, 47, 43, 0.06)',
+                                        border: 'none',
+                                        height: '100%',
+                                        position: 'relative'
+                                    }}>
+                                        {/* Dual color top border using BRAND COLORS */}
+                                        <div className="d-flex" style={{ height: '5px' }}>
+                                            <div style={{ flex: 1, backgroundColor: programInfo.borderColor }}></div>
+                                            <div style={{ flex: 1, backgroundColor: programInfo.secondaryBorder }}></div>
+                                        </div>
+
+                                        <div className="p-4">
+                                            {/* Header with Icon and Title */}
+                                            <div className="d-flex align-items-center mb-3">
+                                                <div className="mr-3 d-flex align-items-center justify-content-center" style={{
+                                                    width: '50px',
+                                                    height: '50px',
+                                                    backgroundColor: programInfo.iconBg,
+                                                    borderRadius: '12px',
+                                                    flexShrink: 0
+                                                }}>
+                                                    <span className={`${programInfo.icon}`} style={{ fontSize: '22px', color: programInfo.iconColor }}></span>
+                                                </div>
+                                                <div>
+                                                    <h3 className="mb-0" style={{ fontWeight: 800, fontSize: '18px', color: '#122f2b', lineHeight: '1.2' }}>{program.name.en}</h3>
+                                                    <span className="text-secondary font-weight-bold" style={{ fontSize: '11px', letterSpacing: '0.3px' }}>{programInfo.subtitle}</span>
+                                                </div>
+                                            </div>
+
+                                            {/* Description */}
+                                            <p className="mb-3" style={{ color: '#555', fontSize: '14px', lineHeight: '1.6' }}>
+                                                {program.description.en}
+                                            </p>
+
+                                            {/* Features Section */}
+                                            <div className="mb-4 p-3" style={{ backgroundColor: '#f9fbfb', borderRadius: '14px', border: '1px solid #eef2f2' }}>
+                                                <h4 className="mb-2" style={{ fontSize: '13px', fontWeight: 700, color: '#122f2b' }}>{programInfo.featuresTitle}</h4>
+                                                <ul className="list-unstyled mb-0">
+                                                    {programInfo.features.map((feature: string, fIndex: number) => (
+                                                        <li key={fIndex} className="d-flex align-items-start mb-1" style={{ color: '#666', fontSize: '13px' }}>
+                                                            <span className="mr-2 mt-1" style={{ width: '5px', height: '5px', backgroundColor: programInfo.borderColor, borderRadius: '50%', flexShrink: 0 }}></span>
+                                                            <span style={{ lineHeight: '1.4' }}>{feature}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+
+                                            {/* Footer with Badge */}
+                                            <div className="d-flex justify-content-center">
+                                                <div className="px-3 py-1 d-flex align-items-center" style={{
+                                                    backgroundColor: programInfo.statusColor,
+                                                    borderRadius: '50px',
+                                                    fontSize: '12px',
+                                                    fontWeight: '700',
+                                                    color: programInfo.iconColor
+                                                }}>
+                                                    <span className="icon-bolt mr-2" style={{ fontSize: '10px' }}></span>
+                                                    {programInfo.status}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    <div className="text-center mt-4">
+                        <Link to="/about" className="btn px-5 py-3 font-weight-bold shadow-lg" style={{
+                            borderRadius: '50px',
+                            letterSpacing: '1px',
+                            backgroundColor: '#4FB1A1',
+                            color: '#fff'
+                        }}>
+                            VIEW ALL OUR PROGRAMS
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            <section className="ftco-section" id="stories" style={{ backgroundColor: '#076c5b', padding: '100px 0' }}>
                 <div className="container">
                     <div className="row justify-content-center mb-5">
-                        <div className="col-md-8 text-center text-white ftco-animate">
-                            <h2 className="mb-2 font-weight-bold" style={{ color: '#ffffff', fontSize: '32px' }}>Stories of Change</h2>
-                            <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '16px' }}>Real stories from the women and girls whose lives have been transformed through LCEO's initiatives.</p>
+                        <div className="col-md-9 text-center text-white ftco-animate">
+                            <span className="subheading mb-2 d-block font-weight-bold" style={{ color: '#8cded0', letterSpacing: '2px', textTransform: 'uppercase' }}>Impact Stories</span>
+                            <h2 className="mb-3 font-weight-bold" style={{ color: '#ffffff', fontSize: '36px' }}>Stories of Change</h2>
+                            <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '18px' }}>Real lives transformed through education, entrepreneurship, and specialized care in Bugesera.</p>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-12 ftco-animate">
+                        <div className="col-md-12">
                             <div className="carousel-cause owl-carousel">
-                                {stories.length > 0 ? (
-                                    stories.map((story, index) => (
-                                        <div className="item" key={`${story.id}-${index}`}>
-                                            <div className="p-4 h-100 transition-all" style={{ backgroundColor: '#108d7a', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)', position: 'relative' }}>
-                                                <div className="icon mb-3">
-                                                    <span className="icon-quote-left" style={{ fontSize: '30px', color: 'rgba(255,255,255,0.2)' }}></span>
+                                {[...mockStories, ...mockStories, ...mockStories].map((story, index) => (
+                                    <div className="item px-2" key={`${story.id}-${index}`}>
+                                        <div className="p-3 transition-all" style={{
+                                            backgroundColor: 'rgba(255,255,255,0.05)',
+                                            backdropFilter: 'blur(10px)',
+                                            borderRadius: '15px',
+                                            border: '1px solid rgba(255,255,255,0.1)',
+                                            height: '350px',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            justifyContent: 'space-between',
+                                            overflow: 'hidden'
+                                        }}>
+                                            <div>
+                                                <div className="icon mb-2">
+                                                    <span className="icon-quote-left" style={{ fontSize: '20px', color: '#8cded0', opacity: 0.6 }}></span>
                                                 </div>
-                                                <h3 className="text-white font-weight-bold mb-1" style={{ fontSize: '18px' }}>{story.title}</h3>
-                                                <p className="text-white opacity-80 mb-3 font-italic" style={{ fontSize: '13px', color: '#8cded0' }}>
-                                                    "{story.slug.replace(/-/g, ' ')}"
-                                                </p>
-                                                <p className="text-white opacity-90 mb-4" style={{ fontSize: '14px', lineHeight: '1.4' }}>
-                                                    {story.content.substring(0, 100)}...
-                                                </p>
+                                                <h3 className="text-white font-weight-bold mb-1" style={{ fontSize: '15px', lineHeight: '1.2', maxHeight: '36px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                                                    {story.title.en}
+                                                </h3>
+                                                <div className="font-italic mb-2" style={{ fontSize: '11px', color: '#8cded0', opacity: 0.8, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                                    "{story.title.rw}"
+                                                </div>
 
-                                                <div className="mb-4">
-                                                    <div className="d-flex justify-content-between text-white text-small mb-1" style={{ fontSize: '12px' }}>
-                                                        <span>Raised: $12,500</span>
-                                                        <span>Goal: $15,000</span>
+                                                <p className="text-white opacity-90 mb-0" style={{
+                                                    fontSize: '12px',
+                                                    lineHeight: '1.4',
+                                                    display: '-webkit-box',
+                                                    WebkitLineClamp: 3,
+                                                    WebkitBoxOrient: 'vertical',
+                                                    overflow: 'hidden',
+                                                    height: '51px'
+                                                }}>
+                                                    {story.content.en}
+                                                </p>
+                                            </div>
+
+                                            <div>
+                                                <div className="mt-2 mb-2 p-2 rounded" style={{ backgroundColor: 'rgba(0,0,0,0.2)' }}>
+                                                    <div className="d-flex justify-content-between align-items-end mb-1">
+                                                        <span style={{ fontSize: '9px', color: '#fff', fontWeight: 'bold' }}>GOAL</span>
+                                                        <span style={{ fontSize: '9px', color: '#8cded0', fontWeight: 'bold' }}>
+                                                            {story.program ? getPercentage(story.program.fundsAllocated, story.program.budget) : 0}%
+                                                        </span>
                                                     </div>
-                                                    <div className="progress" style={{ height: '6px', backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: '3px' }}>
-                                                        <div className="progress-bar bg-white" role="progressbar" style={{ width: '83%' }} aria-valuenow={83} aria-valuemin={0} aria-valuemax={100}></div>
+                                                    <div className="progress" style={{ height: '3px', borderRadius: '10px', backgroundColor: 'rgba(255,255,255,0.2)' }}>
+                                                        <div className="progress-bar" role="progressbar" style={{ width: `${story.program ? getPercentage(story.program.fundsAllocated, story.program.budget) : 0}%`, backgroundColor: '#8cded0', borderRadius: '10px' }}></div>
+                                                    </div>
+                                                    <div className="d-flex justify-content-between mt-1" style={{ fontSize: '9px', color: 'rgba(255,255,255,0.8)' }}>
+                                                        <span>${story.program?.fundsAllocated?.toLocaleString() || 0}</span>
+                                                        <span>${story.program?.budget?.toLocaleString() || 0}</span>
                                                     </div>
                                                 </div>
 
-                                                <div className="d-flex align-items-center justify-content-between mt-auto">
+                                                <div className="d-flex align-items-center justify-content-between pt-2 border-top border-light" style={{ borderColor: 'rgba(255,255,255,0.1) !important' }}>
                                                     <div className="d-flex align-items-center">
-                                                        <div className="user-img" style={{ backgroundImage: 'url(/images/person_1.jpg)', width: '35px', height: '35px', borderRadius: '50%', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
-                                                        <div className="pl-2 text-left">
-                                                            <p className="mb-0 text-white font-weight-bold" style={{ fontSize: '12px' }}>LCEO Comms</p>
+                                                        <div className="user-img shadow-sm" style={{ backgroundImage: `url('${story.media && story.media[0] ? story.media[0].url : '/images/person_1.jpg'}')`, width: '24px', height: '24px', borderRadius: '50%', backgroundSize: 'cover', backgroundPosition: 'center', border: '1px solid rgba(255,255,255,0.3)' }}></div>
+                                                        <div className="pl-2">
+                                                            <p className="mb-0 text-white font-weight-bold" style={{ fontSize: '10px' }}>{story.authorName}</p>
                                                         </div>
                                                     </div>
-                                                    <Link to="/donate" className="btn px-3 py-1 font-weight-bold" style={{ backgroundColor: '#ffffff', color: '#108d7a', borderRadius: '20px', fontSize: '12px' }}>Donate</Link>
+                                                    <Link to="/donate" className="btn px-3 py-1 font-weight-bold shadow-sm" style={{ backgroundColor: '#ffffff', color: '#076c5b', borderRadius: '50px', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Donate</Link>
                                                 </div>
                                             </div>
                                         </div>
-                                    ))
-                                ) : (
-                                    // Fallback if no stories
-                                    <div className="item">
-                                        <div className="p-4 h-100" style={{ backgroundColor: '#108d7a', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)' }}>
-                                            <div className="icon mb-3">
-                                                <span className="icon-quote-left" style={{ fontSize: '30px', color: 'rgba(255,255,255,0.2)' }}></span>
-                                            </div>
-                                            <h3 className="text-white font-weight-bold mb-1" style={{ fontSize: '18px' }}>Impact Story</h3>
-                                            <p className="text-white opacity-90 mb-4" style={{ fontSize: '14px', lineHeight: '1.4' }}>
-                                                Supporting education for vulnerable girls in Bugesera.
-                                            </p>
-                                            <Link to="/donate" className="btn px-4 py-2 font-weight-bold" style={{ backgroundColor: '#ffffff', color: '#108d7a', borderRadius: '20px' }}>Support Now</Link>
-                                        </div>
                                     </div>
-                                )}
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -448,17 +691,27 @@ export const HomePage = () => {
                         ].map(post => (
                             <div className="col-md-4 d-flex ftco-animate mb-4" key={post.id}>
                                 <div className="blog-entry align-self-stretch shadow-sm h-100" style={{ borderRadius: '15px', overflow: 'hidden', border: '1px solid #f0f0f0' }}>
-                                    <Link to="/resources" className="block-20" style={{ backgroundImage: `url(${post.image})`, height: '220px' }}></Link>
-                                    <div className="text p-4 d-block">
-                                        <div className="meta mb-3">
+                                    <Link to="/resources" className="block-20" style={{ backgroundImage: `url(${post.image})`, height: '180px' }}></Link>
+                                    <div className="text p-3 d-block d-flex flex-column h-100">
+                                        <div className="meta mb-2">
                                             <div className="d-flex align-items-center">
-                                                <span className="badge badge-primary px-3 py-2 mr-3" style={{ borderRadius: '20px', fontSize: '11px', textTransform: 'uppercase' }}>{post.category}</span>
-                                                <span className="text-muted" style={{ fontSize: '13px' }}>{post.date}</span>
+                                                <span className="badge badge-primary px-2 py-1 mr-2" style={{ borderRadius: '4px', fontSize: '10px', textTransform: 'uppercase' }}>{post.category}</span>
+                                                <span className="text-muted" style={{ fontSize: '12px' }}>{post.date}</span>
                                             </div>
                                         </div>
-                                        <h3 className="heading mb-3" style={{ fontSize: '18px' }}><Link to="/resources">{post.title}</Link></h3>
-                                        <p className="text-muted mb-4" style={{ fontSize: '14px' }}>{post.excerpt}</p>
-                                        <Link to="/resources" className="font-weight-bold text-primary" style={{ fontSize: '14px' }}>Read More →</Link>
+                                        <h3 className="heading mb-2" style={{ fontSize: '16px', lineHeight: '1.4' }}><Link to="/resources" style={{ color: '#000' }}>{post.title}</Link></h3>
+                                        <p className="text-muted mb-3" style={{
+                                            fontSize: '13px',
+                                            lineHeight: '1.5',
+                                            display: '-webkit-box',
+                                            WebkitLineClamp: 3,
+                                            WebkitBoxOrient: 'vertical',
+                                            overflow: 'hidden',
+                                            flexGrow: 1
+                                        }}>{post.excerpt}</p>
+                                        <div className="mt-auto pt-2 border-top">
+                                            <Link to="/resources" className="font-weight-bold text-primary" style={{ fontSize: '12px' }}>Read More →</Link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -566,37 +819,128 @@ export const HomePage = () => {
                 </div>
             </section>
 
-            <section className="ftco-section bg-light" style={{ padding: '80px 0' }}>
+            <section className="ftco-section" style={{ padding: '100px 0', backgroundColor: '#fff', overflow: 'hidden' }}>
                 <div className="container">
-                    <div className="row justify-content-center mb-5">
-                        <div className="col-md-8 heading-section ftco-animate text-center">
-                            <h2 className="mb-3 font-weight-bold" style={{ fontSize: '32px' }}>Aligned SDG Goals</h2>
-                            <p className="text-muted">Our mission directly supports the United Nations Sustainable Development Goals for a better future.</p>
-                        </div>
-                    </div>
-                    <div className="row justify-content-center">
-                        {[
-                            { id: 1, name: 'No Poverty', color: '#e5243b', icon: '💰' },
-                            { id: 3, name: 'Good Health', color: '#4c9f38', icon: '🏥' },
-                            { id: 4, name: 'Quality Education', color: '#c5192d', icon: '📚' },
-                            { id: 5, name: 'Gender Equality', color: '#ff3a21', icon: '⚖️' },
-                            { id: 8, name: 'Decent Work', color: '#a21942', icon: '💼' },
-                            { id: 10, name: 'Reduced Inequality', color: '#dd1367', icon: '🤝' }
-                        ].map(sdg => (
-                            <div className="col-lg-2 col-md-4 col-sm-6 ftco-animate mb-4" key={sdg.id}>
-                                <div className="p-4 text-center h-100 transition-all hover:translate-y-[-5px]"
-                                    style={{
-                                        backgroundColor: '#ffffff',
-                                        borderRadius: '20px',
-                                        boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
-                                        borderTop: `5px solid ${sdg.color}`
-                                    }}>
-                                    <div style={{ fontSize: '32px', marginBottom: '15px' }}>{sdg.icon}</div>
-                                    <div className="font-weight-bold mb-1" style={{ color: sdg.color, fontSize: '20px' }}>{sdg.id}</div>
-                                    <p className="small font-weight-bold mb-0 text-dark" style={{ lineHeight: '1.2' }}>{sdg.name}</p>
+                    <div className="row align-items-center">
+                        {/* Left Column: SDG Grid with Blobs */}
+                        <div className="col-lg-7 position-relative mb-5 mb-lg-0 ftco-animate">
+                            {/* Decorative Blobs */}
+                            <div style={{
+                                position: 'absolute',
+                                top: '-10%',
+                                left: '-10%',
+                                width: '300px',
+                                height: '300px',
+                                backgroundColor: '#e2f5f2',
+                                borderRadius: '50%',
+                                filter: 'blur(80px)',
+                                zIndex: 0
+                            }}></div>
+                            <div style={{
+                                position: 'absolute',
+                                bottom: '-10%',
+                                right: '10%',
+                                width: '250px',
+                                height: '250px',
+                                backgroundColor: '#f0f9ff',
+                                borderRadius: '50%',
+                                filter: 'blur(80px)',
+                                zIndex: 0
+                            }}></div>
+
+                            <div className="bg-white shadow-lg overflow-hidden position-relative" style={{ borderRadius: '24px', zIndex: 1, border: '1px solid #f0f0f0' }}>
+                                <div className="row no-gutters">
+                                    {[
+                                        {
+                                            id: 1, name: 'No Poverty', color: '#e5243b',
+                                            icon: (
+                                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                                </svg>
+                                            )
+                                        },
+                                        {
+                                            id: 3, name: 'Good Health', color: '#4c9f38',
+                                            icon: (
+                                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                                                </svg>
+                                            )
+                                        },
+                                        {
+                                            id: 4, name: 'Quality Education', color: '#c5192d',
+                                            icon: (
+                                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                                                </svg>
+                                            )
+                                        },
+                                        {
+                                            id: 5, name: 'Gender Equality', color: '#ff3a21',
+                                            icon: (
+                                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                    <path d="M12 7V3m-4 4V5m8 2V5"></path>
+                                                    <path d="M4 11h16a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"></path>
+                                                    <path d="M7 15v4a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4"></path>
+                                                </svg>
+                                            )
+                                        },
+                                        {
+                                            id: 8, name: 'Decent Work', color: '#a21942',
+                                            icon: (
+                                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                                    <path d="M12 11v4"></path>
+                                                    <path d="M9 13h6"></path>
+                                                </svg>
+                                            )
+                                        },
+                                        {
+                                            id: 10, name: 'Reduced Inequality', color: '#dd1367',
+                                            icon: (
+                                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                                </svg>
+                                            )
+                                        }
+                                    ].map((sdg, index) => (
+                                        <div className="col-md-4 border-right border-bottom" key={sdg.id} style={{
+                                            borderRight: index % 3 === 2 ? 'none' : '1px solid #f0f0f0',
+                                            borderBottom: index >= 3 ? 'none' : '1px solid #f0f0f0'
+                                        }}>
+                                            <div className="p-4 text-center transition-all hover:bg-light h-100 d-flex flex-column align-items-center justify-content-center" style={{ minHeight: '200px' }}>
+                                                <div className="mb-4" style={{ color: '#076c5b' }}>
+                                                    {sdg.icon}
+                                                </div>
+                                                <h5 className="font-weight-bold mb-1" style={{ fontSize: '15px', color: '#111', lineHeight: '1.2' }}>{sdg.name}</h5>
+                                                <span className="font-weight-bold" style={{ color: sdg.color, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px' }}>Goal {sdg.id}</span>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
-                        ))}
+                        </div>
+
+                        {/* Right Column: Content */}
+                        <div className="col-lg-5 pl-lg-5 ftco-animate">
+                            <h2 className="mb-4 font-weight-bold" style={{ fontSize: '42px', lineHeight: '1.2', color: '#111' }}>
+                                Empowering Lives + <span style={{ color: '#076c5b' }}>Strengthening Communities</span> Through Global Goals
+                            </h2>
+                            <p className="lead mb-4" style={{ fontSize: '16px', color: '#666', lineHeight: '1.8' }}>
+                                At LCEO, we believe that sustainable development is only possible when we align our grassroots efforts with global standards. By focusing on these key Sustainable Development Goals, we ensure that every scholarship, business grant, and mental health session contributes to a larger vision of dignity and equality for all Rwandans.
+                            </p>
+                            <p className="mb-5" style={{ fontSize: '14px', color: '#888' }}>
+                                Our integrated approach in Bugesera District directly impacts thousands of lives, bridging the gap between local challenges and international aspirations for social justice and economic resilience.
+                            </p>
+                            <Link to="/about" className="btn px-5 py-3 font-weight-bold shadow-sm" style={{ backgroundColor: '#076c5b', color: '#fff', borderRadius: '12px', fontSize: '16px' }}>
+                                View Our Impact Report &rarr;
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>
