@@ -224,52 +224,47 @@ export function ManageUsersPage() {
                 </div>
                 <Dialog open={isAddModalOpen} onOpenChange={(open) => { setIsAddModalOpen(open); if (!open) resetForm(); }}>
                     <DialogTrigger asChild>
-                        <Button className="bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm h-11 px-6 rounded-lg shadow-sm flex items-center gap-2 transition-all active:scale-95">
-                            <Plus size={18} />
+                        <Button className="font-semibold text-xs h-9 px-5 rounded-xl shadow-lg flex items-center gap-2 transition-all duration-200 active:scale-95" style={{ backgroundColor: '#4c9789', color: '#ffffff' }}>
+                            <Plus size={15} />
                             Add User
                         </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[380px] p-0 border-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.15)] rounded-2xl overflow-hidden bg-white dark:bg-slate-950">
-                        <div className="px-6 py-5 border-b border-slate-50 dark:border-slate-900 bg-slate-50/30">
-                            <div className="flex items-center gap-3">
-                                <div className="w-9 h-9 rounded-xl bg-slate-900 flex items-center justify-center text-white shadow-lg">
-                                    <Plus size={18} strokeWidth={2.5} />
-                                </div>
-                                <div className="space-y-0.5">
-                                    <DialogTitle className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">New Entry</DialogTitle>
-                                    <DialogDescription className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Registry Initialization</DialogDescription>
-                                </div>
+                    <DialogContent className="!max-w-[280px] p-0 border-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.15)] rounded-2xl overflow-hidden bg-white dark:bg-slate-950">
+                        <div className="px-4 py-3 border-b border-slate-50 dark:border-slate-900 bg-slate-50/30">
+                            <div>
+                                <DialogTitle className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">New Entry</DialogTitle>
+                                <DialogDescription className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Registry Initialization</DialogDescription>
                             </div>
                         </div>
-                        <form onSubmit={handleCreateUser} className="p-6 pt-5 space-y-4">
-                            <div className="space-y-1.5">
-                                <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Identity Name</Label>
+                        <form onSubmit={handleCreateUser} className="p-4 pt-3 space-y-3">
+                            <div className="space-y-1">
+                                <Label className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Identity Name</Label>
                                 <Input
                                     value={formData.fullName}
                                     onChange={(e) => handleInputChange('fullName', e.target.value)}
                                     placeholder="Enter legal name"
-                                    className="h-10 rounded-xl border-slate-100 bg-slate-50/50 focus:ring-slate-900 transition-all font-bold text-xs"
+                                    className="h-8 rounded-lg border-slate-100 bg-slate-50/50 focus:ring-slate-900 transition-all font-bold text-xs"
                                     required
                                 />
                             </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-1.5">
-                                    <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Phone Link</Label>
+                            <div className="grid grid-cols-2 gap-3">
+                                <div className="space-y-1">
+                                    <Label className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Phone Link</Label>
                                     <Input
                                         value={formData.phone}
                                         onChange={(e) => handleInputChange('phone', e.target.value)}
                                         placeholder="+000 000 000"
-                                        className="h-10 rounded-xl border-slate-100 bg-slate-50/50 font-bold text-xs"
+                                        className="h-8 rounded-lg border-slate-100 bg-slate-50/50 font-bold text-xs"
                                         required
                                     />
                                 </div>
-                                <div className="space-y-1.5">
-                                    <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Class</Label>
+                                <div className="space-y-1">
+                                    <Label className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Class</Label>
                                     <Select value={formData.userType} onValueChange={(val) => handleInputChange('userType', val)}>
-                                        <SelectTrigger className="h-10 rounded-xl border-slate-100 bg-slate-50/50 font-black text-[10px] uppercase tracking-wider">
+                                        <SelectTrigger className="h-8 rounded-lg border-slate-100 bg-slate-50/50 font-black text-[10px] uppercase tracking-wider">
                                             <SelectValue />
                                         </SelectTrigger>
-                                        <SelectContent className="rounded-xl border-slate-100">
+                                        <SelectContent className="rounded-lg border-slate-100">
                                             <SelectItem value={UserType.ADMIN} className="text-[10px] font-black uppercase tracking-wider">Admin</SelectItem>
                                             <SelectItem value={UserType.DONOR} className="text-[10px] font-black uppercase tracking-wider">Donor</SelectItem>
                                             <SelectItem value={UserType.BENEFICIARY} className="text-[10px] font-black uppercase tracking-wider">Beneficiary</SelectItem>
@@ -277,22 +272,22 @@ export function ManageUsersPage() {
                                     </Select>
                                 </div>
                             </div>
-                            <div className="space-y-1.5">
-                                <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Email Endpoint</Label>
+                            <div className="space-y-1">
+                                <Label className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Email Endpoint</Label>
                                 <Input
                                     type="email"
                                     value={formData.email}
                                     onChange={(e) => handleInputChange('email', e.target.value)}
                                     placeholder="identity@lceo.org"
-                                    className="h-10 rounded-xl border-slate-100 bg-slate-50/50 font-bold text-xs"
+                                    className="h-8 rounded-lg border-slate-100 bg-slate-50/50 font-bold text-xs"
                                 />
                             </div>
-                            <div className="pt-2 flex flex-col gap-2">
-                                <Button type="submit" className="w-full h-10 bg-slate-950 hover:bg-black text-white rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl transition-all active:scale-95">
-                                    Propagate Entry
+                            <div className="pt-2 flex flex-col items-center gap-1.5">
+                                <Button type="submit" className="w-3/4 h-8 rounded-lg font-semibold text-[10px] uppercase tracking-wider shadow-md transition-all duration-200 active:scale-[0.97]" style={{ backgroundColor: '#4c9789', color: '#ffffff' }}>
+                                    Create User
                                 </Button>
-                                <Button type="button" variant="ghost" className="w-full h-9 text-[9px] font-black uppercase tracking-widest text-slate-400" onClick={() => setIsAddModalOpen(false)}>
-                                    Discard Mapping
+                                <Button type="button" variant="ghost" className="w-3/4 h-7 text-[9px] font-semibold uppercase tracking-wider text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-all duration-200" onClick={() => setIsAddModalOpen(false)}>
+                                    Cancel
                                 </Button>
                             </div>
                         </form>
@@ -404,57 +399,57 @@ export function ManageUsersPage() {
                                                     <span className={cn("text-[11px] font-bold uppercase tracking-tight", user.isActive ? "text-emerald-600" : "text-slate-400")}>{user.isActive ? 'Active' : 'Suspended'}</span>
                                                 </div>
                                             </TableCell>
-                                            <TableCell className="text-right px-8 py-3">
-                                                <div className="flex items-center justify-end gap-1.5">
+                                            <TableCell className="text-right px-6 py-3">
+                                                <div className="flex items-center justify-end gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                                                     <Button
                                                         size="icon"
                                                         variant="ghost"
-                                                        className="h-8 w-8 rounded-lg bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-200 text-slate-500 transition-all border border-transparent shadow-sm"
+                                                        className="h-6 w-6 rounded-md bg-blue-50/80 dark:bg-blue-900/20 hover:bg-blue-100 text-blue-500 hover:text-blue-700 transition-all duration-150 hover:scale-110 border border-transparent hover:border-blue-200/60"
                                                         title="View Details"
                                                         onClick={() => { setSelectedUser(user); setIsViewModalOpen(true); }}
                                                     >
-                                                        <Eye size={14} />
+                                                        <Eye size={12} />
                                                     </Button>
                                                     <Button
                                                         size="icon"
                                                         variant="ghost"
-                                                        className="h-8 w-8 rounded-lg bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-200 text-slate-500 transition-all border border-transparent shadow-sm"
+                                                        className="h-6 w-6 rounded-md bg-indigo-50/80 dark:bg-indigo-900/20 hover:bg-indigo-100 text-indigo-500 hover:text-indigo-700 transition-all duration-150 hover:scale-110 border border-transparent hover:border-indigo-200/60"
                                                         title="Edit Profile"
                                                         onClick={() => { setSelectedUser(user); setIsEditModalOpen(true); }}
                                                     >
-                                                        <Edit size={14} />
+                                                        <Edit size={12} />
                                                     </Button>
                                                     <Button
                                                         size="icon"
                                                         variant="ghost"
-                                                        className="h-8 w-8 rounded-lg bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-200 text-slate-500 transition-all border border-transparent shadow-sm"
+                                                        className="h-6 w-6 rounded-md bg-violet-50/80 dark:bg-violet-900/20 hover:bg-violet-100 text-violet-500 hover:text-violet-700 transition-all duration-150 hover:scale-110 border border-transparent hover:border-violet-200/60"
                                                         title="Change Role"
                                                         onClick={() => { setSelectedUser(user); setIsRoleModalOpen(true); }}
                                                     >
-                                                        <UserCog size={14} />
+                                                        <UserCog size={12} />
                                                     </Button>
                                                     <Button
                                                         size="icon"
                                                         variant="ghost"
                                                         className={cn(
-                                                            "h-8 w-8 rounded-lg transition-all border shadow-sm",
+                                                            "h-6 w-6 rounded-md transition-all duration-150 border border-transparent hover:scale-110",
                                                             user.isActive
-                                                                ? "bg-amber-50 dark:bg-amber-900/20 hover:bg-amber-100 text-amber-600 border-amber-100"
-                                                                : "bg-emerald-50 dark:bg-emerald-900/20 hover:bg-emerald-100 text-emerald-600 border-emerald-100"
+                                                                ? "bg-amber-50/80 dark:bg-amber-900/20 hover:bg-amber-100 text-amber-500 hover:text-amber-700 hover:border-amber-200/60"
+                                                                : "bg-emerald-50/80 dark:bg-emerald-900/20 hover:bg-emerald-100 text-emerald-500 hover:text-emerald-700 hover:border-emerald-200/60"
                                                         )}
                                                         title={user.isActive ? "Suspend" : "Activate"}
                                                         onClick={() => toggleUserStatus(user.id)}
                                                     >
-                                                        <Power size={14} />
+                                                        <Power size={12} />
                                                     </Button>
                                                     <Button
                                                         size="icon"
                                                         variant="ghost"
-                                                        className="h-8 w-8 rounded-lg bg-red-50/50 dark:bg-red-900/10 hover:bg-red-100 text-red-500 transition-all border border-red-50"
+                                                        className="h-6 w-6 rounded-md bg-rose-50/80 dark:bg-rose-900/15 hover:bg-rose-100 text-rose-400 hover:text-rose-600 transition-all duration-150 hover:scale-110 border border-transparent hover:border-rose-200/60"
                                                         title="Delete User"
                                                         onClick={() => { setSelectedUser(user); setIsDeleteModalOpen(true); }}
                                                     >
-                                                        <Trash2 size={14} />
+                                                        <Trash2 size={12} />
                                                     </Button>
                                                 </div>
                                             </TableCell>
@@ -467,9 +462,9 @@ export function ManageUsersPage() {
                 </div>
                 <div className="bg-slate-50/30 p-4 px-8 text-xs font-semibold text-slate-400 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
                     <p>Showing {filteredUsers.length} total users in manifest</p>
-                    <div className="flex gap-4">
-                        <Button variant="ghost" disabled className="h-8 text-[10px] font-bold uppercase tracking-widest opacity-50">Prev</Button>
-                        <Button variant="ghost" disabled className="h-8 text-[10px] font-bold uppercase tracking-widest opacity-50">Next</Button>
+                    <div className="flex gap-2">
+                        <Button variant="outline" disabled className="h-7 px-3 text-[9px] font-semibold uppercase tracking-wider opacity-40 rounded-lg border-slate-200 transition-all">Prev</Button>
+                        <Button variant="outline" disabled className="h-7 px-3 text-[9px] font-semibold uppercase tracking-wider opacity-40 rounded-lg border-slate-200 transition-all">Next</Button>
                     </div>
                 </div>
             </div>
@@ -478,148 +473,175 @@ export function ManageUsersPage() {
 
             {/* Recreated & Unified Professional Modals */}
 
-            {/* View Profile Artifact */}
+            {/* View Profile Modal */}
             <Dialog open={isViewModalOpen} onOpenChange={setIsViewModalOpen}>
-                <DialogContent className="sm:max-w-[340px] p-0 border-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] rounded-2xl overflow-hidden bg-white dark:bg-slate-950">
-                    <div className="h-1 bg-slate-100 dark:bg-slate-900 w-full" />
-                    <div className="p-8 text-center space-y-6">
-                        <div className="relative mx-auto w-20 h-20">
-                            <Avatar className="w-20 h-20 ring-4 ring-slate-50 dark:ring-slate-900 shadow-xl">
-                                <AvatarImage src={selectedUser?.profileImageUrl} className="object-cover" />
-                                <AvatarFallback className="text-xl font-black bg-slate-100 text-slate-900">{selectedUser?.fullName[0]}</AvatarFallback>
-                            </Avatar>
-                            <div className={cn("absolute bottom-0 right-1 h-3.5 w-3.5 rounded-full border-2 border-white dark:border-slate-950 shadow-sm", selectedUser?.isActive ? "bg-emerald-500" : "bg-slate-300")} />
+                <DialogContent className="!max-w-[280px] p-0 border-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.15)] rounded-2xl overflow-hidden bg-white dark:bg-slate-950">
+                    <div className="px-4 py-3 border-b border-slate-50 dark:border-slate-900 bg-slate-50/30">
+                        <div>
+                            <DialogTitle className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">User Profile</DialogTitle>
+                            <DialogDescription className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">View Details</DialogDescription>
+                        </div>
+                    </div>
+                    <div className="p-4 pt-3 space-y-3 overflow-y-auto max-h-[320px]">
+                        <div className="flex flex-col items-center gap-2 pb-1">
+                            <div className="relative">
+                                <Avatar className="w-14 h-14 ring-2 ring-slate-100 dark:ring-slate-800 shadow-md">
+                                    <AvatarImage src={selectedUser?.profileImageUrl} className="object-cover" />
+                                    <AvatarFallback className="text-base font-black bg-slate-100 text-slate-900">{selectedUser?.fullName[0]}</AvatarFallback>
+                                </Avatar>
+                                <div className={cn("absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white dark:border-slate-950", selectedUser?.isActive ? "bg-emerald-500" : "bg-slate-300")} />
+                            </div>
+                            <div className="text-center">
+                                <h2 className="text-sm font-black text-slate-900 dark:text-white tracking-tight">{selectedUser?.fullName}</h2>
+                                <p className="text-[8px] font-black uppercase tracking-[0.2em] text-slate-400 mt-0.5">{selectedUser?.userType}</p>
+                            </div>
                         </div>
 
-                        <div className="space-y-1">
-                            <h2 className="text-lg font-black text-slate-900 dark:text-white tracking-tight">{selectedUser?.fullName}</h2>
-                            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">Class: {selectedUser?.userType}</p>
-                        </div>
-
-                        <div className="space-y-2.5 text-left pt-2">
+                        <div className="space-y-2 text-left">
                             {[
-                                { label: 'Email Endpoint', value: selectedUser?.email || 'N/A', icon: Mail },
-                                { label: 'Secure Line', value: selectedUser?.phone, icon: Phone },
-                                { label: 'Registry Date', value: selectedUser ? formatDate(selectedUser.createdAt) : '--', icon: Calendar }
+                                { label: 'Email', value: selectedUser?.email || 'N/A', icon: Mail },
+                                { label: 'Phone', value: selectedUser?.phone, icon: Phone },
+                                { label: 'Joined', value: selectedUser ? formatDate(selectedUser.createdAt) : '--', icon: Calendar }
                             ].map((item, i) => (
-                                <div key={i} className="p-3 bg-slate-50/50 dark:bg-slate-900/50 border border-slate-100/50 dark:border-slate-800/50 rounded-xl">
-                                    <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center gap-1.5 leading-none">
-                                        <item.icon size={11} className="opacity-50" /> {item.label}
+                                <div key={i} className="p-2.5 bg-slate-50/50 dark:bg-slate-900/50 border border-slate-100/50 dark:border-slate-800/50 rounded-lg">
+                                    <p className="text-[7px] font-black text-slate-400 uppercase tracking-widest mb-0.5 flex items-center gap-1 leading-none">
+                                        <item.icon size={9} className="opacity-50" /> {item.label}
                                     </p>
-                                    <p className="text-[11px] font-bold text-slate-700 dark:text-slate-300 truncate leading-none">{item.value}</p>
+                                    <p className="text-[10px] font-bold text-slate-700 dark:text-slate-300 truncate leading-none">{item.value}</p>
                                 </div>
                             ))}
                         </div>
 
-                        <Button className="w-full h-10 bg-slate-950 hover:bg-black text-white rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg active:scale-95 transition-all" onClick={() => setIsViewModalOpen(false)}>
-                            Conclude Observation
-                        </Button>
+                        <div className="pt-1 flex flex-col items-center">
+                            <Button className="w-3/4 h-8 rounded-lg font-semibold text-[10px] uppercase tracking-wider shadow-md transition-all duration-200 active:scale-[0.97]" style={{ backgroundColor: '#4c9789', color: '#ffffff' }} onClick={() => setIsViewModalOpen(false)}>
+                                Close
+                            </Button>
+                        </div>
                     </div>
                 </DialogContent>
             </Dialog>
 
-            {/* Profile Modification Manifest */}
+            {/* Edit User Modal */}
             <Dialog open={isEditModalOpen} onOpenChange={(open) => { setIsEditModalOpen(open); if (!open) resetForm(); }}>
-                <DialogContent className="sm:max-w-[380px] p-0 border-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden bg-white dark:bg-slate-950">
-                    <div className="px-7 py-6 border-b border-slate-50 dark:border-slate-900">
-                        <DialogTitle className="text-base font-black text-slate-950 dark:text-white uppercase tracking-tight">Modify Identity</DialogTitle>
-                        <DialogDescription className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Registry Synchronization</DialogDescription>
+                <DialogContent className="!max-w-[280px] p-0 border-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.15)] rounded-2xl overflow-hidden bg-white dark:bg-slate-950">
+                    <div className="px-4 py-3 border-b border-slate-50 dark:border-slate-900 bg-slate-50/30">
+                        <div>
+                            <DialogTitle className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">Edit User</DialogTitle>
+                            <DialogDescription className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Update Profile</DialogDescription>
+                        </div>
                     </div>
-                    <form onSubmit={handleUpdateUser} className="p-7 space-y-5">
-                        <div className="space-y-2">
-                            <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Legal Label</Label>
+                    <form onSubmit={handleUpdateUser} className="p-4 pt-3 space-y-3">
+                        <div className="space-y-1">
+                            <Label className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Full Name</Label>
                             <Input
                                 value={formData.fullName}
                                 onChange={(e) => handleInputChange('fullName', e.target.value)}
-                                className="h-10 rounded-xl bg-slate-50/50 border-slate-100 dark:border-slate-900 font-bold text-xs"
+                                className="h-8 rounded-lg bg-slate-50/50 border-slate-100 dark:border-slate-900 font-bold text-xs"
                                 required
                             />
                         </div>
-                        <div className="grid grid-cols-2 gap-5">
-                            <div className="space-y-2">
-                                <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Secure Grid</Label>
+                        <div className="grid grid-cols-2 gap-3">
+                            <div className="space-y-1">
+                                <Label className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Phone</Label>
                                 <Input
                                     value={formData.phone}
                                     onChange={(e) => handleInputChange('phone', e.target.value)}
-                                    className="h-10 rounded-xl bg-slate-50/50 border-slate-100 dark:border-slate-900 font-bold text-xs"
+                                    className="h-8 rounded-lg bg-slate-50/50 border-slate-100 dark:border-slate-900 font-bold text-xs"
                                     required
                                 />
                             </div>
-                            <div className="space-y-2">
-                                <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Access Status</Label>
+                            <div className="space-y-1">
+                                <Label className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Status</Label>
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className={cn("h-10 w-full rounded-xl font-black text-[10px] uppercase tracking-wider border-slate-100 dark:border-slate-900 transition-all shadow-sm", formData.isActive ? "bg-emerald-50 text-emerald-700 border-emerald-100" : "bg-red-50 text-red-700 border-red-100")}
+                                    className={cn("h-8 w-full rounded-lg font-bold text-[9px] uppercase tracking-wider border-slate-100 dark:border-slate-900 transition-all", formData.isActive ? "bg-emerald-50 text-emerald-700 border-emerald-100" : "bg-red-50 text-red-700 border-red-100")}
                                     onClick={() => handleInputChange('isActive', !formData.isActive)}
                                 >
                                     {formData.isActive ? 'Active' : 'Suspended'}
                                 </Button>
                             </div>
                         </div>
-                        <div className="space-y-2">
-                            <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Primary Endpoint</Label>
+                        <div className="space-y-1">
+                            <Label className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Email</Label>
                             <Input
                                 type="email"
                                 value={formData.email}
                                 onChange={(e) => handleInputChange('email', e.target.value)}
-                                className="h-10 rounded-xl bg-slate-50/50 border-slate-100 dark:border-slate-900 font-bold text-xs"
+                                className="h-8 rounded-lg bg-slate-50/50 border-slate-100 dark:border-slate-900 font-bold text-xs"
                             />
                         </div>
-                        <DialogFooter className="pt-3">
-                            <Button type="submit" className="w-full h-11 bg-slate-950 hover:bg-black text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.15em] shadow-xl transition-all active:scale-95">
-                                Commit Modulation
+                        <div className="pt-2 flex flex-col items-center gap-1.5">
+                            <Button type="submit" className="w-3/4 h-8 rounded-lg font-semibold text-[10px] uppercase tracking-wider shadow-md transition-all duration-200 active:scale-[0.97]" style={{ backgroundColor: '#4c9789', color: '#ffffff' }}>
+                                Save Changes
                             </Button>
-                        </DialogFooter>
+                            <Button type="button" variant="ghost" className="w-3/4 h-7 text-[9px] font-semibold uppercase tracking-wider text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-all duration-200" onClick={() => setIsEditModalOpen(false)}>
+                                Cancel
+                            </Button>
+                        </div>
                     </form>
                 </DialogContent>
             </Dialog>
 
-            {/* Classification Authority Switch */}
+            {/* Change Role Modal */}
             <Dialog open={isRoleModalOpen} onOpenChange={(open) => { setIsRoleModalOpen(open); if (!open) resetForm(); }}>
-                <DialogContent className="sm:max-w-[340px] p-0 border-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden bg-white dark:bg-slate-950">
-                    <div className="px-7 py-6 border-b border-slate-50 dark:border-slate-900 text-center">
-                        <DialogTitle className="text-base font-black text-slate-950 dark:text-white uppercase tracking-tight">Classification</DialogTitle>
-                        <DialogDescription className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Authority Re-mapping</DialogDescription>
+                <DialogContent className="!max-w-[280px] p-0 border-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.15)] rounded-2xl overflow-hidden bg-white dark:bg-slate-950">
+                    <div className="px-4 py-3 border-b border-slate-50 dark:border-slate-900 bg-slate-50/30">
+                        <div>
+                            <DialogTitle className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">Change Role</DialogTitle>
+                            <DialogDescription className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Select New Role</DialogDescription>
+                        </div>
                     </div>
-                    <form onSubmit={handleUpdateUser} className="p-5 space-y-2">
+                    <form onSubmit={handleUpdateUser} className="p-4 pt-3 space-y-2">
                         {[UserType.ADMIN, UserType.DONOR, UserType.BENEFICIARY].map((role) => (
-                            <label key={role} className={cn("flex items-center justify-between p-4 rounded-2xl border-2 cursor-pointer transition-all", formData.userType === role ? "bg-slate-950 border-slate-950 shadow-2xl" : "border-slate-50 hover:border-slate-100")}>
-                                <div className="flex items-center gap-3">
-                                    <div className={cn("p-1.5 rounded-lg", formData.userType === role ? "bg-white/10 text-white" : "bg-slate-100 text-slate-400")}>
-                                        <Shield size={12} strokeWidth={3} />
+                            <label key={role} className={cn("flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-all", formData.userType === role ? "bg-[#4c9789] border-[#4c9789] shadow-lg" : "border-slate-100 hover:border-slate-200 bg-white dark:bg-slate-950")}>
+                                <div className="flex items-center gap-2">
+                                    <div className={cn("p-1 rounded-md", formData.userType === role ? "bg-white/10 text-white" : "bg-slate-50 text-slate-400")}>
+                                        <Shield size={10} strokeWidth={3} />
                                     </div>
-                                    <span className={cn("font-black text-[10px] uppercase tracking-widest", formData.userType === role ? "text-white" : "text-slate-600 font-bold")}>{role}</span>
+                                    <span className={cn("font-bold text-[9px] uppercase tracking-widest", formData.userType === role ? "text-white" : "text-slate-600")}>{role}</span>
                                 </div>
-                                <div className={cn("w-4 h-4 rounded-full border-2 flex items-center justify-center", formData.userType === role ? "border-white bg-white" : "border-slate-200")}>
-                                    {formData.userType === role && <div className="w-1.5 h-1.5 bg-slate-950 rounded-full" />}
+                                <div className={cn("w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center", formData.userType === role ? "border-white bg-white" : "border-slate-200")}>
+                                    {formData.userType === role && <div className="w-1.5 h-1.5 bg-[#4c9789] rounded-full" />}
                                 </div>
                                 <input type="radio" className="hidden" checked={formData.userType === role} onChange={() => handleInputChange('userType', role)} />
                             </label>
                         ))}
-                        <DialogFooter className="pt-4">
-                            <Button type="submit" className="w-full h-11 bg-slate-950 hover:bg-black text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl transition-all">
-                                Execute Override
+                        <div className="pt-2 flex flex-col items-center gap-1.5">
+                            <Button type="submit" className="w-3/4 h-8 rounded-lg font-semibold text-[10px] uppercase tracking-wider shadow-md transition-all duration-200 active:scale-[0.97]" style={{ backgroundColor: '#4c9789', color: '#ffffff' }}>
+                                Update Role
                             </Button>
-                        </DialogFooter>
+                            <Button type="button" variant="ghost" className="w-3/4 h-7 text-[9px] font-semibold uppercase tracking-wider text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-all duration-200" onClick={() => setIsRoleModalOpen(false)}>
+                                Cancel
+                            </Button>
+                        </div>
                     </form>
                 </DialogContent>
             </Dialog>
 
-            {/* Destructive Purge Command */}
+            {/* Delete User Modal */}
             <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
-                <DialogContent className="sm:max-w-[340px] p-0 border-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden bg-white dark:bg-slate-950">
-                    <div className="p-9 text-center space-y-6">
-                        <div className="mx-auto w-16 h-16 bg-red-50 dark:bg-red-950/20 text-red-600 rounded-3xl flex items-center justify-center shadow-inner">
-                            <AlertCircle size={32} strokeWidth={2.5} />
+                <DialogContent className="!max-w-[280px] p-0 border-none shadow-[0_32px_64px_-16px_rgba(0,0,0,0.15)] rounded-2xl overflow-hidden bg-white dark:bg-slate-950">
+                    <div className="px-4 py-3 border-b border-slate-50 dark:border-slate-900 bg-slate-50/30">
+                        <div>
+                            <DialogTitle className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">Delete User</DialogTitle>
+                            <DialogDescription className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Permanent Action</DialogDescription>
                         </div>
-                        <div className="space-y-2 text-center">
-                            <h3 className="text-lg font-black text-slate-950 dark:text-white uppercase tracking-tight">Purge Confirmation</h3>
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em] leading-relaxed px-2">You are permanently shredding the profile mapping for <br /><span className="text-slate-950 dark:text-white underline underline-offset-4 decoration-red-500/50">{selectedUser?.fullName}</span>.<br />This state is irreversible.</p>
+                    </div>
+                    <div className="p-4 pt-3 space-y-3 text-center">
+                        <div className="mx-auto w-10 h-10 bg-red-50 dark:bg-red-950/20 text-red-500 rounded-xl flex items-center justify-center">
+                            <AlertCircle size={20} strokeWidth={2.5} />
                         </div>
-                        <div className="flex flex-col gap-2.5 pt-2">
-                            <Button className="h-11 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active:scale-95 shadow-xl shadow-red-500/10" onClick={handleDeleteUser}>Confirm Shredding</Button>
-                            <Button variant="ghost" className="h-10 font-black text-[9px] uppercase tracking-widest text-slate-400 hover:text-slate-600" onClick={() => setIsDeleteModalOpen(false)}>Abort Command</Button>
+                        <div className="space-y-1">
+                            <p className="text-[10px] font-bold text-slate-500 leading-relaxed px-2">Are you sure you want to delete<br /><span className="text-slate-900 dark:text-white font-black">{selectedUser?.fullName}</span>?<br />This cannot be undone.</p>
+                        </div>
+                        <div className="pt-1 flex flex-col items-center gap-1.5">
+                            <Button className="w-3/4 h-8 rounded-lg font-semibold text-[10px] uppercase tracking-wider shadow-md transition-all duration-200 active:scale-[0.97]" style={{ backgroundColor: '#d4183d', color: '#ffffff' }} onClick={handleDeleteUser}>
+                                Delete User
+                            </Button>
+                            <Button variant="ghost" className="w-3/4 h-7 text-[9px] font-semibold uppercase tracking-wider text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-all duration-200" onClick={() => setIsDeleteModalOpen(false)}>
+                                Cancel
+                            </Button>
                         </div>
                     </div>
                 </DialogContent>
